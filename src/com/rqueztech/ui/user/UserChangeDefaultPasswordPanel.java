@@ -1,4 +1,4 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.user;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,16 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class MainLoginPanel extends JPanel {
+public class UserChangeDefaultPasswordPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6576995148312400023L;
 	// --- Group 1: Panel related variables ---
-	private static final long serialVersionUID = 1151818027338195157L;
 	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 	private HashMap <String, JComponent> components;
 	
-	public MainLoginPanel(JFrame frame) {
+	public UserChangeDefaultPasswordPanel(JFrame frame) {
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
@@ -40,14 +43,14 @@ public class MainLoginPanel extends JPanel {
 			this.grid.gridx = 0;
 			this.grid.gridy = 0;
 			
-			this.addLabel("UserName", 0);
-			this.addTextField("UserNameEntry", 0, 15);
+			this.addLabel("EnterNewPassword", 0);
+			this.addTextField("EnterNewPassword", 0, 15);
 			
-			this.addLabel("Password",0);
-			this.addTextField("PasswordEntry", 0, 15);
+			this.addLabel("ConfirmNewPassword",0);
+			this.addTextField("ConfirmNewPassword", 0, 15);
 			
-			this.addRightButton("User", 0);
-			this.addLeftButton("Admin", 1);
+			this.addLeftButton("Cancel", 0);
+			this.addRightButton("Submit", 1);
 		});
 	}
 	
@@ -96,6 +99,7 @@ public class MainLoginPanel extends JPanel {
 	
 	private void addRightButton(String rightButtonName, int xCoordinate) {
 		JButton rightButton = new JButton(rightButtonName);
+		
 		rightButton.setForeground(Color.GRAY);
 		rightButton.setBackground(Color.BLACK);
 		
