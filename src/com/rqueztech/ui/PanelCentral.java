@@ -7,13 +7,13 @@ package com.rqueztech.ui;
 
 import java.awt.CardLayout;
 import java.awt.Image;
-import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.rqueztech.ui.configuration.SetupAgreementPanel;
 import com.rqueztech.ui.configuration.SetupConfigurationPanel;
+import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.user.UserCentralPanel;
 import com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
 
@@ -37,17 +37,17 @@ public class PanelCentral extends JFrame {
 		
 		isInvokeGUI();
 		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, PanelTypeEnum.SETUP_AGREEMENT_PANEL.toString());
+		cl.show(cards, PanelCentralEnums.SETUP_AGREEMENT_PANEL.toString());
 	}
 	
 	public void createAllPanels() {
 	    cards = new JPanel(new CardLayout());
 
-	    cards.add(new MainLoginPanel(this), PanelTypeEnum.MAIN_LOGIN_PANEL.toString());
-	    cards.add(new UserChangeDefaultPasswordPanel(this), PanelTypeEnum.DEFAULT_PASSWORD_CHANGE_USER_PANEL.toString());
-	    cards.add(new UserCentralPanel(this), PanelTypeEnum.USER_CENTRAL_PANEL.toString());
-	    cards.add(new SetupConfigurationPanel(this), PanelTypeEnum.SETUP_CONFIGURATION_PANEL.toString());
-	    cards.add(new SetupAgreementPanel(this), PanelTypeEnum.SETUP_AGREEMENT_PANEL.toString());
+	    cards.add(new MainLoginPanel(this), PanelCentralEnums.MAIN_LOGIN_PANEL.toString());
+	    cards.add(new UserChangeDefaultPasswordPanel(this), PanelCentralEnums.DEFAULT_PASSWORD_CHANGE_USER_PANEL.toString());
+	    cards.add(new UserCentralPanel(this), PanelCentralEnums.USER_CENTRAL_PANEL.toString());
+	    cards.add(new SetupConfigurationPanel(this), PanelCentralEnums.SETUP_CONFIGURATION_PANEL.toString());
+	    cards.add(new SetupAgreementPanel(this), PanelCentralEnums.SETUP_AGREEMENT_PANEL.toString());
 
 	    this.add(cards);
 	}

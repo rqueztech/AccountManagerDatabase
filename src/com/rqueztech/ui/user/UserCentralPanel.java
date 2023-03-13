@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.enums.PanelCentralEnums;
+
 public class UserCentralPanel extends JPanel {
 	
 	/**

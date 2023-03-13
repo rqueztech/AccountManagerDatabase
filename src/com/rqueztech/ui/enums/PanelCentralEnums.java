@@ -1,6 +1,6 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.enums;
 
-enum PanelTypeEnum {
+public enum PanelCentralEnums {
     // --- Group 2: Panel Key Variables ---
     MAIN_LOGIN_PANEL("MAIN_LOGIN_PANEL"),
     DEFAULT_PASSWORD_CHANGE_USER_PANEL("DEFAULT_PASSWORD_CHANGE_USER_PANEL"), 
@@ -10,7 +10,7 @@ enum PanelTypeEnum {
 
     private final String panelName;
 
-    private PanelTypeEnum(String panelName) {
+    private PanelCentralEnums(String panelName) {
         this.panelName = panelName;
     }
 
