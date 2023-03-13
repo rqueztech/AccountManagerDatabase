@@ -15,9 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.rqueztech.ui.PanelCentral;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-
 public class UserCentralPanel extends JPanel {
 	
 	/**
@@ -28,6 +25,16 @@ public class UserCentralPanel extends JPanel {
 	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
+
+	private final int TOP_INSET = 0;
+	private final int LEFT_INSET = 0;
+	private final int BOTTOM_INSET = 2;
+	private final int RIGHT_INSET = 0;
+	private final int GRID_X = 0;
+	private final int GRID_Y = 0;
+	private final int GRID_Y_INCREMENT = 1;
+	private final int TEXTFIELD_LENGTH = 15;
+	
 	private HashMap <String, JComponent> components;
 	
 	public UserCentralPanel(JFrame frame) {
@@ -45,9 +52,9 @@ public class UserCentralPanel extends JPanel {
 	}
 	
 	public void setUserCentralComponents() {
-		this.grid.insets = new Insets(0, 0, 2, 0);
-		this.grid.gridx = 0;
-		this.grid.gridy = 0;
+		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
+		this.grid.gridx = GRID_X;
+		this.grid.gridy = GRID_Y;
 				
 		this.addRightButton("Balance", 0);
 		this.addLeftButton("Add", 1);

@@ -27,6 +27,16 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
+
+	private final int TOP_INSET = 0;
+	private final int LEFT_INSET = 0;
+	private final int BOTTOM_INSET = 2;
+	private final int RIGHT_INSET = 0;
+	private final int GRID_X = 0;
+	private final int GRID_Y = 0;
+	private final int GRID_Y_INCREMENT = 1;
+	private final int TEXTFIELD_LENGTH = 15;
+	
 	private HashMap <String, JComponent> components;
 	
 	public UserChangeDefaultPasswordPanel(JFrame frame) {
@@ -39,23 +49,23 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.frame.add(this);
 		
 		SwingUtilities.invokeLater(() -> {
-			this.grid.insets = new Insets(0, 0, 2, 0);
+			this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
 			this.grid.gridx = 0;
 			this.grid.gridy = 0;
 			
 			this.addLabel("EnterNewPassword", 0);
-			this.addTextField("EnterNewPassword", 0, 15);
+			this.addTextField("EnterNewPassword", 0);
 			
 			this.addLabel("ConfirmNewPassword",0);
-			this.addTextField("ConfirmNewPassword", 0, 15);
+			this.addTextField("ConfirmNewPassword", 0);
 			
 			this.addLeftButton("Cancel", 0);
 			this.addRightButton("Submit", 1);
 		});
 	}
 	
-	private void addTextField(String textFieldName, int xCoordinate, int size) {
-		JTextField textField = new JTextField(size); // Set Object (textfield) to size
+	private void addTextField(String textFieldName, int xCoordinate) {
+		JTextField textField = new JTextField(TEXTFIELD_LENGTH); // Set Object (textfield) to size
 		textField.setForeground(Color.BLACK); // Set the color
 		
 		this.grid.gridwidth = 2;
@@ -65,7 +75,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.components.put(textFieldName, textField);
 		
 		this.add(textField, this.grid); // Add to the current grid
-		this.grid.gridy += 1; // Append by one for the next element in use
+		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
 	}
 	
 	private void addLabel(String labelName, int xCoordinate) {
@@ -79,7 +89,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.components.put(labelName, label);
 		
 		this.add(label, this.grid);
-		this.grid.gridy += 1;
+		this.grid.gridy += GRID_Y_INCREMENT;
 	}
 	
 	private void addLeftButton(String leftButtonName, int xCoordinate) {

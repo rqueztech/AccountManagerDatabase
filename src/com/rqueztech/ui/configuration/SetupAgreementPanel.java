@@ -1,6 +1,7 @@
 package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,6 +24,16 @@ public class SetupAgreementPanel extends JPanel {
 	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
+
+	// --- Magic Numbers ---
+	private final int TOP_INSET = 0;
+	private final int LEFT_INSET = 0;
+	private final int BOTTOM_INSET = 2;
+	private final int RIGHT_INSET = 0;
+	private final int GRID_X = 0;
+	private final int GRID_Y = 0;
+	private final int GRID_Y_INCREMENT = 1;
+	private final int TEXTFIELD_LENGTH = 15;
 	
 	// --- Group 2: Panel Map ---
 	private HashMap <String, JComponent> components;
@@ -34,6 +45,9 @@ public class SetupAgreementPanel extends JPanel {
 		
 		this.frame = frame;
 		this.image = new ImageIcon("background.jpg").getImage();
+		
+		this.setPreferredSize(new Dimension(600, 600));
+		
 		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
@@ -44,13 +58,13 @@ public class SetupAgreementPanel extends JPanel {
 	
 	// --- Group 3: Component Calls (Add Into Panel)
 	private void setMainLoginComponents() {
-		this.grid.insets = new Insets(0, 0, 2, 0);
-		this.grid.gridx = 0;
-		this.grid.gridy = 0;
+		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
+		this.grid.gridx = GRID_X;
+		this.grid.gridy = GRID_Y;
 		
 		// -> User/Admin Buttons. Individual row.
-		this.addLabel("Welcome To Initial Configuraion", 0);
-		this.addAgreementButton("Start Configuration", 0);
+		this.addLabel("Welcome To Initial Configuraion", GRID_X);
+		this.addAgreementButton("Start Configuration", GRID_X);
 	}
 	
 	private void addLabel(String labelName, int xCoordinate) {
@@ -64,7 +78,7 @@ public class SetupAgreementPanel extends JPanel {
 		this.components.put(labelName, label);
 		
 		this.add(label, this.grid);
-		this.grid.gridy += 1;
+		this.grid.gridy += GRID_Y_INCREMENT;
 	}
 	
 	private void addAgreementButton(String leftButtonName, int xCoordinate) {
