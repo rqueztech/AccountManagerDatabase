@@ -39,7 +39,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.frame.add(this);
 		
 		SwingUtilities.invokeLater(() -> {
-			this.grid.insets = new Insets(0, 0, 0, 0);
+			this.grid.insets = new Insets(0, 0, 2, 0);
 			this.grid.gridx = 0;
 			this.grid.gridy = 0;
 			
@@ -56,7 +56,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	private void addTextField(String textFieldName, int xCoordinate, int size) {
 		JTextField textField = new JTextField(size); // Set Object (textfield) to size
-		textField.setForeground(Color.WHITE); // Set the color
+		textField.setForeground(Color.BLACK); // Set the color
 		
 		this.grid.gridwidth = 2;
 		this.grid.gridx = xCoordinate;
@@ -64,7 +64,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(textFieldName, textField);
 		
-		this.add(textField, grid); // Add to the current grid
+		this.add(textField, this.grid); // Add to the current grid
 		this.grid.gridy += 1; // Append by one for the next element in use
 	}
 	
@@ -78,7 +78,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(labelName, label);
 		
-		this.add(label, grid);
+		this.add(label, this.grid);
 		this.grid.gridy += 1;
 	}
 	
@@ -94,7 +94,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(leftButtonName, leftButton);
 		
-		this.add(leftButton, grid);
+		this.add(leftButton, this.grid);
 	}
 	
 	private void addRightButton(String rightButtonName, int xCoordinate) {
@@ -109,12 +109,12 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(rightButtonName, rightButton);
 		
-		this.add(rightButton, grid);
+		this.add(rightButton, this.grid);
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-		g.drawImage(image, 0, 0, null);
+		g.drawImage(this.image, 0, 0, null);
 	}
 }

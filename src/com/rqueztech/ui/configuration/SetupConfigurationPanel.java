@@ -1,4 +1,4 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,10 +14,11 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class MainLoginPanel extends JPanel {
+public class SetupConfigurationPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
@@ -28,13 +29,13 @@ public class MainLoginPanel extends JPanel {
 	// --- Group 2: Panel Map ---
 	private HashMap <String, JComponent> components;
 	
-	public MainLoginPanel(JFrame frame) {
+	public SetupConfigurationPanel(JFrame frame) {
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
-		this.image = new ImageIcon("backgroundd.jpg").getImage();
+		this.image = new ImageIcon("background.jpg").getImage();
 		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
@@ -49,17 +50,30 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridx = 0;
 		this.grid.gridy = 0;
 		
-		// -> Username Rows. Username label/password
-		this.addLabel("UserName", 0);
-		this.addTextField("UserNameEntry", 0, 15);
+		// -> FirstName Rows. FirstName label/password
+		this.addLabel("FirstName", 0);
+		this.addTextField("FirstNameEntry", 0, 15);
+		
+		// -> LastName Rows. LastName label/password
+		this.addLabel("LastName",0);
+		this.addTextField("LastNameEntry", 0, 15);
 		
 		// -> Password Rows. Password label/password
 		this.addLabel("Password",0);
-		this.addTextField("PasswordEntry", 0, 15);
+		this.addPasswordField("PasswordEntry", 0, 15);
+		
+		// -> ConfirmPassword Rows. ConfirmPassword label/password
+		this.addLabel("ConfirmPassword",0);
+		this.addPasswordField("ConfirmPasswordEntry", 0, 15);
+		
+		// -> PassphraseEntry Rows. PassphraseEntry label/password
+		this.addLabel("PassphraseEntry",0);
+		this.addPasswordField("PassphraseEntryEntry", 0, 15);
 		
 		// -> User/Admin Buttons. Individual row.
-		this.addRightButton("User", 0);
-		this.addLeftButton("Admin", 1);
+		this.addLeftButton("Cancel", 0);
+		this.addRightButton("Submit", 1);
+		
 	}
 	
 	// --- Group 4: Panel Components ---
@@ -74,6 +88,20 @@ public class MainLoginPanel extends JPanel {
 		this.components.put(textFieldName, textField);
 		
 		this.add(textField, this.grid); // Add to the current grid
+		this.grid.gridy += 1; // Append by one for the next element in use
+	}
+	
+	private void addPasswordField(String passwordFieldName, int xCoordinate, int size) {
+		JPasswordField passwordField = new JPasswordField(size); // Set Object (passwordfield) to size
+		passwordField.setForeground(Color.BLACK); // Set the color
+		
+		this.grid.gridwidth = 2;
+		this.grid.gridx = xCoordinate;
+		this.grid.anchor = GridBagConstraints.WEST;
+		this.grid.fill = GridBagConstraints.HORIZONTAL;
+		this.components.put(passwordFieldName, passwordField);
+		
+		this.add(passwordField, this.grid); // Add to the current grid
 		this.grid.gridy += 1; // Append by one for the next element in use
 	}
 	

@@ -1,49 +1,55 @@
+/**
+This class represents the central panel containing all the other panels using CardLayout.
+It extends JFrame and contains a HashMap of all the panels as well as an image to be used as the background.
+*/
+
 package com.rqueztech.ui;
 
+import java.awt.CardLayout;
 import java.awt.Image;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.configuration.SetupAgreementPanel;
+import com.rqueztech.ui.configuration.SetupConfigurationPanel;
+import com.rqueztech.ui.user.UserCentralPanel;
 import com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
 
 public class PanelCentral extends JFrame {
 	
-	// --- Group 1: Panel Related Variables ---
 	private static final long serialVersionUID = -652692111395861275L;
+	
+	// --- Frame Size ---
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 600;
 	
+	// --- 
 	public Image image;
+	private JPanel cards;
 	
-	// --- Group 2: Panel Key Variables ---
-	private final String MAIN_LOGIN_PANEL = "MAIN_LOGIN_PANEL";
-	private final String USER_PASSWORD_REENTRY_PANEL = "USER_PASSWORD_REENTRY_PANEL"; 
-	
-	private String currentPanel;
-	
-	// --- Group 3: Panel Selector Map ---
-	private HashMap <String, JPanel> panelSelector
-		= new HashMap <String, JPanel>();
 	
 	public PanelCentral() {
-		// TODO Auto-generated constructor stub
-		this.panelSelector.put(MAIN_LOGIN_PANEL, new MainLoginPanel(this)); // this = Current JFrame instance
-		this.add(this.panelSelector.get(MAIN_LOGIN_PANEL));
 		
-		this.panelSelector.put(USER_PASSWORD_REENTRY_PANEL, new UserChangeDefaultPasswordPanel(this)); // this = Current JFrame instance
-		this.add(this.panelSelector.get(USER_PASSWORD_REENTRY_PANEL));
+		// Create all panels and add them to the card layout
+		this.createAllPanels();
 		
-		//this.setInitialPanel();
-		
-		this.panelSelector.get(USER_PASSWORD_REENTRY_PANEL);
 		isInvokeGUI();
-		
+		CardLayout cl = (CardLayout)(cards.getLayout());
+		cl.show(cards, PanelTypeEnum.SETUP_AGREEMENT_PANEL.toString());
 	}
 	
-	private void setInitialPanel() {
+	public void createAllPanels() {
+	    cards = new JPanel(new CardLayout());
+
+	    cards.add(new MainLoginPanel(this), PanelTypeEnum.MAIN_LOGIN_PANEL.toString());
+	    cards.add(new UserChangeDefaultPasswordPanel(this), PanelTypeEnum.DEFAULT_PASSWORD_CHANGE_USER_PANEL.toString());
+	    cards.add(new UserCentralPanel(this), PanelTypeEnum.USER_CENTRAL_PANEL.toString());
+	    cards.add(new SetupConfigurationPanel(this), PanelTypeEnum.SETUP_CONFIGURATION_PANEL.toString());
+	    cards.add(new SetupAgreementPanel(this), PanelTypeEnum.SETUP_AGREEMENT_PANEL.toString());
+
+	    this.add(cards);
 	}
 	
 	// --- Group 4: GUI Setup Methods ---
@@ -53,29 +59,5 @@ public class PanelCentral extends JFrame {
 		this.setTitle("Database Project");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-	}
-	
-	// --- Group 5: Accessor Methods ---
-	public HashMap<String, JPanel> getHashMap() {
-		return this.panelSelector;
-	}
-	
-	private String initialPanel() {
-		if(true) {
-			this.currentPanel = "MAIN_LOGIN_PANEL";
-		}
-		
-		return this.currentPanel;
-	}
-	
-	public void showPanel(String panelName) {
-		JPanel newPanel = panelSelector.get(panelName);
-		String currentPanel = this.currentPanel;
-		
-		if(newPanel != null && panelName != currentPanel) {
-			this.panelSelector.get(this.currentPanel).setVisible(false);
-			this.currentPanel = panelName;
-			this.panelSelector.get(this.currentPanel).setVisible(true);
-		}
 	}
 }

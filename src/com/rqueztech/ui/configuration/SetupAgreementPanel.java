@@ -1,4 +1,4 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,10 +14,11 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class MainLoginPanel extends JPanel {
+public class SetupAgreementPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
@@ -28,13 +29,13 @@ public class MainLoginPanel extends JPanel {
 	// --- Group 2: Panel Map ---
 	private HashMap <String, JComponent> components;
 	
-	public MainLoginPanel(JFrame frame) {
+	public SetupAgreementPanel(JFrame frame) {
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
-		this.image = new ImageIcon("backgroundd.jpg").getImage();
+		this.image = new ImageIcon("background.jpg").getImage();
 		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
@@ -49,32 +50,9 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridx = 0;
 		this.grid.gridy = 0;
 		
-		// -> Username Rows. Username label/password
-		this.addLabel("UserName", 0);
-		this.addTextField("UserNameEntry", 0, 15);
-		
-		// -> Password Rows. Password label/password
-		this.addLabel("Password",0);
-		this.addTextField("PasswordEntry", 0, 15);
-		
 		// -> User/Admin Buttons. Individual row.
-		this.addRightButton("User", 0);
-		this.addLeftButton("Admin", 1);
-	}
-	
-	// --- Group 4: Panel Components ---
-	private void addTextField(String textFieldName, int xCoordinate, int size) {
-		JTextField textField = new JTextField(size); // Set Object (textfield) to size
-		textField.setForeground(Color.BLACK); // Set the color
-		
-		this.grid.gridwidth = 2;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(textFieldName, textField);
-		
-		this.add(textField, this.grid); // Add to the current grid
-		this.grid.gridy += 1; // Append by one for the next element in use
+		this.addLabel("Welcome To Initial Configuraion", 0);
+		this.addAgreementButton("Start Configuration", 0);
 	}
 	
 	private void addLabel(String labelName, int xCoordinate) {
@@ -91,33 +69,19 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridy += 1;
 	}
 	
-	private void addLeftButton(String leftButtonName, int xCoordinate) {
+	private void addAgreementButton(String leftButtonName, int xCoordinate) {
 		JButton leftButton = new JButton(leftButtonName);
 		
 		leftButton.setForeground(Color.GRAY);
 		leftButton.setBackground(Color.BLACK);
 		
-		this.grid.gridwidth = 1;
+		this.grid.gridwidth = 2;
 		this.grid.gridx = xCoordinate;
 		this.grid.anchor = GridBagConstraints.WEST;
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(leftButtonName, leftButton);
 		
 		this.add(leftButton, this.grid);
-	}
-	
-	private void addRightButton(String rightButtonName, int xCoordinate) {
-		JButton rightButton = new JButton(rightButtonName);
-		rightButton.setForeground(Color.GRAY);
-		rightButton.setBackground(Color.BLACK);
-		
-		this.grid.gridwidth = 1;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.EAST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(rightButtonName, rightButton);
-		
-		this.add(rightButton, this.grid);
 	}
 	
 	@Override
