@@ -21,6 +21,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.events.TogglePasswordVisibility;
+
 public class MainLoginPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
@@ -38,6 +40,18 @@ public class MainLoginPanel extends JPanel {
 	private final int GRID_Y_INCREMENT = 1;
 	private final int TEXTFIELD_LENGTH = 15;
 	
+	
+	
+	private final String USERNAME_LABEL = "Enter Username";
+	private final String USERNAME_FIELD = "USERNAME_FIELD";
+	private final String VISIBILITY_BUTTON = "Visible";
+	private final String PASSWORD_LABEL = "Enter Password";
+	private final String PASSWORD_FIELD = "PASSWORD_FIELD";
+	private final String USER_BUTTON = "User";
+	private final String ADMIN_BUTTON = "Admin";
+	
+	private TogglePasswordVisibility togglePasswordVisibility;
+	
 	private int newYValue = 0;
 	
 	// --- Group 2: Panel Map ---
@@ -47,6 +61,8 @@ public class MainLoginPanel extends JPanel {
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
+		
+		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		this.frame = frame;
 		this.grid.anchor = GridBagConstraints.BOTH;
@@ -58,9 +74,20 @@ public class MainLoginPanel extends JPanel {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
 			this.setMainLoginComponents();
+			passwordVisibility();
 		});
 		
 		this.frame.add(this);
+	}
+	
+	public void passwordVisibility() {
+		System.out.println(this.components);
+		JButton visibilityButton = (JButton) this.components.get(VISIBILITY_BUTTON);
+		
+		visibilityButton.addActionListener(e -> {
+			JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_FIELD);
+			this.togglePasswordVisibility.passwordToggler(passwordField);
+		});
 	}
 	
 	// --- Group 3: Component Calls (Add Into Panel)
@@ -70,17 +97,20 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridy = GRID_Y;
 		
 		// -> Username Rows. Username label/password
-		this.addLabel("UserName", GRID_X);
-		this.addTextField("UserNameEntry", GRID_X);
+		this.addLabel(USERNAME_LABEL, GRID_X);
+		this.addTextField(USERNAME_FIELD, GRID_X);
+		this.grid.gridy += 1;
+		this.addRightButton(VISIBILITY_BUTTON, GRID_X + 3);
+		this.grid.gridy -= 1;
 		
 		// -> Password Rows. Password label/password
-		this.addLabel("Password",GRID_X);
+		this.addLabel(PASSWORD_LABEL,GRID_X);
 		
-		this.addPasswordField("PasswordEntry", GRID_X);
+		this.addPasswordField(PASSWORD_FIELD, GRID_X);
 		
 		// -> User/Admin Buttons. Individual row.
-		this.addRightButton("User", GRID_X);
-		this.addLeftButton("Admin", GRID_X + 1);
+		this.addRightButton(USER_BUTTON, GRID_X);
+		this.addLeftButton(ADMIN_BUTTON, GRID_X + 1);
 	}
 	
 	// --- Group 4: Panel Components ---
@@ -152,6 +182,7 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridx = xCoordinate;
 		this.grid.anchor = GridBagConstraints.EAST;
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
+		System.out.println(rightButtonName);
 		this.components.put(rightButtonName, rightButton);
 		
 		this.add(rightButton, this.grid);

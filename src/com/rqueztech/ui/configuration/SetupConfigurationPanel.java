@@ -51,7 +51,7 @@ public class SetupConfigurationPanel extends JPanel {
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
-		this.image = new ImageIcon("background.jpg").getImage();
+		this.image = new ImageIcon("backgroundd.jpg").getImage();
 		this.setPreferredSize(new Dimension(600, 600));
 		this.frame.add(this);
 		

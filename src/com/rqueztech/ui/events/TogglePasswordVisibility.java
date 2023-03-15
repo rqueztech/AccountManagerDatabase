@@ -1,6 +1,5 @@
 package com.rqueztech.ui.events;
 
-import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
 public class TogglePasswordVisibility {

@@ -130,8 +130,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 			this.setXMiddle();
 			this.addRightButton(this.SUBMIT_BUTTON);
 			
-			this.newPasswordButton();
-			this.confirmNewPasswordButton();
+			this.newPasswordVisibility();
+			this.confirmNewPasswordVisibility();
 			
 			// Initialize the two document listeners
 			this.newPasswordValidator(); //New Password Document Listener
@@ -153,7 +153,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		passwordField.getDocument().addDocumentListener(new PasswordDocumentListener(passwordField, confirmButton));
 	}
 		
-	public void newPasswordButton() {
+	public void newPasswordVisibility() {
 		JButton newPasswordButton = (JButton) this.components.get(NEWPASSWORD_BUTTON);
 		
 		newPasswordButton.addActionListener(e -> {
@@ -162,7 +162,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		});
 	}
 	
-	public void confirmNewPasswordButton() {
+	public void confirmNewPasswordVisibility() {
 		JButton confirmNewPasswordButton = (JButton) this.components.get(CONFIRM_NEWPASSWORD_BUTTON);
 		
 		confirmNewPasswordButton.addActionListener(e -> {
