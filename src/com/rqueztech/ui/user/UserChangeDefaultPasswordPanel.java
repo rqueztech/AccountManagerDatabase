@@ -19,10 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
-import com.rqueztech.ui.DocumentListenerAdapter;
+import com.rqueztech.ui.PasswordDocumentListener;
+import com.rqueztech.ui.TogglePasswordVisibility;
 import com.rqueztech.ui.validation.InputValidations;
 
 public class UserChangeDefaultPasswordPanel extends JPanel {
@@ -36,29 +35,35 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private Image image;
 	private GridBagConstraints grid;
 	
-	// Set integers for all parameters to prevent magic numbers throughout the code (for clarity)
+	// --- Group 2: Constants (to prevent magic numbers)
+	// Inset variables
 	private final int TOP_INSET = 0;
 	private final int LEFT_INSET = 0;
 	private final int BOTTOM_INSET = 2;
 	private final int RIGHT_INSET = 0;
+	
+	// Grid coordinate predefinitions
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	private final int GRID_Y_INCREMENT = 1;
 	private final int GRID_X_INCREMENT = 1;
 	private int GRID_Y_CURRENT = 0;
 	private int GRID_X_CURRENT = 0;
+	private final int GRID_X_LEFT = 0;
+	private final int GRID_X_MIDDLE = 2;
+	private final int GRID_X_RIGHT = 3;
+	
+	// Textfield variable
 	private final int TEXTFIELD_LENGTH = 20;
 	
-	private final int PASSWORD_PLAIN_TEXT_ASCII = 0;
-	private final int PASSWORD_ENCRYPTED_TEXT_ASCII = 8226;
-	
+	// Hashmap variable names
 	private final String DEFAULT_PASSWORD_DETECTED = "Default Password Detected";
-	private final String MUST_ENTER_NEW_PASSWORD = "Must Enter new Password";
-	private final String ENTER_NEW_PASSWORD_LABEL = "Enter New Password";
-	private final String ENTER_NEW_PASSWORD_FIELD = "Enter New Password Field";
+	private final String MUST_ENTER_NEWPASSWORD = "Must Enter new Password";
+	private final String ENTER_NEWPASSWORD_LABEL = "Enter New Password";
+	private final String ENTER_NEWPASSWORD_FIELD = "Enter New Password Field";
 	private final String NEWPASSWORD_BUTTON = "Yes 1";
-	private final String CONFIRM_NEW_PASSWORD_LABEL = "Confirm New Password";
-	private final String CONFIRM_NEW_PASSWORD_FIELD = "Confirm New Password Field";
+	private final String CONFIRM_NEWPASSWORD_LABEL = "Confirm New Password";
+	private final String CONFIRM_NEWPASSWORD_FIELD = "Confirm New Password Field";
 	private final String CONFIRM_NEWPASSWORD_BUTTON = "Yes 2";
 	private final String CANCEL_BUTTON = "Cancel";
 	private final String SUBMIT_BUTTON = "Submit";
@@ -67,10 +72,13 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private HashMap <String, JComponent> components;
 	
 	public InputValidations inputValidations;
+	public PasswordDocumentListener passwordDocumentListener;
+	public TogglePasswordVisibility togglePasswordVisibility;
 	
 	public UserChangeDefaultPasswordPanel(JFrame frame, InputValidations inputValidations) {
 		
 		this.inputValidations = new InputValidations();
+		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
@@ -91,27 +99,27 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 			this.addLabel(this.DEFAULT_PASSWORD_DETECTED);
 			
 			this.setIncreaseY();
-			this.addLabel(this.MUST_ENTER_NEW_PASSWORD);
+			this.addLabel(this.MUST_ENTER_NEWPASSWORD);
 			
 			this.setIncreaseY();
 			this.setXLeft();
 			this.addLeftButton(this.PASSWORDS_MATCH);
 			
 			this.setIncreaseY();
-			this.addLabel(this.ENTER_NEW_PASSWORD_LABEL);
+			this.addLabel(this.ENTER_NEWPASSWORD_LABEL);
 			
 			this.setIncreaseY();
-			this.addPasswordField(this.ENTER_NEW_PASSWORD_FIELD);
+			this.addPasswordField(this.ENTER_NEWPASSWORD_FIELD);
 			
 			this.setXRight();
 			this.addRightButton(this.NEWPASSWORD_BUTTON);
 			
 			this.setXLeft();
 			this.setIncreaseY();
-			this.addLabel(this.CONFIRM_NEW_PASSWORD_LABEL);
+			this.addLabel(this.CONFIRM_NEWPASSWORD_LABEL);
 			
 			this.setIncreaseY();
-			this.addPasswordField(this.CONFIRM_NEW_PASSWORD_FIELD);
+			this.addPasswordField(this.CONFIRM_NEWPASSWORD_FIELD);
 			
 			this.setXRight();
 			this.addRightButton(this.CONFIRM_NEWPASSWORD_BUTTON);
@@ -123,34 +131,64 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 			this.setXMiddle();
 			this.addRightButton(this.SUBMIT_BUTTON);
 			
-			this.newPasswordValidator();
-			this.confirmNewPasswordValidator();
+			this.yes1Button();
+			this.yes2Button();
 			
-			JButton yes1Button = (JButton) this.components.get(NEWPASSWORD_BUTTON);
-			yes1Button.addActionListener(e -> {
-				JPasswordField newPassword = (JPasswordField) this.components.get(this.ENTER_NEW_PASSWORD_FIELD);
-			    char currentEchoChar = newPassword.getEchoChar();
-			    if(currentEchoChar == (char) PASSWORD_ENCRYPTED_TEXT_ASCII) {
-			        newPassword.setEchoChar((char) PASSWORD_PLAIN_TEXT_ASCII);
-			    } else {
-			        newPassword.setEchoChar((char) PASSWORD_ENCRYPTED_TEXT_ASCII);
-			    }
-
-			});
-			
-			JButton yes2Button = (JButton) this.components.get(CONFIRM_NEWPASSWORD_BUTTON);
-			yes2Button.addActionListener(e -> {
-				JPasswordField confirmPassword = (JPasswordField) this.components.get(this.CONFIRM_NEW_PASSWORD_FIELD);
-				char currentEchoChar = confirmPassword.getEchoChar();
-				if(currentEchoChar == (char) PASSWORD_ENCRYPTED_TEXT_ASCII) {
-				    confirmPassword.setEchoChar((char) PASSWORD_PLAIN_TEXT_ASCII);
-				} else {
-				    confirmPassword.setEchoChar((char) PASSWORD_ENCRYPTED_TEXT_ASCII);
-				}
-
-			});
+			// Initialize the two document listeners
+			this.newPasswordValidator(); //New Password Document Listener
+			this.confirmPasswordValidator(); //Confirm Password Document Listener
 		});
 	}
+	
+	public void newPasswordValidator() {
+		JButton newButton = (JButton) this.components.get(this.NEWPASSWORD_BUTTON);
+		
+		JPasswordField passwordField = (JPasswordField) this.components.get(this.ENTER_NEWPASSWORD_FIELD);
+		passwordField.getDocument().addDocumentListener(new PasswordDocumentListener(passwordField, newButton));
+	}
+	
+	public void confirmPasswordValidator() {
+		JButton confirmButton = (JButton) this.components.get(this.CONFIRM_NEWPASSWORD_BUTTON);
+		
+		JPasswordField passwordField = (JPasswordField) this.components.get(this.CONFIRM_NEWPASSWORD_FIELD);
+		passwordField.getDocument().addDocumentListener(new PasswordDocumentListener(passwordField, confirmButton));
+	}
+		
+	public void yes1Button() {
+		JButton yes1Button = (JButton) this.components.get(NEWPASSWORD_BUTTON);
+		
+		yes1Button.addActionListener(e -> {
+			JPasswordField yes1PasswordField = (JPasswordField) this.components.get(ENTER_NEWPASSWORD_FIELD);
+			this.togglePasswordVisibility.passwordToggler(yes1PasswordField);
+		});
+	}
+	
+	public void yes2Button() {
+		JButton yes2Button = (JButton) this.components.get(CONFIRM_NEWPASSWORD_BUTTON);
+		
+		yes2Button.addActionListener(e -> {
+			JPasswordField yes2PasswordField = (JPasswordField) this.components.get(CONFIRM_NEWPASSWORD_FIELD);	
+			this.togglePasswordVisibility.passwordToggler(yes2PasswordField);
+		});
+	}
+	
+	
+	public void setXLeft() {
+		this.grid.gridx = GRID_X_LEFT;
+	}
+	
+	public void setXMiddle() {
+		this.grid.gridx += GRID_X_MIDDLE;
+	}
+
+	public void setXRight() {
+		this.grid.gridx += GRID_X_RIGHT;
+	}
+	
+	public void setIncreaseY() {
+		this.grid.gridy += GRID_Y_INCREMENT;
+	}
+	
 	
 	private void addPasswordField(String newPasswordName) {
 		JPasswordField newPassword = new JPasswordField(TEXTFIELD_LENGTH); // Set Object (passwordfield) to size
@@ -208,103 +246,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.add(rightButton, this.grid);
 	}
 	
-	public void newPasswordValidator() {
-		JPasswordField newPassword = (JPasswordField) this.components.get(this.ENTER_NEW_PASSWORD_FIELD);
-		
-		newPassword.getDocument().addDocumentListener(new DocumentListenerAdapter() {
-			
-			public void updateButton() {
-				String NEWPASSWORD_BUTTON = UserChangeDefaultPasswordPanel.this.NEWPASSWORD_BUTTON;
-				
-				// TODO Auto-generated method stub
-				if(UserChangeDefaultPasswordPanel.this.inputValidations.validatePassword(newPassword.getPassword())) {
-					UserChangeDefaultPasswordPanel.this.components.get(NEWPASSWORD_BUTTON).setBackground(Color.GREEN);
-				}
-				
-				else {
-					UserChangeDefaultPasswordPanel.this.components.get(NEWPASSWORD_BUTTON).setBackground(Color.RED);
-				}
-			}
-			
-			public void resetButton() {
-				if(newPassword.getPassword().length == 0) {
-					UserChangeDefaultPasswordPanel.this.components.get(NEWPASSWORD_BUTTON).setBackground(Color.BLACK);
-				}
-			}
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				resetButton();
-			}
-			
-			// Document listener 
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				updateButton();
-			}
-		});
-	}
-	
-	public void confirmNewPasswordValidator() {
-		JPasswordField confirmNewPassword = (JPasswordField) this.components.get(this.CONFIRM_NEW_PASSWORD_FIELD);
-		
-		confirmNewPassword.getDocument().addDocumentListener(new DocumentListener() {
-			
-			public void updateButton() {
-				String CONFIRM_NEWPASSWORD_BUTTON = UserChangeDefaultPasswordPanel.this.CONFIRM_NEWPASSWORD_BUTTON;
-				
-				// TODO Auto-generated method stub
-				if(UserChangeDefaultPasswordPanel.this.inputValidations.validatePassword(confirmNewPassword.getPassword())) {
-					UserChangeDefaultPasswordPanel.this.components.get(CONFIRM_NEWPASSWORD_BUTTON).setBackground(Color.GREEN);
-				}
-				
-				else {
-					UserChangeDefaultPasswordPanel.this.components.get(CONFIRM_NEWPASSWORD_BUTTON).setBackground(Color.RED);
-				}
-			}
-			
-			public void resetButton() {
-				if(confirmNewPassword.getPassword().length == 0) {
-					UserChangeDefaultPasswordPanel.this.components.get(CONFIRM_NEWPASSWORD_BUTTON).setBackground(Color.BLACK);
-				}
-			}
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				resetButton();
-			}
-			
-			// Document listener 
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				updateButton();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-			}
-		});
-	}
-	
-	public void setXLeft() {
-		this.grid.gridx = GRID_X_INITIAL;
-	}
-	
-	public void setXMiddle() {
-		this.grid.gridx += GRID_X_INCREMENT;
-	}
-
-	public void setXRight() {
-		this.grid.gridx += GRID_X_INCREMENT + 2;
-	}
-	
-	public void setIncreaseY() {
-		this.grid.gridy += GRID_Y_INCREMENT;
-	}
-	
+	// Getter to retrieve components from the components hashmap.
+	// Components include textfields, labels, and buttons used in program
 	public JComponent getComponents(String key) {
 		return components.get(key);
 	}
