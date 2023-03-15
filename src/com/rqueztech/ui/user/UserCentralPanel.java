@@ -41,16 +41,16 @@ public class UserCentralPanel extends JPanel {
 	private HashMap <String, JComponent> components;
 	
 	public UserCentralPanel(JFrame frame) {
-		this.components = new HashMap <String, JComponent> ();
-		this.setLayout(new GridBagLayout());
-		this.grid = new GridBagConstraints();
-		
-		this.frame = frame;
-		this.image = new ImageIcon("backgroundd.jpg").getImage();
-		this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-		this.frame.add(this);
-		
 		SwingUtilities.invokeLater(() -> {
+			this.components = new HashMap <String, JComponent> ();
+			this.setLayout(new GridBagLayout());
+			this.grid = new GridBagConstraints();
+			
+			this.frame = frame;
+			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+			this.frame.add(this);
+			
 			this.setUserCentralComponents();
 		});
 	}

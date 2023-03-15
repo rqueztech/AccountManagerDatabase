@@ -7,10 +7,10 @@ package com.rqueztech.ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.configuration.SetupAgreementPanel;
 import com.rqueztech.ui.configuration.SetupConfigurationPanel;
@@ -40,13 +40,15 @@ public class PanelCentral extends JPanel {
 		this.setBackground(Color.black);
 		this.createAllPanels();
 		
+		SwingUtilities.invokeLater(() -> {
+			// Show the SetupAgreementPanel by default
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, PanelCentralEnums.MAIN_LOGIN_PANEL.toString());
+		});
+		
 		// Add this panel to the BaseFrame object
 		frame.addPanel(this);
 		frame.setVisible(true);
-		
-		// Show the SetupAgreementPanel by default
-		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, PanelCentralEnums.MAIN_LOGIN_PANEL.toString());
 	}
 	
 	// Create all panels to be 	

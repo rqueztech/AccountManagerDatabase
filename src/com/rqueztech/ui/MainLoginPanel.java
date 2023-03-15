@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -74,10 +75,16 @@ public class MainLoginPanel extends JPanel {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
 			this.setMainLoginComponents();
-			passwordVisibility();
+			this.callActionListeners();
 		});
 		
 		this.frame.add(this);
+	}
+	
+	// --- Group: Action Listeners -> All button functionalities
+	public void callActionListeners() {
+		passwordVisibility();
+		adminButton();
 	}
 	
 	public void passwordVisibility() {
@@ -87,6 +94,14 @@ public class MainLoginPanel extends JPanel {
 		visibilityButton.addActionListener(e -> {
 			JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_FIELD);
 			this.togglePasswordVisibility.passwordToggler(passwordField);
+		});
+	}
+	
+	public void adminButton() {
+		JButton admin = (JButton) this.components.get(ADMIN_BUTTON);
+		
+		admin.addActionListener(e -> {
+			JOptionPane.showMessageDialog(null, "Clicked Admin");
 		});
 	}
 	
