@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
-import com.rqueztech.ui.PasswordDocumentListener;
-import com.rqueztech.ui.TogglePasswordVisibility;
+import com.rqueztech.ui.events.PasswordDocumentListener;
+import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.validation.InputValidations;
 
 public class UserChangeDefaultPasswordPanel extends JPanel {
@@ -37,10 +37,10 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	// --- Group 2: Constants (to prevent magic numbers)
 	// Inset variables
-	private final int TOP_INSET = 0;
-	private final int LEFT_INSET = 0;
-	private final int BOTTOM_INSET = 2;
-	private final int RIGHT_INSET = 0;
+	private final int TOP_INSET = 1;
+	private final int LEFT_INSET = 5;
+	private final int BOTTOM_INSET = 1;
+	private final int RIGHT_INSET = 5;
 	
 	// Grid coordinate predefinitions
 	private final int GRID_X_INITIAL = 0;
@@ -61,10 +61,10 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final String MUST_ENTER_NEWPASSWORD = "Must Enter new Password";
 	private final String ENTER_NEWPASSWORD_LABEL = "Enter New Password";
 	private final String ENTER_NEWPASSWORD_FIELD = "Enter New Password Field";
-	private final String NEWPASSWORD_BUTTON = "Yes 1";
+	private final String NEWPASSWORD_BUTTON = "View1";
 	private final String CONFIRM_NEWPASSWORD_LABEL = "Confirm New Password";
 	private final String CONFIRM_NEWPASSWORD_FIELD = "Confirm New Password Field";
-	private final String CONFIRM_NEWPASSWORD_BUTTON = "Yes 2";
+	private final String CONFIRM_NEWPASSWORD_BUTTON = "View2";
 	private final String CANCEL_BUTTON = "Cancel";
 	private final String SUBMIT_BUTTON = "Submit";
 	private final String PASSWORDS_MATCH = "Match";
@@ -91,10 +91,9 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		this.frame.add(this);
 		
 		SwingUtilities.invokeLater(() -> {
-			this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
 			this.grid.gridx = GRID_X_INITIAL;
 			this.grid.gridy = GRID_Y_INITIAL;
-			this.grid.insets = new Insets(1, 5, 1, 5);
+			this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
 			
 			this.addLabel(this.DEFAULT_PASSWORD_DETECTED);
 			
@@ -131,8 +130,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 			this.setXMiddle();
 			this.addRightButton(this.SUBMIT_BUTTON);
 			
-			this.yes1Button();
-			this.yes2Button();
+			this.newPasswordButton();
+			this.confirmNewPasswordButton();
 			
 			// Initialize the two document listeners
 			this.newPasswordValidator(); //New Password Document Listener
@@ -154,21 +153,21 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		passwordField.getDocument().addDocumentListener(new PasswordDocumentListener(passwordField, confirmButton));
 	}
 		
-	public void yes1Button() {
-		JButton yes1Button = (JButton) this.components.get(NEWPASSWORD_BUTTON);
+	public void newPasswordButton() {
+		JButton newPasswordButton = (JButton) this.components.get(NEWPASSWORD_BUTTON);
 		
-		yes1Button.addActionListener(e -> {
-			JPasswordField yes1PasswordField = (JPasswordField) this.components.get(ENTER_NEWPASSWORD_FIELD);
-			this.togglePasswordVisibility.passwordToggler(yes1PasswordField);
+		newPasswordButton.addActionListener(e -> {
+			JPasswordField newPasswordPasswordField = (JPasswordField) this.components.get(ENTER_NEWPASSWORD_FIELD);
+			this.togglePasswordVisibility.passwordToggler(newPasswordPasswordField);
 		});
 	}
 	
-	public void yes2Button() {
-		JButton yes2Button = (JButton) this.components.get(CONFIRM_NEWPASSWORD_BUTTON);
+	public void confirmNewPasswordButton() {
+		JButton confirmNewPasswordButton = (JButton) this.components.get(CONFIRM_NEWPASSWORD_BUTTON);
 		
-		yes2Button.addActionListener(e -> {
-			JPasswordField yes2PasswordField = (JPasswordField) this.components.get(CONFIRM_NEWPASSWORD_FIELD);	
-			this.togglePasswordVisibility.passwordToggler(yes2PasswordField);
+		confirmNewPasswordButton.addActionListener(e -> {
+			JPasswordField confirmNewPasswordPasswordField = (JPasswordField) this.components.get(CONFIRM_NEWPASSWORD_FIELD);	
+			this.togglePasswordVisibility.passwordToggler(confirmNewPasswordPasswordField);
 		});
 	}
 	
@@ -212,7 +211,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		
 		this.grid.gridwidth = 3;
 		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.NONE;
+		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(labelName, label);
 		
 		this.add(label, this.grid);
@@ -220,6 +219,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	private void addLeftButton(String leftButtonName) {
 		JButton leftButton = new JButton(leftButtonName);
+		
+		leftButton.setFocusable(false);
 		
 		leftButton.setForeground(Color.GRAY);
 		leftButton.setBackground(Color.BLACK);

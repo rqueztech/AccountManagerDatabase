@@ -1,4 +1,4 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.events;
 
 import java.awt.Button;
 import java.awt.Color;

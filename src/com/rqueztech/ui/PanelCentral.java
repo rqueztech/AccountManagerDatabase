@@ -46,7 +46,7 @@ public class PanelCentral extends JPanel {
 		
 		// Show the SetupAgreementPanel by default
 		CardLayout cl = (CardLayout)(cards.getLayout());
-		cl.show(cards, PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL.toString());
+		cl.show(cards, PanelCentralEnums.MAIN_LOGIN_PANEL.toString());
 	}
 	
 	// Create all panels to be 	

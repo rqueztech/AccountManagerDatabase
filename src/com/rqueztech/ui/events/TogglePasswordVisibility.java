@@ -1,4 +1,4 @@
-package com.rqueztech.ui;
+package com.rqueztech.ui.events;
 
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
