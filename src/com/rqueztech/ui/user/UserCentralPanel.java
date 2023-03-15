@@ -1,11 +1,14 @@
 package com.rqueztech.ui.user;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -44,6 +47,7 @@ public class UserCentralPanel extends JPanel {
 		
 		this.frame = frame;
 		this.image = new ImageIcon("backgroundd.jpg").getImage();
+		this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
 		this.frame.add(this);
 		
 		SwingUtilities.invokeLater(() -> {
@@ -92,7 +96,10 @@ public class UserCentralPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
+	    
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		g.drawImage(this.image, 0, 0, null);
 	}
 }

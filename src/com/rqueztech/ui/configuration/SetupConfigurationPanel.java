@@ -1,11 +1,14 @@
 package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -17,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class SetupConfigurationPanel extends JPanel {
 	
@@ -39,12 +44,15 @@ public class SetupConfigurationPanel extends JPanel {
 	private HashMap <String, JComponent> components;
 	
 	public SetupConfigurationPanel(JFrame frame) {
+		
+		
 		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
 		this.image = new ImageIcon("background.jpg").getImage();
+		this.setPreferredSize(new Dimension(600, 600));
 		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
@@ -81,7 +89,7 @@ public class SetupConfigurationPanel extends JPanel {
 		
 		// -> User/Admin Buttons. Individual row.
 		this.addLeftButton("Cancel", GRID_X);
-		this.addRightButton("Submit", 1);
+		this.addRightButton("Submit", GRID_X + 1);
 		
 	}
 	
@@ -110,6 +118,46 @@ public class SetupConfigurationPanel extends JPanel {
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(passwordFieldName, passwordField);
 		
+		passwordField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(new String(passwordField.getPassword()).equals("p")) {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
+				}
+				
+				else {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
+				}
+			}
+			
+			// Document listener 
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(new String(passwordField.getPassword()).equals("p")) {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
+				}
+				
+				else {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(new String(passwordField.getPassword()).equals("p")) {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
+				}
+				
+				else {
+					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
+				}
+			}
+		});
+				
 		this.add(passwordField, this.grid); // Add to the current grid
 		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
 	}
@@ -149,7 +197,7 @@ public class SetupConfigurationPanel extends JPanel {
 		rightButton.setBackground(Color.BLACK);
 		
 		this.grid.gridwidth = 1;
-		this.grid.gridx = xCoordinate;
+		this.grid.gridx += 1;
 		this.grid.anchor = GridBagConstraints.EAST;
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
 		this.components.put(rightButtonName, rightButton);
@@ -159,7 +207,10 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
+	    
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		g.drawImage(this.image, 0, 0, null);
 	}
 }

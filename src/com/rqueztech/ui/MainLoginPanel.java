@@ -1,11 +1,14 @@
 package com.rqueztech.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -14,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -29,10 +33,12 @@ public class MainLoginPanel extends JPanel {
 	private final int LEFT_INSET = 0;
 	private final int BOTTOM_INSET = 2;
 	private final int RIGHT_INSET = 0;
-	private final int GRID_X = 0;
-	private final int GRID_Y = 0;
+	private int GRID_X = 0;
+	private int GRID_Y = 0;
 	private final int GRID_Y_INCREMENT = 1;
 	private final int TEXTFIELD_LENGTH = 15;
+	
+	private int newYValue = 0;
 	
 	// --- Group 2: Panel Map ---
 	private HashMap <String, JComponent> components;
@@ -43,13 +49,18 @@ public class MainLoginPanel extends JPanel {
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
+		this.grid.anchor = GridBagConstraints.BOTH;
+		this.grid.anchor = GridBagConstraints.CENTER;
+		
+		this.setPreferredSize(new Dimension(600, 600));
 		this.image = new ImageIcon("backgroundd.jpg").getImage();
-		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
 			this.setMainLoginComponents();
 		});
+		
+		this.frame.add(this);
 	}
 	
 	// --- Group 3: Component Calls (Add Into Panel)
@@ -64,7 +75,8 @@ public class MainLoginPanel extends JPanel {
 		
 		// -> Password Rows. Password label/password
 		this.addLabel("Password",GRID_X);
-		this.addTextField("PasswordEntry", GRID_X);
+		
+		this.addPasswordField("PasswordEntry", GRID_X);
 		
 		// -> User/Admin Buttons. Individual row.
 		this.addRightButton("User", GRID_X);
@@ -83,6 +95,21 @@ public class MainLoginPanel extends JPanel {
 		this.components.put(textFieldName, textField);
 		
 		this.add(textField, this.grid); // Add to the current grid
+		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
+	}
+	
+	// --- Group 4: Panel Components ---
+	private void addPasswordField(String passwordFieldName, int xCoordinate) {
+		JPasswordField passwordField = new JPasswordField(TEXTFIELD_LENGTH); // Set Object (passwordfield) to size
+		passwordField.setForeground(Color.BLACK); // Set the color
+		
+		this.grid.gridwidth = 2;
+		this.grid.gridx = xCoordinate;
+		this.grid.anchor = GridBagConstraints.WEST;
+		this.grid.fill = GridBagConstraints.HORIZONTAL;
+		this.components.put(passwordFieldName, passwordField);
+		
+		this.add(passwordField, this.grid); // Add to the current grid
 		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
 	}
 	
@@ -113,6 +140,7 @@ public class MainLoginPanel extends JPanel {
 		this.components.put(leftButtonName, leftButton);
 		
 		this.add(leftButton, this.grid);
+		this.grid.gridy += GRID_Y_INCREMENT;
 	}
 	
 	private void addRightButton(String rightButtonName, int xCoordinate) {
@@ -131,7 +159,10 @@ public class MainLoginPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
+	    
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		g.drawImage(this.image, 0, 0, null);
 	}
 }

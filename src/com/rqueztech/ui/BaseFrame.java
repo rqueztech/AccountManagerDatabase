@@ -14,13 +14,12 @@ public class BaseFrame extends JFrame {
 	public static final int HEIGHT = 600;
 	
 	public BaseFrame() {
-		super();
-		
 		this.setSize(WIDTH, HEIGHT);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setTitle("Database Project");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setVisible(true);
+		
 	}
 	
 	public void addPanel(JPanel panel) {

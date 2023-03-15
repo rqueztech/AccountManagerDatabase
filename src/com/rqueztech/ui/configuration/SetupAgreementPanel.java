@@ -3,10 +3,12 @@ package com.rqueztech.ui.configuration;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -23,6 +25,7 @@ public class SetupAgreementPanel extends JPanel {
 	private static final long serialVersionUID = 1151818027338195157L;
 	private JFrame frame;
 	private Image image;
+	
 	private GridBagConstraints grid;
 
 	// --- Magic Numbers ---
@@ -44,20 +47,25 @@ public class SetupAgreementPanel extends JPanel {
 		this.grid = new GridBagConstraints();
 		
 		this.frame = frame;
-		this.image = new ImageIcon("background.jpg").getImage();
+		this.grid.anchor = GridBagConstraints.BOTH;
+		this.grid.anchor = GridBagConstraints.CENTER;
+		
 		
 		this.setPreferredSize(new Dimension(600, 600));
+		this.image = new ImageIcon("background.jpg").getImage();
 		
-		this.frame.add(this);
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
+			//this.setBackgroundImage();
 			this.setMainLoginComponents();
 		});
+		
+		this.frame.add(this);
 	}
-	
-	// --- Group 3: Component Calls (Add Into Panel)
+
 	private void setMainLoginComponents() {
+		this.grid = new GridBagConstraints();
 		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
 		this.grid.gridx = GRID_X;
 		this.grid.gridy = GRID_Y;
@@ -66,8 +74,9 @@ public class SetupAgreementPanel extends JPanel {
 		this.addLabel("Welcome To Initial Configuraion", GRID_X);
 		this.addAgreementButton("Start Configuration", GRID_X);
 	}
-	
+
 	private void addLabel(String labelName, int xCoordinate) {
+		this.grid = new GridBagConstraints();
 		JLabel label = new JLabel(labelName);
 		label.setForeground(Color.WHITE);
 		
@@ -80,8 +89,9 @@ public class SetupAgreementPanel extends JPanel {
 		this.add(label, this.grid);
 		this.grid.gridy += GRID_Y_INCREMENT;
 	}
-	
+
 	private void addAgreementButton(String leftButtonName, int xCoordinate) {
+		this.grid = new GridBagConstraints();
 		JButton leftButton = new JButton(leftButtonName);
 		
 		leftButton.setForeground(Color.GRAY);
@@ -98,7 +108,10 @@ public class SetupAgreementPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
+	    
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		g.drawImage(this.image, 0, 0, null);
 	}
 }
