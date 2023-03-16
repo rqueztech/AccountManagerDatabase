@@ -41,27 +41,28 @@ public class SetupAgreementPanel extends JPanel {
 	// --- Group 2: Panel Map ---
 	private HashMap <String, JComponent> components;
 	
+	
 	public SetupAgreementPanel(JFrame frame) {
-		this.components = new HashMap <String, JComponent> ();
-		this.setLayout(new GridBagLayout());
-		this.grid = new GridBagConstraints();
-		
-		this.frame = frame;
-		this.grid.anchor = GridBagConstraints.BOTH;
-		this.grid.anchor = GridBagConstraints.CENTER;
-		
-		
-		this.setPreferredSize(new Dimension(600, 600));
-		this.image = new ImageIcon("background.jpg").getImage();
-		
-		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+			this.setLayout(new GridBagLayout());
+			
+			this.components = new HashMap <String, JComponent> ();
+			this.grid = new GridBagConstraints();
+			
+			this.frame = frame;
+			this.grid.anchor = GridBagConstraints.BOTH;
+			this.grid.anchor = GridBagConstraints.CENTER;
+			
+			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			
 			//this.setBackgroundImage();
 			this.setMainLoginComponents();
+			
+			this.frame.add(this);
 		});
 		
-		this.frame.add(this);
 	}
 
 	private void setMainLoginComponents() {

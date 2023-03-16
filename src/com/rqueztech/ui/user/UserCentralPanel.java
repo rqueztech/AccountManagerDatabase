@@ -35,23 +35,27 @@ public class UserCentralPanel extends JPanel {
 	private final int RIGHT_INSET = 0;
 	private final int GRID_X = 0;
 	private final int GRID_Y = 0;
+	
+	/*
 	private final int GRID_Y_INCREMENT = 1;
 	private final int TEXTFIELD_LENGTH = 15;
+	*/
 	
 	private HashMap <String, JComponent> components;
 	
 	public UserCentralPanel(JFrame frame) {
 		SwingUtilities.invokeLater(() -> {
-			this.components = new HashMap <String, JComponent> ();
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
 			this.setLayout(new GridBagLayout());
-			this.grid = new GridBagConstraints();
 			
 			this.frame = frame;
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
-			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.frame.add(this);
+			this.components = new HashMap <String, JComponent> ();
 			
+			this.grid = new GridBagConstraints();
 			this.setUserCentralComponents();
+		
+			this.frame.add(this);
 		});
 	}
 	

@@ -41,8 +41,6 @@ public class MainLoginPanel extends JPanel {
 	private final int GRID_Y_INCREMENT = 1;
 	private final int TEXTFIELD_LENGTH = 15;
 	
-	
-	
 	private final String USERNAME_LABEL = "Enter Username";
 	private final String USERNAME_FIELD = "USERNAME_FIELD";
 	private final String VISIBILITY_BUTTON = "Visible";
@@ -59,14 +57,14 @@ public class MainLoginPanel extends JPanel {
 	private HashMap <String, JComponent> components;
 	
 	public MainLoginPanel(JFrame frame) {
-		this.components = new HashMap <String, JComponent> ();
 		this.setLayout(new GridBagLayout());
 		this.grid = new GridBagConstraints();
+		
+		this.components = new HashMap <String, JComponent> ();
 		
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		this.frame = frame;
-		this.grid.anchor = GridBagConstraints.BOTH;
 		this.grid.anchor = GridBagConstraints.CENTER;
 		
 		this.setPreferredSize(new Dimension(600, 600));
@@ -88,7 +86,6 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	public void passwordVisibility() {
-		System.out.println(this.components);
 		JButton visibilityButton = (JButton) this.components.get(VISIBILITY_BUTTON);
 		
 		visibilityButton.addActionListener(e -> {
@@ -197,7 +194,6 @@ public class MainLoginPanel extends JPanel {
 		this.grid.gridx = xCoordinate;
 		this.grid.anchor = GridBagConstraints.EAST;
 		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		System.out.println(rightButtonName);
 		this.components.put(rightButtonName, rightButton);
 		
 		this.add(rightButton, this.grid);

@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -33,6 +34,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	// --- Group 1: Panel related variables ---
 	private JFrame frame;
 	private Image image;
+	private BufferedImage buffer;
 	private GridBagConstraints grid;
 	
 	// --- Group 2: Constants (to prevent magic numbers)
@@ -41,7 +43,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final int LEFT_INSET = 5;
 	private final int BOTTOM_INSET = 1;
 	private final int RIGHT_INSET = 5;
-	
+		
 	// Grid coordinate predefinitions
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -52,6 +54,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final int GRID_X_LEFT = 0;
 	private final int GRID_X_MIDDLE = 2;
 	private final int GRID_X_RIGHT = 3;
+	
+	
 	
 	// Textfield variable
 	private final int TEXTFIELD_LENGTH = 20;
@@ -71,26 +75,25 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	private HashMap <String, JComponent> components;
 	
-	public InputValidations inputValidations;
 	public PasswordDocumentListener passwordDocumentListener;
 	public TogglePasswordVisibility togglePasswordVisibility;
 	
-	public UserChangeDefaultPasswordPanel(JFrame frame, InputValidations inputValidations) {
-		
-		this.inputValidations = new InputValidations();
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
-		
-		this.components = new HashMap <String, JComponent> ();
-		this.setLayout(new GridBagLayout());
-		this.grid = new GridBagConstraints();
-		
-		this.frame = frame;
-		this.image = new ImageIcon("backgroundd.jpg").getImage();
-		
-		this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-		this.frame.add(this);
-		
+	private InputValidations inputValidations;
+	
+	public UserChangeDefaultPasswordPanel(JFrame frame) {
 		SwingUtilities.invokeLater(() -> {
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+			this.setLayout(new GridBagLayout());
+			this.grid = new GridBagConstraints();
+			
+			this.components = new HashMap <String, JComponent> ();
+			
+			this.inputValidations = new InputValidations();
+			this.togglePasswordVisibility = new TogglePasswordVisibility();
+			
+			this.frame = frame;
+			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			
 			this.grid.gridx = GRID_X_INITIAL;
 			this.grid.gridy = GRID_Y_INITIAL;
 			this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
@@ -136,6 +139,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 			// Initialize the two document listeners
 			this.newPasswordValidator(); //New Password Document Listener
 			this.confirmPasswordValidator(); //Confirm Password Document Listener
+			
+			this.frame.add(this);
 		});
 	}
 	

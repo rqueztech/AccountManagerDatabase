@@ -44,19 +44,18 @@ public class SetupConfigurationPanel extends JPanel {
 	private HashMap <String, JComponent> components;
 	
 	public SetupConfigurationPanel(JFrame frame) {
-		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
-			this.components = new HashMap <String, JComponent> ();
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
 			this.setLayout(new GridBagLayout());
 			this.grid = new GridBagConstraints();
+			this.components = new HashMap <String, JComponent> ();
 			
 			this.frame = frame;
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
-			this.setPreferredSize(new Dimension(600, 600));
-			this.frame.add(this);
-			
 			this.setMainLoginComponents();
+			
+			this.frame.add(this);
 		});
 	}
 	

@@ -1,7 +1,11 @@
 package com.rqueztech.ui;
 
+import java.awt.Color;
+import java.awt.GridBagLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class BaseFrame extends JFrame {
 	/**
@@ -14,15 +18,13 @@ public class BaseFrame extends JFrame {
 	public static final int HEIGHT = 600;
 	
 	public BaseFrame() {
-		this.setSize(WIDTH, HEIGHT);
-		this.setResizable(false);
-		this.setLocationRelativeTo(null);
-		this.setTitle("Database Project");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-	}
-	
-	public void addPanel(JPanel panel) {
-		this.getContentPane().add(panel);
+		SwingUtilities.invokeLater(() -> {
+			this.setSize(WIDTH, HEIGHT);
+			this.setLayout(new GridBagLayout());
+			this.setResizable(false);
+			this.setLocationRelativeTo(null);
+			this.setTitle("Database Project");
+			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		});
 	}
 }
