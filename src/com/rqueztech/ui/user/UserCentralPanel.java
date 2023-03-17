@@ -50,8 +50,9 @@ public class UserCentralPanel extends JPanel {
 			this.frame = frame;
 			
 			this.setLayout(layout);
-			this.grid = new GridBagConstraints();
 			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+			
+			this.grid = new GridBagConstraints();
 			
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
 			this.components = new ConcurrentHashMap <String, JComponent> ();

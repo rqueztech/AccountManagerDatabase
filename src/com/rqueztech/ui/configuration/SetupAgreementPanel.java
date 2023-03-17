@@ -50,7 +50,7 @@ public class SetupAgreementPanel extends JPanel {
 			// Set the panel to the gridbaglayout, establish the preferred size,
 			// And get the image that will be used in the background
 			this.setLayout(layout);
-			this.setPreferredSize(new Dimension(BaseFrame.WIDTH, BaseFrame.HEIGHT));
+			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
 			
 			// --- Start Constraints ---
