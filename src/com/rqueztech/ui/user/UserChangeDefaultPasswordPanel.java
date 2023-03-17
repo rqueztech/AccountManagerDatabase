@@ -10,7 +10,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.events.PasswordDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.validation.InputValidations;
@@ -73,25 +74,27 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final String SUBMIT_BUTTON = "Submit";
 	private final String PASSWORDS_MATCH = "Match";
 	
-	private HashMap <String, JComponent> components;
+	private ConcurrentHashMap <String, JComponent> components;
 	
 	public PasswordDocumentListener passwordDocumentListener;
 	public TogglePasswordVisibility togglePasswordVisibility;
 	
 	private InputValidations inputValidations;
 	
-	public UserChangeDefaultPasswordPanel(JFrame frame) {
+	public UserChangeDefaultPasswordPanel(BaseFrame frame, GridBagLayout layout) {
+		
+		
 		SwingUtilities.invokeLater(() -> {
+			this.frame = frame;
+			this.setLayout(layout);
 			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.setLayout(new GridBagLayout());
 			this.grid = new GridBagConstraints();
 			
-			this.components = new HashMap <String, JComponent> ();
+			this.components = new ConcurrentHashMap <String, JComponent> ();
 			
 			this.inputValidations = new InputValidations();
 			this.togglePasswordVisibility = new TogglePasswordVisibility();
 			
-			this.frame = frame;
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
 			
 			this.grid.gridx = GRID_X_INITIAL;
@@ -264,6 +267,6 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.drawImage(image, 0, 0, null);
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	}
 }

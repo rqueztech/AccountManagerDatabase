@@ -9,7 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import com.rqueztech.ui.BaseFrame;
 
 public class SetupConfigurationPanel extends JPanel {
 	
@@ -41,15 +43,15 @@ public class SetupConfigurationPanel extends JPanel {
 	private final int TEXTFIELD_LENGTH = 15;
 	
 	// --- Group 2: Panel Map ---
-	private HashMap <String, JComponent> components;
+	private ConcurrentHashMap <String, JComponent> components;
 	
-	public SetupConfigurationPanel(JFrame frame) {
+	public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout) {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
+			this.setLayout(layout);
 			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.setLayout(new GridBagLayout());
 			this.grid = new GridBagConstraints();
-			this.components = new HashMap <String, JComponent> ();
+			this.components = new ConcurrentHashMap <String, JComponent> ();
 			
 			this.frame = frame;
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
@@ -209,6 +211,6 @@ public class SetupConfigurationPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.drawImage(this.image, 0, 0, null);
+		g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
 	}
 }

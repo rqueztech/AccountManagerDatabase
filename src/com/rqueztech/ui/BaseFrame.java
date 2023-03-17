@@ -1,10 +1,8 @@
 package com.rqueztech.ui;
 
-import java.awt.Color;
 import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class BaseFrame extends JFrame {
@@ -21,7 +19,6 @@ public class BaseFrame extends JFrame {
 		SwingUtilities.invokeLater(() -> {
 			this.setSize(WIDTH, HEIGHT);
 			this.setLayout(new GridBagLayout());
-			this.setResizable(false);
 			this.setLocationRelativeTo(null);
 			this.setTitle("Database Project");
 			this.setDefaultCloseOperation(EXIT_ON_CLOSE);

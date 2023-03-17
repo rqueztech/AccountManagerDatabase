@@ -1,6 +1,5 @@
 package com.rqueztech.ui.events;
 
-import java.awt.Button;
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -8,7 +7,6 @@ import javax.swing.JPasswordField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
 import com.rqueztech.ui.validation.InputValidations;
 
 public class PasswordDocumentListener implements DocumentListener {

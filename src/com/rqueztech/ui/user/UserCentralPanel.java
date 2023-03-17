@@ -9,7 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +17,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.rqueztech.ui.BaseFrame;
 
 public class UserCentralPanel extends JPanel {
 	
@@ -41,18 +43,19 @@ public class UserCentralPanel extends JPanel {
 	private final int TEXTFIELD_LENGTH = 15;
 	*/
 	
-	private HashMap <String, JComponent> components;
+	private ConcurrentHashMap <String, JComponent> components;
 	
-	public UserCentralPanel(JFrame frame) {
+	public UserCentralPanel(BaseFrame frame, GridBagLayout layout) {
 		SwingUtilities.invokeLater(() -> {
-			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.setLayout(new GridBagLayout());
-			
 			this.frame = frame;
-			this.image = new ImageIcon("backgroundd.jpg").getImage();
-			this.components = new HashMap <String, JComponent> ();
 			
+			this.setLayout(layout);
 			this.grid = new GridBagConstraints();
+			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+			
+			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			this.components = new ConcurrentHashMap <String, JComponent> ();
+			
 			this.setUserCentralComponents();
 		
 			this.frame.add(this);
@@ -104,6 +107,6 @@ public class UserCentralPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.drawImage(this.image, 0, 0, null);
+		g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
 	}
 }

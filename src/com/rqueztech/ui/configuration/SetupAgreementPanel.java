@@ -9,7 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,13 +19,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.BaseFrame;
+
 public class SetupAgreementPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
 	private JFrame frame;
 	private Image image;
-	
 	private GridBagConstraints grid;
 
 	// --- Magic Numbers ---
@@ -39,32 +40,39 @@ public class SetupAgreementPanel extends JPanel {
 	private final int TEXTFIELD_LENGTH = 15;
 	
 	// --- Group 2: Panel Map ---
-	private HashMap <String, JComponent> components;
+	private ConcurrentHashMap <String, JComponent> components;
 	
 	
-	public SetupAgreementPanel(JFrame frame) {
+	public SetupAgreementPanel(BaseFrame frame, GridBagLayout layout) {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
-			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.setLayout(new GridBagLayout());
 			
-			this.components = new HashMap <String, JComponent> ();
-			this.grid = new GridBagConstraints();
-			
-			this.frame = frame;
-			this.grid.anchor = GridBagConstraints.BOTH;
-			this.grid.anchor = GridBagConstraints.CENTER;
-			
+			// Set the panel to the gridbaglayout, establish the preferred size,
+			// And get the image that will be used in the background
+			this.setLayout(layout);
+			this.setPreferredSize(new Dimension(BaseFrame.WIDTH, BaseFrame.HEIGHT));
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
 			
-			//this.setBackgroundImage();
-			this.setMainLoginComponents();
-			
-			this.frame.add(this);
+			// --- Start Constraints ---
+	        // Set all of the constraints for the background image
+	        this.setBackgroundImageConstraints();
+	        frame.add(this, this.grid);
+	        //--- Finish Constraints End ---
 		});
 		
 	}
 
+	public void setBackgroundImageConstraints() {
+		// Set layout, width, and image in the background
+		this.grid = new GridBagConstraints();
+        this.grid.fill = GridBagConstraints.BOTH;
+        this.grid.gridx = 0;
+        this.grid.gridy = 0;
+        this.grid.weightx = 1.0;
+        this.grid.weighty = 1.0;
+        this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
+	}
+	
 	private void setMainLoginComponents() {
 		this.grid = new GridBagConstraints();
 		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
@@ -113,6 +121,6 @@ public class SetupAgreementPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.drawImage(this.image, 0, 0, null);
+		g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
 	}
 }
