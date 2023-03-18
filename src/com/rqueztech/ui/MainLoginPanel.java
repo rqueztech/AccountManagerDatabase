@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -57,7 +58,7 @@ public class MainLoginPanel extends JPanel {
 	private final int GRID_Y_INITIAL = 0;
 	
 	private final int GRIDX_IMAGEWEIGHT = 1;
-	private final int GRIDY_IMAGEHEIGHT = 1;
+	private final int GRIDY_IMAGEWEIGHT = 1;
 	
 	private final int TEXTFIELD_SIZE = 10;
 	
@@ -80,7 +81,7 @@ public class MainLoginPanel extends JPanel {
 			// Set the panel to the gridbaglayout, establish the preferred size,
 			// And get the image that will be used in the background
 			this.setLayout(layout);
-	        this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
@@ -158,8 +159,10 @@ public class MainLoginPanel extends JPanel {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
+        this.grid.gridx = GRID_X_INITIAL;
+        this.grid.gridx = GRID_Y_INITIAL;
         this.grid.weightx = GRIDX_IMAGEWEIGHT; // Value is 0: initial
-        this.grid.weighty = GRIDY_IMAGEHEIGHT; // Value is 0: initial
+        this.grid.weighty = GRIDY_IMAGEWEIGHT; // Value is 0: initial
         this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET); // Insets values all 0 (Initial)
 	}
 	

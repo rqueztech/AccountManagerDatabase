@@ -2,6 +2,7 @@ package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -16,14 +18,14 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.BaseFrame;
+import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class SetupConfigurationPanel extends JPanel {
 	
@@ -35,174 +37,251 @@ public class SetupConfigurationPanel extends JPanel {
 
 	private final int TOP_INSET = 0;
 	private final int LEFT_INSET = 0;
-	private final int BOTTOM_INSET = 2;
+	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
-	private final int GRID_X = 0;
-	private final int GRID_Y = 0;
-	private final int GRID_Y_INCREMENT = 1;
-	private final int TEXTFIELD_LENGTH = 15;
+	
+	// --- Section 1: Username Component Keys
+	private final String FIRSTNAME_LABEL_KEY = "FIRSTNAME_LABEL_KEY";
+	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
+	
+	// --- Section 2: Password Component Keys
+	private final String LASTNAME_LABEL_KEY = "LASTNAME_LABEL_KEY";
+	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
+	
+	// --- Section 3: Login Button Component Keys
+	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
+	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
+	
+	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
+	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	private final String PASSPHRASE_VISIBILITY_BUTTON_KEY = "PASSPHRASE_VISIBILITY_BUTTON_KEY";
+	
+	private final String CONFIRM_PASSPHRASE_LABEL_KEY = "CONFIRM_PASSPHRASE_LABEL_KEY";
+	private final String CONFIRM_PASSPHRASE_TEXTFIELD_KEY = "CONFIRM_PASSPHRASE_TEXTFIELD_KEY";
+	private final String CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY = "CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY";
+	
+	private final String PASSWORD_LABEL_KEY = "PASSWORD_LABEL_KEY";
+	private final String PASSWORD_TEXTFIELD_KEY = "PASSWORD_TEXTFIELD_KEY";
+	private final String PASSWORD_VISIBILITY_BUTTON_KEY = "PASSWORD_VISIBILITY_BUTTON_KEY";
+	
+	private final String CONFIRM_PASSWORD_LABEL_KEY = "CONFIRM_PASSWORD_LABEL_KEY";
+	private final String CONFIRM_PASSWORD_TEXTFIELD_KEY = "CONFIRM_PASSWORD_TEXTFIELD_KEY";
+	private final String CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY";
+	
+	private final int GRID_X_INITIAL = 0;
+	private final int GRID_Y_INITIAL = 0;
+	
+	private final int GRIDX_IMAGEWEIGHT = 1;
+	private final int GRIDY_IMAGEWEIGHT = 1;
+	
+	private final int TEXTFIELD_SIZE = 15;
+	
+	private TogglePasswordVisibility togglePasswordVisibility;
+	
+	private int newYValue = 0;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
+	// --------------------------------------------------------------------------------------
 	public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout) {
+		// Function that will toggle visibility on and off in password
+		// Field found in this class
+		this.togglePasswordVisibility = new TogglePasswordVisibility();
+		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
+	        
+			// Set the panel to the gridbaglayout, establish the preferred size,
+			// And get the image that will be used in the background
 			this.setLayout(layout);
-			this.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
-			this.grid = new GridBagConstraints();
-			this.components = new ConcurrentHashMap <String, JComponent> ();
-			
-			this.frame = frame;
-			this.image = new ImageIcon("backgroundd.jpg").getImage();
-			this.setMainLoginComponents();
-			
-			this.frame.add(this);
+	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
+	        this.image = new ImageIcon("backgroundd.jpg").getImage();
+	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        
+	        // --- Start Constraints ---
+	        // Set all of the constraints for the background image
+	        this.setBackgroundImageConstraints();
+	        frame.add(this, this.grid);
+	        //--- Finish Constraints End ---
+	        
+	        // --- Set the initial values for the grid
+	        this.grid.fill = GridBagConstraints.HORIZONTAL;
+	        this.grid.anchor = GridBagConstraints.CENTER;
+	        this.grid.insets = new Insets(2, 2, 2, 2);
+	        this.grid.gridx = GRID_X_INITIAL;
+	        this.grid.gridy = GRID_Y_INITIAL;
+	        
+	        this.setLabelField(FIRSTNAME_LABEL_KEY, "Enter FirstName");
+	        this.setTextField(FIRSTNAME_TEXTFIELD_KEY);
+	        
+	        this.setLabelField(LASTNAME_LABEL_KEY, "Enter LastName");
+	        this.setTextField(LASTNAME_TEXTFIELD_KEY);
+	        
+	        this.setLabelField(PASSPHRASE_LABEL_KEY, "Enter Passphrase");
+	        this.setPasswordField(PASSPHRASE_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.setLabelField(CONFIRM_PASSPHRASE_LABEL_KEY, "Confirm Passphrase");
+	        this.setPasswordField(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.setLabelField(PASSWORD_LABEL_KEY, "Enter New Password");
+	        this.setPasswordField(PASSWORD_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.setLabelField(CONFIRM_PASSWORD_LABEL_KEY, "Confirm New Password");
+	        this.setPasswordField(CONFIRM_PASSWORD_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.grid.fill = GridBagConstraints.HORIZONTAL;
+	        this.grid.anchor = GridBagConstraints.EAST;
+	        this.grid.gridx = 0; // Buttons are not fixed, therefore coordinates are custom set
+	        this.grid.gridy += 1;
+	        this.setButton(USER_LOGIN_BUTTON_KEY, "User");
+	        this.add(this.components.get(USER_LOGIN_BUTTON_KEY), grid);
+	        
+	        this.grid.anchor = GridBagConstraints.WEST;
+	        this.grid.gridx += 1;
+	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
+	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
+	        
+	        this.enableTogglers();
 		});
 	}
 	
-	// --- Group 3: Component Calls (Add Into Panel)
-	private void setMainLoginComponents() {
-		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
-		this.grid.gridx = GRID_X;
-		this.grid.gridy = GRID_Y;
-		
-		// -> FirstName Rows. FirstName label/password
-		this.addLabel("FirstName", GRID_X);
-		this.addTextField("FirstNameEntry", GRID_X);
-		
-		// -> LastName Rows. LastName label/password
-		this.addLabel("LastName",GRID_X);
-		this.addTextField("LastNameEntry", GRID_X);
-		
-		// -> Password Rows. Password label/password
-		this.addLabel("Password",GRID_X);
-		this.addPasswordField("PasswordEntry", GRID_X);
-		
-		// -> ConfirmPassword Rows. ConfirmPassword label/password
-		this.addLabel("ConfirmPassword",GRID_X);
-		this.addPasswordField("ConfirmPasswordEntry", GRID_X);
-		
-		// -> PassphraseEntry Rows. PassphraseEntry label/password
-		this.addLabel("PassphraseEntry",GRID_X);
-		this.addPasswordField("PassphraseEntryEntry", GRID_X);
-		
-		// -> User/Admin Buttons. Individual row.
-		this.addLeftButton("Cancel", GRID_X);
-		this.addRightButton("Submit", GRID_X + 1);
-		
+	public void enableTogglers() {
+		this.togglePassphraseVisibility();
+		this.togglePasswordVisibility();
+		this.toggleConfirmPasswordVisibility();
+		this.toggleConfirmPassphraseVisibility();
 	}
 	
-	// --- Group 4: Panel Components ---
-	private void addTextField(String textFieldName, int xCoordinate) {
-		JTextField textField = new JTextField(TEXTFIELD_LENGTH); // Set Object (textfield) to size
-		textField.setForeground(Color.BLACK); // Set the color
+	// --------------------------------------------------------------------------------------
+	public void togglePassphraseVisibility() {
+		JButton toggleButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
 		
-		this.grid.gridwidth = 2;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(textFieldName, textField);
-		
-		this.add(textField, this.grid); // Add to the current grid
-		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
-	}
-	
-	private void addPasswordField(String passwordFieldName, int xCoordinate) {
-		JPasswordField passwordField = new JPasswordField(TEXTFIELD_LENGTH); // Set Object (passwordfield) to size
-		passwordField.setForeground(Color.BLACK); // Set the color
-		
-		this.grid.gridwidth = 2;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(passwordFieldName, passwordField);
-		
-		passwordField.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if(new String(passwordField.getPassword()).equals("p")) {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
-				}
-				
-				else {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
-				}
-			}
-			
-			// Document listener 
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if(new String(passwordField.getPassword()).equals("p")) {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
-				}
-				
-				else {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
-				}
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if(new String(passwordField.getPassword()).equals("p")) {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.GRAY);
-				}
-				
-				else {
-					SetupConfigurationPanel.this.components.get("Submit").setBackground(Color.BLACK);
-				}
-			}
+		toggleButton.addActionListener( e -> {
+			JPasswordField passphraseTextField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
 		});
-				
-		this.add(passwordField, this.grid); // Add to the current grid
-		this.grid.gridy += GRID_Y_INCREMENT; // Append by one for the next element in use
 	}
 	
-	private void addLabel(String labelName, int xCoordinate) {
-		JLabel label = new JLabel(labelName);
-		label.setForeground(Color.WHITE);
+	// --------------------------------------------------------------------------------------
+	public void toggleConfirmPassphraseVisibility() {
+		JButton toggleButton = (JButton) this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY);
 		
+		toggleButton.addActionListener( e -> {
+			JPasswordField confirmPassphraseTextField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
+			this.togglePasswordVisibility.passwordToggler(confirmPassphraseTextField);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void togglePasswordVisibility(){
+		JButton toggleButton = (JButton) this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY);
+		
+		toggleButton.addActionListener( e -> {
+			JPasswordField passphraseTextField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
+			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void toggleConfirmPasswordVisibility(){
+		JButton toggleButton = (JButton) this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY);
+		
+		toggleButton.addActionListener( e -> {
+			JPasswordField passphraseTextField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
+			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setBackgroundImageConstraints() {
+		// Set everything to initial status.
+		this.grid = new GridBagConstraints(); // Set the gridbag constraints
+        this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
+        this.grid.gridx = GRID_X_INITIAL;
+        this.grid.gridx = GRID_Y_INITIAL;
+        this.grid.weightx = GRIDX_IMAGEWEIGHT; // Value is 0: initial
+        this.grid.weighty = GRIDY_IMAGEWEIGHT; // Value is 0: initial
+        this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET); // Insets values all 0 (Initial)
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setButton(String buttonKey, String buttonText) {
+		JButton button = new JButton(buttonText);
+        //this.grid.anchor = GridBagConstraints.CENTER;
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        this.grid.gridwidth = 1;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        
+        this.components.put(buttonKey, button);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setTextField(String textFieldKey) {
+		JTextField textField = new JTextField(TEXTFIELD_SIZE);
+		//this.grid.anchor = GridBagConstraints.CENTER;
+		//textField.setFont(new Font("Arial", Font.PLAIN, 14));
+		textField.setBackground(Color.WHITE);
+		textField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(labelName, label);
-		
-		this.add(label, this.grid);
-		this.grid.gridy += GRID_Y_INCREMENT;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        this.grid.gridx = 0;
+		this.grid.gridy += 1;
+        
+        this.components.put(textFieldKey, textField);
+        this.add(this.components.get(textFieldKey), grid);
 	}
 	
-	private void addLeftButton(String leftButtonName, int xCoordinate) {
-		JButton leftButton = new JButton(leftButtonName);
-		
-		leftButton.setForeground(Color.GRAY);
-		leftButton.setBackground(Color.BLACK);
-		
-		this.grid.gridwidth = 1;
-		this.grid.gridx = xCoordinate;
-		this.grid.anchor = GridBagConstraints.WEST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(leftButtonName, leftButton);
-		
-		this.add(leftButton, this.grid);
+	// --------------------------------------------------------------------------------------
+	public void setPasswordField(String passwordFieldKey) {
+		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
+		//this.grid.anchor = GridBagConstraints.CENTER;
+		//passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+		passwordField.setBackground(Color.WHITE);
+		passwordField.setForeground(Color.BLACK);
+		this.grid.gridwidth = 2;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        this.grid.gridx = 0;
+        this.grid.gridy += 1;
+        
+        this.components.put(passwordFieldKey, passwordField);
+        this.add(this.components.get(passwordFieldKey), grid);
 	}
 	
-	private void addRightButton(String rightButtonName, int xCoordinate) {
-		JButton rightButton = new JButton(rightButtonName);
-		rightButton.setForeground(Color.GRAY);
-		rightButton.setBackground(Color.BLACK);
-		
-		this.grid.gridwidth = 1;
-		this.grid.gridx += 1;
-		this.grid.anchor = GridBagConstraints.EAST;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		this.components.put(rightButtonName, rightButton);
-		
-		this.add(rightButton, this.grid);
+	// --------------------------------------------------------------------------------------
+	public void setLabelField(String labelKey, String labelText) {
+		JLabel labelField = new JLabel(labelText);
+		//this.grid.anchor = GridBagConstraints.CENTER;
+		labelField.setBackground(Color.BLACK);
+		labelField.setForeground(Color.WHITE);
+		this.grid.gridwidth = 2;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        this.grid.gridx = 0;
+        this.grid.gridy += 1;
+        
+        this.components.put(labelKey, labelField);
+        this.add(this.components.get(labelKey), grid);
 	}
 	
 	@Override

@@ -37,11 +37,16 @@ public class SetupAgreementPanel extends JPanel {
 	private final int GRID_X = 0;
 	private final int GRID_Y = 0;
 	private final int GRID_Y_INCREMENT = 1;
-	private final int TEXTFIELD_LENGTH = 15;
+	private final int TEXTFIELD_LENGTH = 10;
+	
+	private final int GRIDX_IMAGEWEIGHT = 1;
+	private final int GRIDY_IMAGEWEIGHT = 1;
+	
+	private final int GRIDX_INITIAL = 0;
+	private final int GRIDY_INITIAL = 0;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
-	
 	
 	public SetupAgreementPanel(BaseFrame frame, GridBagLayout layout) {
 		// Dispatch responsibilities on EDT.
@@ -52,6 +57,7 @@ public class SetupAgreementPanel extends JPanel {
 			this.setLayout(layout);
 			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			this.components = new ConcurrentHashMap <String, JComponent> ();
 			
 			// --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -66,13 +72,14 @@ public class SetupAgreementPanel extends JPanel {
 		// Set layout, width, and image in the background
 		this.grid = new GridBagConstraints();
         this.grid.fill = GridBagConstraints.BOTH;
-        this.grid.gridx = 0;
-        this.grid.gridy = 0;
-        this.grid.weightx = 1.0;
-        this.grid.weighty = 1.0;
+        this.grid.gridx = GRIDX_INITIAL;
+        this.grid.gridy = GRIDY_INITIAL;
+        this.grid.weightx = GRIDX_IMAGEWEIGHT;
+        this.grid.weighty = GRIDY_IMAGEWEIGHT;
         this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
 	}
 	
+	/*
 	private void setMainLoginComponents() {
 		this.grid = new GridBagConstraints();
 		this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET);
@@ -114,6 +121,7 @@ public class SetupAgreementPanel extends JPanel {
 		
 		this.add(leftButton, this.grid);
 	}
+	*/
 	
 	@Override
 	public void paintComponent(Graphics g) {
