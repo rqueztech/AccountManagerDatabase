@@ -23,8 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.BaseFrame;
+import com.rqueztech.ui.events.PasswordDocumentListener;
+import com.rqueztech.ui.events.SubmitDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class SetupConfigurationPanel extends JPanel {
@@ -70,6 +73,9 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
+	
+	private int GRID_X_CURRENT = 0;
+	private int GRID_Y_CURRENT = 0;
 	
 	private final int GRIDX_IMAGEWEIGHT = 1;
 	private final int GRIDY_IMAGEWEIGHT = 1;
@@ -146,22 +152,92 @@ public class SetupConfigurationPanel extends JPanel {
 	        this.setButton(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
 	        this.add(this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY), grid);
 	        
+	        
 	        this.grid.fill = GridBagConstraints.HORIZONTAL;
 	        this.grid.anchor = GridBagConstraints.EAST;
-	        this.grid.gridx = 0; // Buttons are not fixed, therefore coordinates are custom set
-	        this.grid.gridy += 1;
-	        this.setButton(USER_LOGIN_BUTTON_KEY, "User");
+	        this.grid.gridx = GRID_X_CURRENT; // Buttons are not fixed, therefore coordinates are custom set
+	        this.grid.gridy += GRID_Y_CURRENT;
+	        this.setButton(USER_LOGIN_BUTTON_KEY, "Cancel");
 	        this.add(this.components.get(USER_LOGIN_BUTTON_KEY), grid);
 	        
 	        this.grid.anchor = GridBagConstraints.WEST;
 	        this.grid.gridx += 1;
-	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
+	        this.setAdminButton(ADMIN_LOGIN_BUTTON_KEY, "Submit");
 	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
+	        this.enableDocumentListeners();
 	        this.enableTogglers();
+	        this.setSubmitButtonFeedback();
 		});
 	}
 	
+	public void enableDocumentListeners() {
+		this.setValidPassphraseFeedback();
+		this.setValidConfirmPassphraseFeedback();
+		
+		this.setValidPasswordFeedback();
+		this.setValidConfirmPasswordFeedback();
+		this.setSubmitButtonFeedback();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setSubmitButtonFeedback() {
+		JButton adminSubmitButton = (JButton) this.components.get(ADMIN_LOGIN_BUTTON_KEY);
+		
+		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
+		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
+		JPasswordField passphraseField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+		JPasswordField confirmPassphraseField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
+		JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
+		JPasswordField confirmPasswordField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
+		
+		SubmitDocumentListener submitDocumentListener = 
+				new SubmitDocumentListener(adminSubmitButton, firstName, lastName,
+				passphraseField, confirmPassphraseField, passwordField, confirmPasswordField);
+		
+		passphraseField.getDocument().addDocumentListener(submitDocumentListener);
+		confirmPassphraseField.getDocument().addDocumentListener(submitDocumentListener);
+		passwordField.getDocument().addDocumentListener(submitDocumentListener);
+		confirmPasswordField.getDocument().addDocumentListener(submitDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setValidPassphraseFeedback() {
+		JButton passphraseButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
+		JPasswordField passphraseField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+		
+		PasswordDocumentListener passphraseDocumentListener = new PasswordDocumentListener(passphraseField, passphraseButton);
+		passphraseField.getDocument().addDocumentListener(passphraseDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setValidConfirmPassphraseFeedback() {
+		JButton confirmPassphraseButton = (JButton) this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY);
+		JPasswordField confirmPassphraseField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
+		
+		PasswordDocumentListener confirmPassphraseDocumentListener = new PasswordDocumentListener(confirmPassphraseField, confirmPassphraseButton);
+		confirmPassphraseField.getDocument().addDocumentListener(confirmPassphraseDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setValidPasswordFeedback() {
+		JButton passwordButton = (JButton) this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY);
+		JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
+		
+		PasswordDocumentListener passwordDocumentListener = new PasswordDocumentListener(passwordField, passwordButton);
+		passwordField.getDocument().addDocumentListener(passwordDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setValidConfirmPasswordFeedback() {
+		JButton confirmPasswordButton = (JButton) this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY);
+		JPasswordField confirmPasswordField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
+		
+		PasswordDocumentListener confirmPasswordDocumentListener = new PasswordDocumentListener(confirmPasswordField, confirmPasswordButton);
+		confirmPasswordField.getDocument().addDocumentListener(confirmPasswordDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
 	public void enableTogglers() {
 		this.togglePassphraseVisibility();
 		this.togglePasswordVisibility();
@@ -223,6 +299,7 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
+		
 		JButton button = new JButton(buttonText);
         //this.grid.anchor = GridBagConstraints.CENTER;
         button.setBackground(Color.BLACK);
@@ -230,6 +307,21 @@ public class SetupConfigurationPanel extends JPanel {
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
+        
+        this.components.put(buttonKey, button);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setAdminButton(String buttonKey, String buttonText) {
+		
+		JButton button = new JButton(buttonText);
+        //this.grid.anchor = GridBagConstraints.CENTER;
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        this.grid.gridwidth = 1;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        button.setOpaque(false);
         
         this.components.put(buttonKey, button);
 	}
@@ -244,8 +336,9 @@ public class SetupConfigurationPanel extends JPanel {
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
-        this.grid.gridx = 0;
-		this.grid.gridy += 1;
+        this.grid.gridx = GRID_X_INITIAL;
+		this.GRID_Y_CURRENT += 1;
+        this.grid.gridy += GRID_Y_CURRENT;
         
         this.components.put(textFieldKey, textField);
         this.add(this.components.get(textFieldKey), grid);
@@ -261,8 +354,9 @@ public class SetupConfigurationPanel extends JPanel {
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
-        this.grid.gridx = 0;
-        this.grid.gridy += 1;
+        this.grid.gridx = GRID_X_INITIAL;
+        this.GRID_Y_CURRENT += 1;
+        this.grid.gridy += GRID_Y_CURRENT;
         
         this.components.put(passwordFieldKey, passwordField);
         this.add(this.components.get(passwordFieldKey), grid);
@@ -277,7 +371,8 @@ public class SetupConfigurationPanel extends JPanel {
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
-        this.grid.gridx = 0;
+        this.grid.gridx = GRID_X_INITIAL;
+        this.GRID_Y_CURRENT += 1;
         this.grid.gridy += 1;
         
         this.components.put(labelKey, labelField);

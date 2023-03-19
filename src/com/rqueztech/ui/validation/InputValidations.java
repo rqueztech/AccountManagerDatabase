@@ -19,7 +19,7 @@ public class InputValidations {
 	private static final Pattern NO_ENTRY_FOUND_PATTERN = Pattern.compile("^$");
 
 	// ------------------------------------------------------------------------------------
-	private boolean matchRegex(Pattern pattern, String input) {
+	private boolean matchRegex(Pattern pattern, CharBuffer input) {
 		Matcher matcher = pattern.matcher(input);
 		return matcher.matches();
 	}
@@ -31,95 +31,65 @@ public class InputValidations {
 	}
 	
 	// ------------------------------------------------------------------------------------
-	public boolean noEntryFound(String inputMeetsPasswordRequirements) {
-		
+	public boolean noEntryFound(char[] inputMeetsPasswordRequirements) {
 		// If the password requirements are not met, print a message and then give specific feedback
-		return matchRegex(NO_ENTRY_FOUND_PATTERN, inputMeetsPasswordRequirements);
+		CharBuffer inputBuffer = CharBuffer.wrap(inputMeetsPasswordRequirements);
+		return matchRegex(NO_ENTRY_FOUND_PATTERN, inputBuffer);
 	}
 	
 	// ------------------------------------------------------------------------------------
 	public boolean validatePassword(char[] inputMeetsPasswordRequirements) {
-		CharBuffer inputBuffer = CharBuffer.wrap(inputMeetsPasswordRequirements);
-		
 		// If the password requirements are not met, print a message and then give specific feedback
+		CharBuffer inputBuffer = CharBuffer.wrap(inputMeetsPasswordRequirements);
 		return matchPasswordRegex(PASSWORD_REQUIREMENTS_PATTERN, inputBuffer);
 	}
 	
 	// ------------------------------------------------------------------------------------
-	public boolean containsLegalCharacters(String inputLegalCharacters) {
+	public boolean containsLegalCharacters(char[] inputLegalCharacters) {
 		// Return true or false (dependent on if the regex matches)
-		return matchRegex(LEGAL_CHARACTERS_PATTERN, inputLegalCharacters);
+		CharBuffer inputBuffer = CharBuffer.wrap(inputLegalCharacters);
+		return matchRegex(LEGAL_CHARACTERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
 	// Check so see if input entered by the user is legal. If all characters
 	// Entered are legal, then it will be return true. Otherwise, returns false.
-	public boolean isOnlyLettersAndNumbers(String inputLettersAndNumbers) {
-		
-		return matchRegex(ONLY_LETTERS_AND_NUMBERS_PATTERN, inputLettersAndNumbers);
+	public boolean isOnlyLettersAndNumbers(char[] inputLettersAndNumbers) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputLettersAndNumbers);
+		return matchRegex(ONLY_LETTERS_AND_NUMBERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
 	// Check so see if input entered by the user is legal. If all characters
 	// Entered are legal, then it will be return true. Otherwise, returns false.
-	public boolean isOnlyLetterCharacters(String inputOnlyLetters) {
-		
-		return matchRegex(ONLY_LETTER_CHARACTERS_PATTERN, inputOnlyLetters);
+	public boolean isOnlyLetterCharacters(char[] inputOnlyLetters) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputOnlyLetters);
+		return matchRegex(ONLY_LETTER_CHARACTERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
-	public boolean isNoUpperCaseCharacters(String inputNoUpperCase) {
-		
-		return matchRegex(NO_UPPERCASE_CHARACTERS_PATTERN, inputNoUpperCase);
+	public boolean isNoUpperCaseCharacters(char[] inputNoUpperCase) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputNoUpperCase);
+		return matchRegex(NO_UPPERCASE_CHARACTERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
-	public boolean isNoLowerCaseCharacters(String inputNoLowerCase) {
-		
-		return matchRegex(NO_LOWERCASE_CHARACTERS_PATTERN, inputNoLowerCase);
+	public boolean isNoLowerCaseCharacters(char[] inputNoLowerCase) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputNoLowerCase);
+		return matchRegex(NO_LOWERCASE_CHARACTERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
-	public boolean isNoSpecialCharacters(String inputNoSpecialCharacters) {
-		
-		return matchRegex(NO_SPECIAL_CHARACTERS_PATTERN, inputNoSpecialCharacters);
+	public boolean isNoSpecialCharacters(char[] inputNoSpecialCharacters) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputNoSpecialCharacters);
+		return matchRegex(NO_SPECIAL_CHARACTERS_PATTERN, inputBuffer);
 	}
 
 	// ------------------------------------------------------------------------------------
-	public boolean isNoNumbersFound(String inputNoNumbersFound) {
-		return matchRegex(NO_NUMBERS_PATTERN, inputNoNumbersFound);
+	public boolean isNoNumbersFound(char[] inputNoNumbersFound) {
+		CharBuffer inputBuffer = CharBuffer.wrap(inputNoNumbersFound);
+		return matchRegex(NO_NUMBERS_PATTERN, inputBuffer);
 	}
 	
-	/*
-	// -----------------------------------------------------------------------------------
-	public String specificPasswordFeedback(String passwordInput) {
-		StringBuilder specificMessage = new StringBuilder();
-
-		// Create an array that will hold specific error messages
-		// Such as no lower case, no upper case, no characters, and no numbers.
-		String[] checks = {
-				this.isNoLowerCaseCharacters(passwordInput),
-				this.isNoUpperCaseCharacters(passwordInput),
-				this.isNoSpecialCharacters(passwordInput),
-				this.isNoNumbersFound(passwordInput)
-		};
-		
-		boolean isNoEntryFound = this.noEntryFound(passwordInput).isEmpty();
-		boolean isLegalCharacters = this.containsLegalCharacters(passwordInput).isEmpty();
-		
-		if (isNoEntryFound) { return "Field Empty: Must Enter Input"; }
-		if (!isLegalCharacters) { return "Field Contains Illegal Characters"
-				+ "\nFields can only contain characters ^@$!%*#?&"; }
-
-		// Iterate through every element of 2D Array. If the message is not empty,
-		// Then append the message to the current messages.
-		for (int counter = 0; counter < checks.length; counter++) {
-			if(!checks[counter].isEmpty()) {
-				specificMessage.append(String.format("%s%n", checks[counter]));
-			}
-		}
-
-		return specificMessage.toString();
-	}
-	*/
+	
 }
