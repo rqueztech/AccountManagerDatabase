@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -18,13 +17,13 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.BaseFrame;
+import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class UserCentralPanel extends JPanel {
@@ -51,7 +50,7 @@ public class UserCentralPanel extends JPanel {
 	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 3: Login Button Component Keys
-	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
+	private final String USER_LOGOUT_BUTTON_KEY = "USER_LOGOUT_BUTTON_KEY";
 	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
 	
 	private final int GRID_X_INITIAL = 0;
@@ -65,15 +64,17 @@ public class UserCentralPanel extends JPanel {
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
 	private int newYValue = 0;
+	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
-	public UserCentralPanel(BaseFrame frame, GridBagLayout layout) {
+	public UserCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
+		this.panelCentral = panelCentral;
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -93,41 +94,29 @@ public class UserCentralPanel extends JPanel {
 	        
 	        
 	        this.setComponentMainPosition();
-	        this.setLabelField(ENTERPASSWORD_LABEL_KEY, "Enter New Password");
-	        this.add(this.components.get(ENTERPASSWORD_LABEL_KEY), grid);
-	        
-	        this.setNewTextfieldPosition(); // All textfields are fixed, therefore coordinates set in function
-	        this.setPasswordField(ENTERPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(ENTERPASSWORD_TEXTFIELD_KEY), grid);
-	        
-	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(ENTERPASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY), grid);
-	        
-	        
-	        this.setNewLabelPosition(); // All labels are fixed, therefore coordinates set in function
-	        this.setLabelField(CONFIRMPASSWORDPASSWORD_LABEL_KEY, "Confirm New Password");
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
-	        
-	        this.setNewTextfieldPosition(); // All textfields are fixed, therefore coordinates set in function
-	        this.setPasswordField(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY), grid);
-	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinates are custom set
-	        this.setButton(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY, "Visibile");
-	        this.add(this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx = 0;
-	        this.grid.gridy += 1;
-	        this.setButton(USER_LOGIN_BUTTON_KEY, "User");
-	        this.add(this.components.get(USER_LOGIN_BUTTON_KEY), grid);
+	        this.grid.gridy = 0;
+	        this.setButton(USER_LOGOUT_BUTTON_KEY, "Logout");
+	        this.add(this.components.get(USER_LOGOUT_BUTTON_KEY), grid);
 	        
-	        this.grid.gridx = 1;
-	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
+	        this.grid.gridx += 1;
+	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Under Construction");
 	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
-	        this.enablePasswordTogglers();
+	        this.logoutButtonActionListener();
+	        
+	        //this.enablePasswordTogglers();
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void logoutButtonActionListener() {
+		JButton adminLogin = (JButton) this.components.get(USER_LOGOUT_BUTTON_KEY);
+		
+		adminLogin.addActionListener(e -> {
+			this.setVisible(false);
+			this.panelCentral.getPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
 		});
 	}
 	

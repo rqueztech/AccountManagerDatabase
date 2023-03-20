@@ -2,7 +2,6 @@ package com.rqueztech.ui.configuration;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -10,7 +9,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -18,14 +16,14 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.BaseFrame;
+import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.PasswordDocumentListener;
 import com.rqueztech.ui.events.SubmitDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
@@ -85,15 +83,18 @@ public class SetupConfigurationPanel extends JPanel {
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
 	private int newYValue = 0;
+	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
-	public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout) {
+	public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
+		
+		this.panelCentral = panelCentral;
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -167,7 +168,8 @@ public class SetupConfigurationPanel extends JPanel {
 	        
 	        this.enableDocumentListeners();
 	        this.enableTogglers();
-	        this.setSubmitButtonFeedback();
+	        
+	        this.setupAgreementActionListener();
 		});
 	}
 	
@@ -178,6 +180,28 @@ public class SetupConfigurationPanel extends JPanel {
 		this.setValidPasswordFeedback();
 		this.setValidConfirmPasswordFeedback();
 		this.setSubmitButtonFeedback();
+		this.submitActionListener();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void submitActionListener() {
+		JButton adminLogin = (JButton) this.components.get(ADMIN_LOGIN_BUTTON_KEY);
+		
+		adminLogin.addActionListener(e -> {
+			System.out.println("Here We Are (ERROR LOG)");
+			this.setVisible(false);
+			this.panelCentral.getPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setupAgreementActionListener() {
+		JButton configurationButton = (JButton) this.components.get(USER_LOGIN_BUTTON_KEY);
+		
+		configurationButton.addActionListener(e -> {
+			this.setVisible(false);
+			this.panelCentral.getPanel().get(PanelCentralEnums.SETUP_AGREEMENT_PANEL).setVisible(true);
+		});
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -316,6 +340,7 @@ public class SetupConfigurationPanel extends JPanel {
 		
 		JButton button = new JButton(buttonText);
         //this.grid.anchor = GridBagConstraints.CENTER;
+		button.setEnabled(false);
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);
         this.grid.gridwidth = 1;

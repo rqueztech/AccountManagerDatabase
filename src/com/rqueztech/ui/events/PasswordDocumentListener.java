@@ -1,7 +1,6 @@
 package com.rqueztech.ui.events;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JButton;
@@ -124,6 +123,19 @@ public class PasswordDocumentListener implements DocumentListener {
 		}
 	}
 	
+	public void updateStatus() {
+		if(this.passwordField.getPassword().length >= 8
+		&& this.inputValidations.containsLegalCharacters
+		(this.passwordField.getPassword())) {
+			this.currentButton.setBackground(Color.GREEN);
+			this.currentButton.setOpaque(true);
+		}
+		
+		else {
+			this.currentButton.setBackground(Color.RED);
+		}
+	}
+	
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
@@ -133,7 +145,7 @@ public class PasswordDocumentListener implements DocumentListener {
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		resetButton();
+		updateStatus();
 	}
 
 	@Override

@@ -10,29 +10,15 @@ import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.validation.InputValidations;
 
-public class SubmitDocumentListener implements DocumentListener {
+public class ChangePasswordDocumentListener implements DocumentListener {
 	private JButton adminButton;
-	private JTextField firstName;
-	private JTextField lastName;
-	private JPasswordField passphraseField;
-	private JPasswordField confirmPassphraseField;
 	private JPasswordField passwordField;
 	private JPasswordField confirmPasswordField;
 	private InputValidations inputValidations;
 	
-	public SubmitDocumentListener(JButton adminButton, JTextField firstName, 
-			JTextField lastName, JPasswordField passphraseField, 
-		JPasswordField confirmPassphraseField, JPasswordField passwordField, 
-		JPasswordField confirmPasswordField) {
-		
+	public ChangePasswordDocumentListener(JButton adminButton, JPasswordField passwordField, JPasswordField confirmPasswordField) {
 		this.inputValidations = new InputValidations();
-		
 		this.adminButton = adminButton;
-		
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.passphraseField = passphraseField;
-		this.confirmPassphraseField = confirmPassphraseField;
 		this.passwordField = passwordField;
 		this.confirmPasswordField = confirmPasswordField;
 	}
@@ -40,13 +26,7 @@ public class SubmitDocumentListener implements DocumentListener {
 	public boolean isNullCheckPass() {
 		// Check to see that none of the passwords are equal to null. There
 		// Is no point to proceed if so.
-		if(this.firstName != null && this.lastName != null
-		&& this.passphraseField != null && this.confirmPassphraseField != null
-		&& this.passwordField != null && this.confirmPasswordField != null
-		&& this.firstName.getText().length() > 0
-		&& this.lastName.getText().length() > 0
-		&& this.passphraseField.getPassword().length > 0
-		&& this.confirmPassphraseField.getPassword().length > 0
+		if(this.passwordField != null && this.confirmPasswordField != null
 		&& this.passwordField.getPassword().length > 0
 		&& this.confirmPasswordField.getPassword().length > 0) {
 			return true;
@@ -66,21 +46,16 @@ public class SubmitDocumentListener implements DocumentListener {
 	}
 	
 	public boolean isPasswordsValid() {
-		if(this.inputValidations.isOnlyLetterCharacters(this.firstName.getText().toCharArray())
-		&& this.inputValidations.isOnlyLetterCharacters(this.lastName.getText().toCharArray())
-		&& this.inputValidations.validatePassword(this.passphraseField.getPassword())
-		&& this.inputValidations.validatePassword(this.confirmPassphraseField.getPassword())
-		&& this.inputValidations.validatePassword(this.passwordField.getPassword())
+		if(this.inputValidations.validatePassword(this.passwordField.getPassword())
 		&& this.inputValidations.validatePassword(this.confirmPasswordField.getPassword())) {
-
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public boolean isPassphrasePasswordMatch() {
-		if(Arrays.equals(passphraseField.getPassword(), confirmPassphraseField.getPassword())) {
+	public boolean isPasswordMatch() {
+		if(Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {
 			return true;
 		}
 		
@@ -98,20 +73,11 @@ public class SubmitDocumentListener implements DocumentListener {
 		this.adminButton.setEnabled(false);
 	}
 	
-	public boolean passwordsConflict() {
-		if(Arrays.equals(this.passphraseField.getPassword(), this.passwordField.getPassword())) {
-			return true;
-		}
-		
-		return false;
-	}
-	
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
 		if(this.isNullCheckPass() && this.isPasswordsValid()
-		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
-		&& !this.passwordsConflict()) {
+		&& this.isPasswordsMatch()) {
 			this.opacityToggleOn();
 		}
 		

@@ -1,4 +1,4 @@
-package com.rqueztech.ui.user;
+package com.rqueztech.ui.admin;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,13 +24,9 @@ import javax.swing.SwingUtilities;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.ChangePasswordDocumentListener;
-import com.rqueztech.ui.events.PasswordDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
-public class UserChangeDefaultPasswordPanel extends JPanel {
-	
-	private PanelCentral panelCentral;
+public class AdminCentralPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
@@ -43,7 +39,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
+	// --- Section 1: Adminname Component Keys
 	private final String ENTERPASSWORD_LABEL_KEY = "ENTERPASSWORD_LABEL_KEY";
 	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
 	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
@@ -54,8 +50,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 3: Login Button Component Keys
-	private final String CANCEL_CHANGE_BUTTON_KEY = "CANCEL_CHANGE_BUTTON_KEY";
-	private final String SUBMIT_LOGIN_BUTTON_KEY = "SUBMIT_LOGIN_BUTTON_KEY";
+	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
+	private final String ADMIN_ADD_USER_BUTTON_KEY = "ADMIN_ADD_USER_BUTTON_KEY";
 	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -68,12 +64,13 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
 	private int newYValue = 0;
+	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
-	public UserChangeDefaultPasswordPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
+	public AdminCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
@@ -97,66 +94,40 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	        
 	        
 	        this.setComponentMainPosition();
-	        this.setLabelField(ENTERPASSWORD_LABEL_KEY, "Enter New Password");
-	        this.add(this.components.get(ENTERPASSWORD_LABEL_KEY), grid);
 	        
 	        this.grid.gridx = 0;
-	        this.grid.gridy += 1;
-	        this.setPasswordField(ENTERPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(ENTERPASSWORD_TEXTFIELD_KEY), grid);
+	        this.grid.gridy = 0;
+	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Logout");
+	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
 	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(ENTERPASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        this.grid.gridx += 1;
+	        this.setButton(ADMIN_ADD_USER_BUTTON_KEY, "Add user");
+	        this.add(this.components.get(ADMIN_ADD_USER_BUTTON_KEY), grid);
 	        
+	        this.adminAddUserButtonListener();
+	        this.logoutButtonActionListener();
 	        
-	        this.grid.gridx = 0;
-	        this.grid.gridy += 1;
-	        this.setLabelField(CONFIRMPASSWORDPASSWORD_LABEL_KEY, "Confirm New Password");
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
-	        
-	        this.grid.gridx = 0;
-			this.grid.gridy += 1;
-	        this.setPasswordField(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY), grid);
-	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinates are custom set
-	        this.setButton(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY, "Visibile");
-	        this.add(this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY), grid);
-	        
-	        this.grid.gridx = 0;
-	        this.grid.gridy += 1;
-	        this.setButton(CANCEL_CHANGE_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(CANCEL_CHANGE_BUTTON_KEY), grid);
-	        
-	        this.grid.gridx = 1;
-	        this.setSubmitButton(SUBMIT_LOGIN_BUTTON_KEY, "Submit");
-	        this.add(this.components.get(SUBMIT_LOGIN_BUTTON_KEY), grid);
-	        
-	        this.submitButtonActionListener();
-	        this.enablePasswordTogglers();
-	        this.setListeners();
-	        this.submitButtonListener();
+	        //this.enablePasswordTogglers();
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void submitButtonActionListener() {
-		JButton submitButton = (JButton) this.components.get(SUBMIT_LOGIN_BUTTON_KEY);
+	public void adminAddUserButtonListener() {
+		JButton adminLogin = (JButton) this.components.get(ADMIN_ADD_USER_BUTTON_KEY);
 		
-		submitButton.addActionListener(e -> {
+		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.USER_CENTRAL_PANEL).setVisible(true);
+			this.panelCentral.getPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void cancelButtonActionListener() {
-		JButton cancelButton = (JButton) this.components.get(CANCEL_CHANGE_BUTTON_KEY);
+	public void logoutButtonActionListener() {
+		JButton adminLogin = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
 		
-		cancelButton.addActionListener(e -> {
+		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
+			this.panelCentral.getPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
 		});
 	}
 	
@@ -164,44 +135,6 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	public void enablePasswordTogglers() {
 		this.toggleEnterPasswordVisibility();
         this.toggleConfirmPasswordVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setListeners() {
-		this.passwordListener();
-		this.confirmPasswordListener();
-		this.submitButtonListener();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void submitButtonListener() {
-		JButton submitButton = (JButton) this.components.get(SUBMIT_LOGIN_BUTTON_KEY);
-		JPasswordField enterPassword = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
-		JPasswordField confirmPassword = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-		
-		ChangePasswordDocumentListener changePasswordDocumentListener
-			= new ChangePasswordDocumentListener(submitButton, enterPassword, confirmPassword);
-		
-		enterPassword.getDocument().addDocumentListener(changePasswordDocumentListener);
-		confirmPassword.getDocument().addDocumentListener(changePasswordDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void passwordListener() {
-		JButton passwordButton = (JButton) this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
-		JPasswordField passwordField = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
-		
-		PasswordDocumentListener passwordDocumentListener = new PasswordDocumentListener(passwordField, passwordButton);
-		passwordField.getDocument().addDocumentListener(passwordDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void confirmPasswordListener() {
-		JButton passphraseButton = (JButton) this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
-		JPasswordField passphraseField = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-		
-		PasswordDocumentListener passwordDocumentListener = new PasswordDocumentListener(passphraseField, passphraseButton);
-		passphraseField.getDocument().addDocumentListener(passwordDocumentListener);
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -231,6 +164,18 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
         this.grid.gridy = GRID_Y_INITIAL;
 	}
 	
+	// --------------------------------------------------------------------------------------
+	// This will set the label down one
+	public void setNewLabelPosition() {
+		this.grid.gridx = 0;
+        this.grid.gridy += 1;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setNewTextfieldPosition() {
+		this.grid.gridx = 0;
+		this.grid.gridy += 1;
+	}
 	
 	// --------------------------------------------------------------------------------------
 	public void setBackgroundImageConstraints() {
@@ -250,21 +195,6 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
         this.grid.anchor = GridBagConstraints.CENTER;
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);
-        this.grid.gridwidth = 1;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(buttonKey, button);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setSubmitButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
-        this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
-        button.setOpaque(false);
-        button.setEnabled(false);
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;

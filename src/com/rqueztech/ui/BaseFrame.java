@@ -17,7 +17,7 @@ public class BaseFrame extends JFrame {
 	
 	public BaseFrame() {
 		SwingUtilities.invokeLater(() -> {
-			this.setSize(WIDTH, HEIGHT);
+			this.setSize(HEIGHT, WIDTH);
 			this.setLayout(new GridBagLayout());
 			this.setResizable(false);
 			this.setLocationRelativeTo(null);

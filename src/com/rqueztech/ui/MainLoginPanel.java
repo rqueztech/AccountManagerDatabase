@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -18,12 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class MainLoginPanel extends JPanel {
@@ -51,7 +50,7 @@ public class MainLoginPanel extends JPanel {
 	// --- Section 3: Login Button Component Keys
 	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
 	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
-	
+	private final String ADMIN_CENTRAL_PANEL = "ADMIN_CENTRAL_PANEL";
 	
 	
 	private final int GRID_X_INITIAL = 0;
@@ -66,14 +65,17 @@ public class MainLoginPanel extends JPanel {
 	
 	private int newYValue = 0;
 	
+	private PanelCentral panelCentral;
+	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
-	public MainLoginPanel(BaseFrame frame, GridBagLayout layout) {
+	public MainLoginPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
+		this.panelCentral = panelCentral;
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -120,7 +122,29 @@ public class MainLoginPanel extends JPanel {
 	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
 	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
+	        this.userButtonActionListener();
+	        this.adminButtonActionListener();
 	        this.togglePasswordVisibility();
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void userButtonActionListener() {
+		JButton userButton = (JButton) this.components.get(USER_LOGIN_BUTTON_KEY);
+		
+		userButton.addActionListener(e -> {
+			this.setVisible(false);
+			this.panelCentral.getPanel().get(PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL).setVisible(true);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void adminButtonActionListener() {
+		JButton adminButton = (JButton) this.components.get(ADMIN_LOGIN_BUTTON_KEY);
+		
+		adminButton.addActionListener(e -> {
+			this.setVisible(false);
+			this.panelCentral.getPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
 		});
 	}
 	
@@ -183,7 +207,7 @@ public class MainLoginPanel extends JPanel {
 	public void setTextField(String textFieldKey) {
 		JTextField textField = new JTextField(TEXTFIELD_SIZE);
 		this.grid.anchor = GridBagConstraints.CENTER;
-		textField.setFont(new Font("Arial", Font.PLAIN, 14));
+		
 		textField.setBackground(Color.WHITE);
 		textField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;

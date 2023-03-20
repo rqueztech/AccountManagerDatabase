@@ -20,55 +20,6 @@ import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.user.UserCentralPanel;
 import com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
 
-class PanelCreationWorker extends SwingWorker<ConcurrentHashMap<PanelCentralEnums, JPanel>, Void> {
-
-	PanelCentral panelCentral;
-	BaseFrame frame;
-	ConcurrentHashMap<PanelCentralEnums, JPanel> panels;
-	
-	public PanelCreationWorker(PanelCentral panelCentral, BaseFrame frame, ConcurrentHashMap <PanelCentralEnums, JPanel> panels) {
-		// TODO Auto-generated constructor stub
-		this.panelCentral = panelCentral;
-		this.frame = frame;
-		this.panels = panels;
-	}
-	
-	@Override
-	protected ConcurrentHashMap<PanelCentralEnums, JPanel> doInBackground() throws Exception {
-		// TODO Auto-generated method stub
-		
-		this.panels.put(PanelCentralEnums.MAIN_LOGIN_PANEL, new MainLoginPanel(frame, new GridBagLayout()));
-		this.panels.put(PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL, new UserChangeDefaultPasswordPanel(frame, new GridBagLayout()));
-		this.panels.put(PanelCentralEnums.USER_CENTRAL_PANEL, new UserCentralPanel(frame, new GridBagLayout()));
-		this.panels.put(PanelCentralEnums.SETUP_AGREEMENT_PANEL, new SetupAgreementPanel(frame, new GridBagLayout()));
-		this.panels.put(PanelCentralEnums.SETUP_CONFIGURATION_PANEL, new SetupConfigurationPanel(frame, new GridBagLayout()));
-		
-		return this.panels;
-	}
-	
-	@Override
-	protected void done() {
-		// TODO Auto-generated method stub
-		super.done();
-		
-		try {
-			ConcurrentHashMap<PanelCentralEnums, JPanel> concurrentHashMap = get();
-		
-			System.out.println(this.panels);
-			for(ConcurrentHashMap.Entry<PanelCentralEnums, JPanel> entry : this.panels.entrySet()) {
-				panelCentral.setConcurrentHashMap(entry.getKey(), entry.getValue());
-			}
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-}
-
 public class PanelCentral extends JPanel {
 	
 	private static final long serialVersionUID = -652692111395861275L;
@@ -87,8 +38,6 @@ public class PanelCentral extends JPanel {
 		
 		PanelCreationWorker panelCreationWorker = new PanelCreationWorker(this, frame, this.panels);
 		panelCreationWorker.execute();
-		
-		
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -142,11 +91,35 @@ public class PanelCentral extends JPanel {
 					System.out.println(panels.get(PanelCentralEnums.SETUP_AGREEMENT_PANEL));
 					break;
 		
+				case 6:
+					//panels.put(PanelCentralEnums.LOGOUT_SUCCESS_PANEL, new SetupAgreementPanel(frame));
+					//panels.get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(false);
+					panels.get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
+					System.out.println(panels.get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL));
+					break;
+					
+				case 7:
+					//panels.put(PanelCentralEnums.ADMIN_CENTRAL_PANEL, new SetupAgreementPanel(frame));
+					//panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(false);
+					panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
+					System.out.println(panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL));
+					break;
+					
+				case 8:
+					//panels.put(PanelCentralEnums.ADMIN_CENTRAL_PANEL, new SetupAgreementPanel(frame));
+					//panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(false);
+					panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
+					System.out.println(panels.get(PanelCentralEnums.ADMIN_CENTRAL_PANEL));
+					break;
 			}
 			
 			frame.setVisible(true);
 		}
 		
+	}
+	
+	public ConcurrentHashMap<PanelCentralEnums, JPanel> getPanel() {
+		return this.panels;
 	}
 	
 	public ConcurrentHashMap<PanelCentralEnums, JPanel> getConcurrentHashMap() {
