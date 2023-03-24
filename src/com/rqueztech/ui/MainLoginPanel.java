@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -31,7 +30,6 @@ public class MainLoginPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -52,7 +50,6 @@ public class MainLoginPanel extends JPanel {
 	// --- Section 3: Login Button Component Keys
 	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
 	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
-	private final String ADMIN_CENTRAL_PANEL = "ADMIN_CENTRAL_PANEL";
 	
 	
 	private final int GRID_X_INITIAL = 0;
@@ -64,8 +61,6 @@ public class MainLoginPanel extends JPanel {
 	private final int TEXTFIELD_SIZE = 10;
 	
 	private TogglePasswordVisibility togglePasswordVisibility;
-	
-	private int newYValue = 0;
 	
 	private PanelCentral panelCentral;
 	

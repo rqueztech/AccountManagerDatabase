@@ -18,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -31,13 +30,11 @@ import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.AddUserDocumentListener;
 import com.rqueztech.ui.events.PasswordFieldListener;
 import com.rqueztech.ui.events.TextFieldListener;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class AdminAddUserPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -49,12 +46,10 @@ public class AdminAddUserPanel extends JPanel {
 	// --- Section 1: Adminname Component Keys
 	private final String FIRSTNAME_LABEL_KEY = "FIRSTNAME_LABEL_KEY";
 	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
-	private final String FIRSTNAME_VISIBILITY_BUTTON_KEY = "FIRSTNAME_VISIBILITY_BUTTON_KEY";
 
 	// --- Section 1: Adminname Component Keys
 	private final String LASTNAME_LABEL_KEY = "LASTNAME_LABEL_KEY";
 	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
-	private final String LASTNAME_VISIBILITY_BUTTON_KEY = "LASTNAME_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 3: Login Button Component Keys
 	private final String CANCEL_BUTTON_KEY = "CANCEL_BUTTON_KEY";
@@ -64,8 +59,6 @@ public class AdminAddUserPanel extends JPanel {
 	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
 	
 	// --- Section 4: Set Combo Box
-	private final String COMBO_BOX_KEY = "COMBO_BOX_KEY";
-	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
@@ -74,9 +67,6 @@ public class AdminAddUserPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 10;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
-	
-	private int newYValue = 0;
 	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
@@ -87,7 +77,6 @@ public class AdminAddUserPanel extends JPanel {
 	public AdminAddUserPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		this.panelCentral = panelCentral;
 		
 		// Dispatch responsibilities on EDT.

@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -23,13 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class LogoutSuccessPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -38,19 +35,8 @@ public class LogoutSuccessPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
-	private final String USERNAME_LABEL_KEY = "USERNAME_LABEL_KEY";
-	private final String USERNAME_TEXTFIELD_KEY = "USERNAME_TEXTFIELD_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String PASSWORD_LABEL_KEY = "PASSWORD_LABEL_KEY";
-	private final String PASSWORD_TEXTFIELD_KEY = "PASSWORD_TEXTFIELD_KEY";
-	private final String VISIBILITY_BUTTON_KEY = "VISIBILITY_BUTTON_KEY";
-	
 	// --- Section 3: Login Button Component Keys
-	private final String LOGOUT_SUCCESS_BUTTON_KEY = "LOGOUT_SUCCESS_BUTTON_KEY";
-	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
-	
+	private final String LOGOUT_SUCCESS_BUTTON_KEY = "LOGOUT_SUCCESS_BUTTON_KEY";	
 	private PanelCentral panelCentral;
 	
 	private final int GRID_X_INITIAL = 0;
@@ -61,10 +47,6 @@ public class LogoutSuccessPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 10;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
-	
-	private int newYValue = 0;
-	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	
@@ -72,7 +54,6 @@ public class LogoutSuccessPanel extends JPanel {
 	public LogoutSuccessPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		this.panelCentral = panelCentral; 
 		
 		// Dispatch responsibilities on EDT.

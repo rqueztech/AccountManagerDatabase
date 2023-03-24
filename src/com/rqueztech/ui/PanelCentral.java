@@ -6,7 +6,6 @@ It extends JFrame and contains a ConcurrentHashMap of all the panels as well as 
 package com.rqueztech.ui;
 
 import java.awt.Image;
-import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JPanel;
@@ -21,12 +20,10 @@ public class PanelCentral extends JPanel {
 	public Image image;
 	
 	// Reference to the BaseFrame objects
-	private final BaseFrame frame;
 	private final ConcurrentHashMap <PanelCentralEnums, JPanel> panels;
 	
 	public PanelCentral(BaseFrame frame) {
 		// Create all panels and add them to the card layout
-		this.frame = frame;
 		this.panels = new ConcurrentHashMap<PanelCentralEnums, JPanel>();
 		
 		PanelCreationWorker panelCreationWorker = new PanelCreationWorker(this, frame, this.panels);

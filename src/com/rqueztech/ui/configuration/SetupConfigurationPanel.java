@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -35,7 +34,6 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -85,7 +83,6 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
-	private int newYValue = 0;
 	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---

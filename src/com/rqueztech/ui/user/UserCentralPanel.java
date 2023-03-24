@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,7 +29,6 @@ public class UserCentralPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -40,12 +38,10 @@ public class UserCentralPanel extends JPanel {
 	private final int RIGHT_INSET = 0;
 	
 	// --- Section 1: Username Component Keys
-	private final String ENTERPASSWORD_LABEL_KEY = "ENTERPASSWORD_LABEL_KEY";
 	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
 	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
 	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
 	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
 	
@@ -63,7 +59,6 @@ public class UserCentralPanel extends JPanel {
 	
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
-	private int newYValue = 0;
 	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
