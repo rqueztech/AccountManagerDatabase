@@ -129,7 +129,7 @@ public class AdminCentralPanel extends JPanel {
 		
 		userViewButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_VIEW_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	

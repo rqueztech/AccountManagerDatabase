@@ -57,7 +57,7 @@ public class AdminAddUserPanel extends JPanel {
 	private final String LASTNAME_VISIBILITY_BUTTON_KEY = "LASTNAME_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 3: Login Button Component Keys
-	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
+	private final String CANCEL_BUTTON_KEY = "CANCEL_BUTTON_KEY";
 	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
 	
 	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
@@ -147,8 +147,8 @@ public class AdminAddUserPanel extends JPanel {
 	        
 	        // Set the exit button
 	        this.grid.gridy += 1;
-	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
+	        this.setButton(CANCEL_BUTTON_KEY, "Cancel");
+	        this.add(this.components.get(CANCEL_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
 	        this.setAddButton(ADD_USER_BUTTON_KEY, "Add user");
@@ -164,7 +164,7 @@ public class AdminAddUserPanel extends JPanel {
 	// --------------------------------------------------------------------------------------
 	public void invokeActionListeners() {
 		this.userViewButtonListener();
-        this.exitButtonActionListener();
+        this.cancelButtonActionListener();
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ public class AdminAddUserPanel extends JPanel {
 		userViewButton.addActionListener(e -> {
 			this.setVisible(false);
 			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_VIEW_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	
@@ -252,13 +252,15 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void exitButtonActionListener() {
-		JButton adminLogin = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
+	public void cancelButtonActionListener() {
+		JButton adminLogin = (JButton) this.components.get(CANCEL_BUTTON_KEY);
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
 			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
+			
+			// Take the user back to the Admin User View Panel
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	

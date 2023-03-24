@@ -41,7 +41,7 @@ class PanelCreationWorker extends SwingWorker<ConcurrentHashMap<PanelCentralEnum
 		this.panels.put(PanelCentralEnums.LOGOUT_SUCCESS_PANEL, new LogoutSuccessPanel(this.frame, new GridBagLayout(), this.panelCentral));
 		this.panels.put(PanelCentralEnums.ADMIN_CENTRAL_PANEL, new AdminCentralPanel(this.frame, new GridBagLayout(), this.panelCentral));
 		this.panels.put(PanelCentralEnums.ADMIN_ADD_USER_PANEL, new AdminAddUserPanel(this.frame, new GridBagLayout(), this.panelCentral));
-		this.panels.put(PanelCentralEnums.USER_VIEW_PANEL, new AdminUserViewPanel(this.frame, new GridBagLayout(), this.panelCentral));
+		this.panels.put(PanelCentralEnums.ADMIN_USER_VIEW_PANEL, new AdminUserViewPanel(this.frame, new GridBagLayout(), this.panelCentral));
 		
 		for(JPanel panel : panels.values()) {
 			panel.setVisible(false);
