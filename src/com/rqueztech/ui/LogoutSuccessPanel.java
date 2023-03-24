@@ -107,7 +107,7 @@ public class LogoutSuccessPanel extends JPanel {
 		
 		logoutButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
 		});
 	}
 	

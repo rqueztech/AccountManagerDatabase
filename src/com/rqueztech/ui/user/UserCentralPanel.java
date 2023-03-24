@@ -116,7 +116,7 @@ public class UserCentralPanel extends JPanel {
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
 		});
 	}
 	

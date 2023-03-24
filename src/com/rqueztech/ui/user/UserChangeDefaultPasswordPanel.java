@@ -1,6 +1,7 @@
 package com.rqueztech.ui.user;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -19,13 +21,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.ChangePasswordDocumentListener;
-import com.rqueztech.ui.events.PasswordDocumentListener;
+import com.rqueztech.ui.events.PasswordValidationDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class UserChangeDefaultPasswordPanel extends JPanel {
@@ -82,10 +85,11 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
 	        
-			// Set the panel to the gridbaglayout, establish the preferred size,
-			// And get the image that will be used in the background
-			this.setLayout(layout);
-	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
+			this.setLayout(layout);	// Set the layout to the inherited Gridbag Layout (layout)
+	        
+			this.setPreferredSize(
+					new Dimension(frame.getHeight(), frame.getWidth())); // Set the size to the 
+	        																			// dimensions of the BaseFrame
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
@@ -137,7 +141,23 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	        this.enablePasswordTogglers();
 	        this.setListeners();
 	        this.submitButtonListener();
+	        this.cancelButtonActionListener();
 		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void clearFields() {
+
+		for(Component component : this.components.values()) {
+			if(component instanceof JPasswordField) {
+				((JPasswordField) component).setText("");
+				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
+			}
+			
+			else if(component instanceof JTextField) {
+				((JTextField) component).setText("");
+			}
+		}
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -146,7 +166,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		
 		submitButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.USER_CENTRAL_PANEL).setVisible(true);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_CENTRAL_PANEL).setVisible(true);
 		});
 	}
 	
@@ -156,7 +177,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		
 		cancelButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
 		});
 	}
 	
@@ -191,7 +213,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		JButton passwordButton = (JButton) this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
 		JPasswordField passwordField = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
 		
-		PasswordDocumentListener passwordDocumentListener = new PasswordDocumentListener(passwordField, passwordButton);
+		PasswordValidationDocumentListener passwordDocumentListener = new PasswordValidationDocumentListener(passwordField, passwordButton);
 		passwordField.getDocument().addDocumentListener(passwordDocumentListener);
 	}
 	
@@ -200,7 +222,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		JButton passphraseButton = (JButton) this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
 		JPasswordField passphraseField = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
 		
-		PasswordDocumentListener passwordDocumentListener = new PasswordDocumentListener(passphraseField, passphraseButton);
+		PasswordValidationDocumentListener passwordDocumentListener = new PasswordValidationDocumentListener(passphraseField, passphraseButton);
 		passphraseField.getDocument().addDocumentListener(passwordDocumentListener);
 	}
 	

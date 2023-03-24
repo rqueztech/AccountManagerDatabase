@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -16,11 +15,16 @@ public class ChangePasswordDocumentListener implements DocumentListener {
 	private JPasswordField confirmPasswordField;
 	private InputValidations inputValidations;
 	
-	public ChangePasswordDocumentListener(JButton adminButton, JPasswordField passwordField, JPasswordField confirmPasswordField) {
+	public ChangePasswordDocumentListener(
+			JButton adminButton, 
+			JPasswordField passwordField, 
+			JPasswordField confirmPasswordField) {
+		
 		this.inputValidations = new InputValidations();
 		this.adminButton = adminButton;
 		this.passwordField = passwordField;
 		this.confirmPasswordField = confirmPasswordField;
+		
 	}
 	
 	public boolean isNullCheckPass() {

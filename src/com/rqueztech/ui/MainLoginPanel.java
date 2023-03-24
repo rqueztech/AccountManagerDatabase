@@ -1,6 +1,7 @@
 package com.rqueztech.ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -129,12 +131,27 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	public void clearFields() {
+		for(Component component : this.components.values()) {
+			if(component instanceof JPasswordField) {
+				((JPasswordField) component).setText("");
+				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
+			}
+			
+			else if(component instanceof JTextField) {
+				((JTextField) component).setText("");
+			}
+		}
+	}
+	
+	// --------------------------------------------------------------------------------------
 	public void userButtonActionListener() {
 		JButton userButton = (JButton) this.components.get(USER_LOGIN_BUTTON_KEY);
 		
 		userButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL).setVisible(true);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL).setVisible(true);
 		});
 	}
 	
@@ -144,7 +161,8 @@ public class MainLoginPanel extends JPanel {
 		
 		adminButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
 		});
 	}
 	

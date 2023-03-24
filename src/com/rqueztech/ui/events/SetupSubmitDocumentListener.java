@@ -10,7 +10,7 @@ import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.validation.InputValidations;
 
-public class SubmitDocumentListener implements DocumentListener {
+public class SetupSubmitDocumentListener implements DocumentListener {
 	private JButton adminButton;
 	private JTextField firstName;
 	private JTextField lastName;
@@ -20,7 +20,7 @@ public class SubmitDocumentListener implements DocumentListener {
 	private JPasswordField confirmPasswordField;
 	private InputValidations inputValidations;
 	
-	public SubmitDocumentListener(JButton adminButton, JTextField firstName, 
+	public SetupSubmitDocumentListener(JButton adminButton, JTextField firstName, 
 			JTextField lastName, JPasswordField passphraseField, 
 		JPasswordField confirmPassphraseField, JPasswordField passwordField, 
 		JPasswordField confirmPasswordField) {
@@ -118,28 +118,28 @@ public class SubmitDocumentListener implements DocumentListener {
 		else {
 			this.opacityToggleOff();
 		}
-		
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
 		if(this.isNullCheckPass() && this.isPasswordsValid()
-		&& this.isPasswordsMatch()) {
+		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
+		&& !this.passwordsConflict()) {
 			this.opacityToggleOn();
 		}
 		
 		else {
 			this.opacityToggleOff();
 		}
-		
 	}
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
 		if(this.isNullCheckPass() && this.isPasswordsValid()
-		&& this.isPasswordsMatch()) {
+		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
+		&& !this.passwordsConflict()) {
 			this.opacityToggleOn();
 		}
 		

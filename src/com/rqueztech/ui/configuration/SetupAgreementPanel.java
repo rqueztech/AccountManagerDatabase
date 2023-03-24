@@ -17,11 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.text.SimpleAttributeSet;
@@ -31,7 +28,6 @@ import javax.swing.text.StyledDocument;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class SetupAgreementPanel extends JPanel {
 	
@@ -101,7 +97,7 @@ public class SetupAgreementPanel extends JPanel {
 		
 		configurationButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.SETUP_CONFIGURATION_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.SETUP_CONFIGURATION_PANEL).setVisible(true);
 		});
 	}
 	

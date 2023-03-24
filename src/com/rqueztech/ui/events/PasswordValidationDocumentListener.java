@@ -10,7 +10,7 @@ import javax.swing.event.DocumentListener;
 
 import com.rqueztech.ui.validation.InputValidations;
 
-public class PasswordDocumentListener implements DocumentListener {
+public class PasswordValidationDocumentListener implements DocumentListener {
 	
 	private JPasswordField passwordField;
 	private JButton currentButton;
@@ -36,9 +36,8 @@ public class PasswordDocumentListener implements DocumentListener {
 	
 	private StringBuilder sb;
 	private ConcurrentHashMap <Integer, String> stringMessage; 
-	private boolean meetsPasswordRequirements = false;
 	
-	public PasswordDocumentListener(
+	public PasswordValidationDocumentListener(
 			JPasswordField passwordField,
 			JButton currentButton) 
 	{
@@ -58,6 +57,10 @@ public class PasswordDocumentListener implements DocumentListener {
 		this.stringMessage.put(HAS_ILLEGAL, "No Illegal");
 		
 		this.updateToolTip();
+	}
+	
+	public void resetButtons() {
+		this.currentButton.setBackground(Color.BLACK);
 	}
 	
 	public void updateButton() {
@@ -129,6 +132,10 @@ public class PasswordDocumentListener implements DocumentListener {
 		(this.passwordField.getPassword())) {
 			this.currentButton.setBackground(Color.GREEN);
 			this.currentButton.setOpaque(true);
+		}
+		
+		else if(this.passwordField.getPassword().length == 0) {
+			resetButton();
 		}
 		
 		else {

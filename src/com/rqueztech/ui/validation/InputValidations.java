@@ -9,7 +9,7 @@ public class InputValidations {
 	private static final Pattern PASSWORD_REQUIREMENTS_PATTERN = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}");
 	private static final Pattern LEGAL_CHARACTERS_PATTERN = Pattern.compile("^[A-Za-z0-9@$!%*#?&]+$");
 	private static final Pattern ONLY_LETTERS_AND_NUMBERS_PATTERN = Pattern.compile("^[A-Za-z0-9]+$");
-	private static final Pattern ONLY_LETTER_CHARACTERS_PATTERN = Pattern.compile("^[A-Za-z]+$");
+	private static final Pattern ONLY_LETTER_CHARACTERS_PATTERN = Pattern.compile("^([A-Za-z]+){2,}$");
 	private static final Pattern NO_UPPERCASE_CHARACTERS_PATTERN = Pattern.compile("^[^A-Z]+$");
 	private static final Pattern NO_LOWERCASE_CHARACTERS_PATTERN = Pattern.compile("^[^a-z]+$");
 	private static final Pattern NO_SPECIAL_CHARACTERS_PATTERN = Pattern.compile("^[^@$!%*#?&]+$");

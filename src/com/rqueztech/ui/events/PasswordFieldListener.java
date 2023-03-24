@@ -4,22 +4,25 @@ import javax.swing.JPasswordField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class PasswordMatcherListener implements DocumentListener {
+public class PasswordFieldListener implements DocumentListener {
 	
-	public PasswordMatcherListener(JPasswordField newPassword, JPasswordField confirmedPassword) {
+	private JPasswordField passwordField;
+	
+	public PasswordFieldListener(JPasswordField passwordField) {
+		this.passwordField = passwordField;
 		
 	}
 	
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		
+		this.passwordField.getPassword();
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		
+		this.passwordField.getPassword();
 	}
 
 	@Override
@@ -27,5 +30,4 @@ public class PasswordMatcherListener implements DocumentListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

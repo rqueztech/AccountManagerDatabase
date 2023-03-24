@@ -1,6 +1,7 @@
 package com.rqueztech.ui.admin;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,10 +11,12 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,6 +28,10 @@ import javax.swing.SwingUtilities;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
+import com.rqueztech.ui.events.AddUserDocumentListener;
+import com.rqueztech.ui.events.ChangePasswordDocumentListener;
+import com.rqueztech.ui.events.PasswordFieldListener;
+import com.rqueztech.ui.events.TextFieldListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class AdminAddUserPanel extends JPanel {
@@ -50,19 +57,15 @@ public class AdminAddUserPanel extends JPanel {
 	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
 	private final String LASTNAME_VISIBILITY_BUTTON_KEY = "LASTNAME_VISIBILITY_BUTTON_KEY";
 	
-	// --- Section 1: Adminname Component Keys
-	private final String ENTERPASSWORD_LABEL_KEY = "ENTERPASSWORD_LABEL_KEY";
-	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
-	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
-	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
-	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
-	
 	// --- Section 3: Login Button Component Keys
 	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
-	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
+	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
+	
+	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
+	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	
+	// --- Section 4: Set Combo Box
+	private final String COMBO_BOX_KEY = "COMBO_BOX_KEY";
 	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -79,6 +82,7 @@ public class AdminAddUserPanel extends JPanel {
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
+	private JComboBox<String> gender;
 	
 	// --------------------------------------------------------------------------------------
 	public AdminAddUserPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
@@ -102,7 +106,8 @@ public class AdminAddUserPanel extends JPanel {
 	        this.setBackgroundImageConstraints();
 	        frame.add(this, this.grid);
 	        //--- Finish Constraints End ---
-	        
+	        String[] genderOptions = { "Select", "Male", "Female", "Undisclosed" };
+	        this.gender = new JComboBox<String>(genderOptions);
 	        
 	        this.setComponentMainPosition();
 	        this.grid.gridx = 0;
@@ -111,30 +116,140 @@ public class AdminAddUserPanel extends JPanel {
 	        this.setLabelField(FIRSTNAME_LABEL_KEY, "Enter First Name");
 	        this.add(this.components.get(FIRSTNAME_LABEL_KEY), grid);
 	        
-	        this.grid.gridy += 1;
-	        this.setTextField(FIRSTNAME_TEXTFIELD_KEY);
-	        this.add(this.components.get(FIRSTNAME_TEXTFIELD_KEY), grid);
+	        // Firstname textfield
+	        this.grid.gridy += 1;	// Increase vertical grid by one
+	        this.setTextField(FIRSTNAME_TEXTFIELD_KEY);	// Set the textfield key
+	        this.add(this.components.get(FIRSTNAME_TEXTFIELD_KEY), grid);	// Add the component to the grid
 	        
 	        this.grid.gridy += 1;
 	        this.setLabelField(LASTNAME_LABEL_KEY, "Enter Last Name");
 	        this.add(this.components.get(LASTNAME_LABEL_KEY), grid);
 	        
+	        // Lastname textfield
 	        this.grid.gridy += 1;
 	        this.setTextField(LASTNAME_TEXTFIELD_KEY);
 	        this.add(this.components.get(LASTNAME_TEXTFIELD_KEY), grid);
 	        
 	        this.grid.gridy += 1;
+	        this.setLabelField(PASSPHRASE_LABEL_KEY, "Enter Passphrase");
+	        this.add(this.components.get(PASSPHRASE_LABEL_KEY), grid);
+	        
+	        // Lastname textfield
+	        this.grid.gridy += 1;
+	        this.setPasswordField(PASSPHRASE_TEXTFIELD_KEY);
+	        this.add(this.components.get(PASSPHRASE_TEXTFIELD_KEY), grid);
+	        
+	        // Combo Box. Note: ComboBox is not added to the existing
+	        // 
+	        this.grid.gridx = 0;
+	        this.grid.gridy += 1;
+	        this.setComboBox();
+	        this.add(this.gender, this.grid);
+	        
+	        // Set the exit button
+	        this.grid.gridy += 1;
 	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Exit");
 	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
-	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Add user");
-	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
+	        this.setAddButton(ADD_USER_BUTTON_KEY, "Add user");
+	        this.add(this.components.get(ADD_USER_BUTTON_KEY), grid);
 	        
-	        this.exitButtonActionListener();
+	        this.invokeActionListeners();
+	        this.invokeDocumentListeners();
 	        
 	        //this.enablePasswordTogglers();
 		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void invokeActionListeners() {
+		this.userViewButtonListener();
+        this.exitButtonActionListener();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void userViewButtonListener() {
+		JButton userViewButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
+		
+		userViewButton.addActionListener(e -> {
+			this.setVisible(false);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_VIEW_PANEL).setVisible(true);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void invokeDocumentListeners() {
+		this.firstNameListener();
+		this.lastNameListener();
+		this.passphraseNameListener();
+		this.addUserButtonListener();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void addUserButtonListener() {
+		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
+		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
+		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+		
+		JButton addUserButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
+		
+		AddUserDocumentListener addUserDocumentListener = 
+				new AddUserDocumentListener(addUserButton, firstName, lastName,
+						passphrase, this.gender);
+		
+		firstName.getDocument().addDocumentListener(addUserDocumentListener);
+		lastName.getDocument().addDocumentListener(addUserDocumentListener);
+		passphrase.getDocument().addDocumentListener(addUserDocumentListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void firstNameListener() {
+		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
+		
+		// Create a listener for the first name field
+		TextFieldListener nameFieldListener = 
+				new TextFieldListener(firstName);
+		
+		firstName.getDocument().addDocumentListener(nameFieldListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void lastNameListener() {
+		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
+		
+		// Listener for the last name field
+		TextFieldListener lastNameFieldListener = 
+				new TextFieldListener(lastName);
+		
+		lastName.getDocument().addDocumentListener(lastNameFieldListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void passphraseNameListener() {
+		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+		// Listener for the last name field
+		PasswordFieldListener passwordFieldListener = 
+				new PasswordFieldListener(passphrase);
+
+		passphrase.getDocument().addDocumentListener(passwordFieldListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void clearFields() {
+		for(Component component : this.components.values()) {
+			if(component instanceof JPasswordField) {
+				((JPasswordField) component).setText("");
+				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
+			}
+			
+			else if(component instanceof JTextField) {
+				((JTextField) component).setText("");
+			}
+		}
+		
+		this.gender.setSelectedIndex(0);
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -143,33 +258,8 @@ public class AdminAddUserPanel extends JPanel {
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.panelCentral.getPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void enablePasswordTogglers() {
-		this.toggleEnterPasswordVisibility();
-        this.toggleConfirmPasswordVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleEnterPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField enterPasswordTextField = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleConfirmPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField confirmPasswordTextField = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(confirmPasswordTextField);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
 		});
 	}
 	
@@ -236,6 +326,21 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	public void setAddButton(String buttonKey, String buttonText) {
+		JButton button = new JButton(buttonText);
+        this.grid.anchor = GridBagConstraints.CENTER;
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setEnabled(false);
+        button.setOpaque(false);
+        this.grid.gridwidth = 1;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        
+        this.components.put(buttonKey, button);
+	}
+	
+	// --------------------------------------------------------------------------------------
 	public void setPasswordField(String passwordFieldKey) {
 		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -247,6 +352,19 @@ public class AdminAddUserPanel extends JPanel {
         this.grid.weighty = 0.0;
         
         this.components.put(passwordFieldKey, passwordField);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setComboBox() {
+		// Gender Dropbox
+		this.gender.setForeground(Color.white);
+		this.gender.setBackground(Color.black);
+		
+		this.grid.gridwidth = 1;
+		this.grid.gridheight = 1;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        this.grid.insets = new Insets(2, 0, 10, 0); 
 	}
 	
 	// --------------------------------------------------------------------------------------
