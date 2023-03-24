@@ -29,7 +29,6 @@ import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.AddUserDocumentListener;
-import com.rqueztech.ui.events.ChangePasswordDocumentListener;
 import com.rqueztech.ui.events.PasswordFieldListener;
 import com.rqueztech.ui.events.TextFieldListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
@@ -148,7 +147,7 @@ public class AdminAddUserPanel extends JPanel {
 	        
 	        // Set the exit button
 	        this.grid.gridy += 1;
-	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Exit");
+	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Cancel");
 	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
@@ -259,7 +258,7 @@ public class AdminAddUserPanel extends JPanel {
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
 			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
 		});
 	}
 	

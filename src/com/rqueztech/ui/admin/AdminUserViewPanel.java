@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,41 +35,52 @@ import javax.swing.table.JTableHeader;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
+import com.rqueztech.ui.events.AddUserDocumentListener;
+import com.rqueztech.ui.events.PasswordFieldListener;
+import com.rqueztech.ui.events.TextFieldListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class AdminUserViewPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
+	
 	private JFrame frame;
 	private Image image;
 	private GridBagConstraints grid;
 
 	private final int TOP_INSET = 0;
 	private final int LEFT_INSET = 0;
-	private final int BOTTOM_INSET = 5;
+	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
-	
-	// --- Section 1: Adminname Component Keys
-	private final String ENTERPASSWORD_LABEL_KEY = "ENTERPASSWORD_LABEL_KEY";
-	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
-	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 2: Password Component Keys
 	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
 	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
 	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
 	
-	// --- Section 3: Login Button Component Keys
-	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
+	private final String RETURN_CENTRAL_BUTTON_KEY = "RETURN_CENTRAL_BUTTON_KEY";
 	private final String ADMIN_ADD_USER_BUTTON_KEY = "ADMIN_ADD_USER_BUTTON_KEY";
 	
-	private final String USER_VIEW_BUTTON_KEY = "USER_VIEW_BUTTON_KEY";
+	// --- Section 1: Adminname Component Keys
+	private final String FIRSTNAME_LABEL_KEY = "FIRSTNAME_LABEL_KEY";
+	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
+	private final String FIRSTNAME_VISIBILITY_BUTTON_KEY = "FIRSTNAME_VISIBILITY_BUTTON_KEY";
+
+	// --- Section 1: Adminname Component Keys
+	private final String LASTNAME_LABEL_KEY = "LASTNAME_LABEL_KEY";
+	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
+	private final String LASTNAME_VISIBILITY_BUTTON_KEY = "LASTNAME_VISIBILITY_BUTTON_KEY";
 	
-	// --- Section 2: Password Component Keys
-	private final String RETURN_CENTRAL_LABEL_KEY = "RETURN_CENTRAL_LABEL_KEY";
-	private final String RETURN_CENTRAL_TEXTFIELD_KEY = "RETURN_CENTRAL_TEXTFIELD_KEY";
-	private final String RETURN_CENTRAL_VISIBILITY_BUTTON_KEY = "RETURN_CENTRAL_VISIBILITY_BUTTON_KEY";
+	// --- Section 3: Login Button Component Keys
+	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
+	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
+	
+	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
+	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	
+	// --- Section 4: Set Combo Box
+	private final String COMBO_BOX_KEY = "COMBO_BOX_KEY";
 	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -93,17 +105,20 @@ public class AdminUserViewPanel extends JPanel {
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		this.panelCentral = panelCentral;
 		
+		this.components = new ConcurrentHashMap<String, JComponent>();
+		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
-		
-			// Set the panel to the gridbaglayout, establish the preferred size,
-			// And get the image that will be used in the background
-			this.setLayout(layout);
-	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
-	        this.image = new ImageIcon("backgroundd.jpg").getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
-	        // --- Start Constraints ---
+			this.setLayout(layout);
+			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
+			this.image = new ImageIcon("backgroundd.jpg").getImage();
+			this.components = new ConcurrentHashMap <String, JComponent> ();
+	        
+			this.setBackgroundImageConstraints();
+			frame.add(this, this.grid);
+			
+			// --- Start Constraints ---
 	        // Set all of the constraints for the background image
 	        this.setBackgroundImageConstraints();
 	        frame.add(this, this.grid);
@@ -113,13 +128,13 @@ public class AdminUserViewPanel extends JPanel {
 	        
 	        this.setLabelField(CONFIRMPASSWORDPASSWORD_LABEL_KEY, "User Table");
 	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
-	    
+	        
 	        this.grid.gridy += 1;
 	        
 	        // One dimensional array representing table columns
 	        String[] columns = {"UsrName", "FName", "LName"};
 	        
-	        // Two dimensional array representing data inside of table (row format)
+	     // Two dimensional array representing data inside of table (row format)
 	        String[][] rows = {
 	        		{"rquez", "Ricardo", "Quezada"},
 	        		{"cmans", "Carl", "Mansfield"},
@@ -195,7 +210,6 @@ public class AdminUserViewPanel extends JPanel {
 	                g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
 	            }
 	        });
-
 	        
 	        // Set custom header renderer
 	        JTableHeader header = table.getTableHeader();
@@ -218,56 +232,111 @@ public class AdminUserViewPanel extends JPanel {
 	        scrollPane.setPreferredSize(new Dimension(350, 160));
 	        scrollPane.setBackground(Color.BLACK);
 	        
+	        this.grid.gridwidth = 4;
+	        
 	        table.setBorder(null);
 	        scrollPane.setBorder(null);
 	        scrollPane.setViewportBorder(null);
+	        this.grid.insets = new Insets(5,0,0,0);
 	        
 	        this.add(scrollPane, this.grid);
 	        
 	        this.grid.gridy += 1;
 	        
-	        this.grid.gridx = 0;
-	        this.setButton(RETURN_CENTRAL_VISIBILITY_BUTTON_KEY, "Go Back");
-	        this.add(this.components.get(RETURN_CENTRAL_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(RETURN_CENTRAL_BUTTON_KEY, "Go Back");
+	        this.add(this.components.get(RETURN_CENTRAL_BUTTON_KEY), this.grid);
 	        
 	        this.grid.gridx += 1;
-	        this.setButton(ADMIN_ADD_USER_BUTTON_KEY, "Add User");
-	        this.add(this.components.get(ADMIN_ADD_USER_BUTTON_KEY), grid);
+	        this.setButton(ADD_USER_BUTTON_KEY, "Add User");
+	        this.add(this.components.get(ADD_USER_BUTTON_KEY), this.grid);
 	        
 	        this.grid.gridy += 1;
 	        this.grid.gridx = 0;
 	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Logout");
-	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
+	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), this.grid);
 	        
 	        this.invokeActionListeners();
 		});
+
 	}
 	
 	// --------------------------------------------------------------------------------------
 	public void invokeActionListeners() {
-		this.addUserButtonActionListener();
+		this.userViewButtonListener();
+        this.exitButtonActionListener();
         this.logoutButtonActionListener();
-        this.returnButtonActionListener();
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void returnButtonActionListener() {
-		JButton addUserButton = (JButton) this.components.get(RETURN_CENTRAL_VISIBILITY_BUTTON_KEY);
+	public void logoutButtonActionListener() {
+		JButton userViewButton = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
 		
-		addUserButton.addActionListener(e -> {
+		userViewButton.addActionListener(e -> {
 			this.setVisible(false);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void userViewButtonListener() {
+		JButton userViewButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
+		
+		userViewButton.addActionListener(e -> {
+			this.setVisible(false);
+			this.clearFields();
+			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void exitButtonActionListener() {
+		JButton adminLogin = (JButton) this.components.get(RETURN_CENTRAL_BUTTON_KEY);
+		
+		adminLogin.addActionListener(e -> {
+			this.setVisible(false);
+			this.clearFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void addUserButtonActionListener() {
-		JButton addUserButton = (JButton) this.components.get(ADMIN_ADD_USER_BUTTON_KEY);
+	public void invokeDocumentListeners() {
+		this.firstNameListener();
+		this.lastNameListener();
+		this.passphraseNameListener();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void firstNameListener() {
+		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
 		
-		addUserButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
-		});
+		// Create a listener for the first name field
+		TextFieldListener nameFieldListener = 
+				new TextFieldListener(firstName);
+		
+		firstName.getDocument().addDocumentListener(nameFieldListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void lastNameListener() {
+		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
+		
+		// Listener for the last name field
+		TextFieldListener lastNameFieldListener = 
+				new TextFieldListener(lastName);
+		
+		lastName.getDocument().addDocumentListener(lastNameFieldListener);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void passphraseNameListener() {
+		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+		// Listener for the last name field
+		PasswordFieldListener passwordFieldListener = 
+				new PasswordFieldListener(passphrase);
+
+		passphrase.getDocument().addDocumentListener(passwordFieldListener);
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -285,58 +354,23 @@ public class AdminUserViewPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void adminAddUserButtonListener() {
-		JButton adminLogin = (JButton) this.components.get(ADMIN_ADD_USER_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void enablePasswordTogglers() {
-		this.toggleEnterPasswordVisibility();
-        this.toggleConfirmPasswordVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleEnterPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField enterPasswordTextField = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleConfirmPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField confirmPasswordTextField = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(confirmPasswordTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
 	public void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	// This will set the label down one
+	public void setNewLabelPosition() {
+		this.grid.gridx = 0;
+        this.grid.gridy += 1;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setNewTextfieldPosition() {
+		this.grid.gridx = 0;
+		this.grid.gridy += 1;
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -352,17 +386,47 @@ public class AdminUserViewPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	public void setTextField(String textFieldKey) {
+		JTextField textField = new JTextField(TEXTFIELD_SIZE);
+		//this.grid.anchor = GridBagConstraints.CENTER;
+		//textField.setFont(new Font("Arial", Font.PLAIN, 14));
+		textField.setBackground(Color.WHITE);
+		textField.setForeground(Color.BLACK);
+		this.grid.gridwidth = 2;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
+        this.grid.gridx = GRID_X_INITIAL;
+        this.grid.gridy += 1;
+        
+        this.components.put(textFieldKey, textField);
+        this.add(this.components.get(textFieldKey), grid);
+	}
+	
+	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
 		JButton button = new JButton(buttonText);
         this.grid.anchor = GridBagConstraints.CENTER;
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);
-        this.grid.gridwidth = GridBagConstraints.REMAINDER;
-        this.grid.fill = GridBagConstraints.NONE;
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
-        this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, 5);
+        
+        this.components.put(buttonKey, button);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setAddButton(String buttonKey, String buttonText) {
+		JButton button = new JButton(buttonText);
+        this.grid.anchor = GridBagConstraints.CENTER;
+        this.grid.fill = GridBagConstraints.NONE;
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setEnabled(false);
+        button.setOpaque(false);
+        this.grid.gridwidth = 1;
+        this.grid.weightx = 0.0;
+        this.grid.weighty = 0.0;
         
         this.components.put(buttonKey, button);
 	}
@@ -385,17 +449,11 @@ public class AdminUserViewPanel extends JPanel {
 	public void setLabelField(String labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
-		this.grid.fill = GridBagConstraints.HORIZONTAL;
-		
-		this.grid.gridwidth = 5;
+		labelField.setBackground(Color.BLACK);
+		labelField.setForeground(Color.WHITE);
+		this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
-        
-        this.grid.insets = new Insets(0, 0, 5, 0);
-        
-		//labelField.setBackground(Color.BLACK);
-		labelField.setForeground(Color.WHITE);
-		//labelField.setOpaque(true);
         
         this.components.put(labelKey, labelField);
 	}
