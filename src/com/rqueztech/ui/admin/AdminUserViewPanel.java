@@ -24,11 +24,16 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
@@ -65,6 +70,7 @@ public class AdminUserViewPanel extends JPanel {
 	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
 	
 	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	private final String RETURN_CENTRAL_TEXTFIELD_KEY = "RETURN_CENTRAL_TEXTFIELD_KEY";
 	
 	// --- Section 4: Set Combo Box
 	private final int GRID_X_INITIAL = 0;
@@ -112,9 +118,9 @@ public class AdminUserViewPanel extends JPanel {
 	        this.grid.gridy += 1;
 	        
 	        // One dimensional array representing table columns
-	        String[] columns = {"UsrName", "FName", "LName"};
+	        String[] columns = {"UsrName", "FName", "LName, EmpNo, "};
 	        
-	     // Two dimensional array representing data inside of table (row format)
+	        // Two dimensional array representing data inside of table (row format)
 	        String[][] rows = {
 	        		{"rquez", "Ricardo", "Quezada"},
 	        		{"cmans", "Carl", "Mansfield"},
@@ -151,6 +157,11 @@ public class AdminUserViewPanel extends JPanel {
 	        
 	        // Anonymous innerclass defining the table for the program
 	        JTable table = new JTable(model);
+	        
+	        TableRowSorter <TableModel> rowSorter = 
+	        		new TableRowSorter<>(table.getModel());
+	        
+	        table.setRowSorter(rowSorter);
 	        
 	        this.grid.fill = GridBagConstraints.BOTH;
 	        table.getTableHeader().setReorderingAllowed(false);
@@ -222,7 +233,50 @@ public class AdminUserViewPanel extends JPanel {
 	        this.add(scrollPane, this.grid);
 	        
 	        this.grid.gridy += 1;
+	        this.setTextField(RETURN_CENTRAL_TEXTFIELD_KEY);
+	        this.add(this.components.get(RETURN_CENTRAL_TEXTFIELD_KEY), this.grid);
 	        
+		    JTextField textFilterField = (JTextField) this.components.get(RETURN_CENTRAL_TEXTFIELD_KEY);
+		    
+		    textFilterField.getDocument().addDocumentListener(new DocumentListener() {
+				
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					// TODO Auto-generated method stub
+					String text = textFilterField.getText();
+					
+					if(text.trim().length() == 0) {
+						rowSorter.setRowFilter(null);
+					} else {
+						rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+					}
+				}
+				
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					// TODO Auto-generated method stub
+					String text = textFilterField.getText();
+
+	                if (text.trim().length() == 0) {
+	                    rowSorter.setRowFilter(null);
+	                } else {
+	                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+	                }
+				}
+				
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					// TODO Auto-generated method stub
+					throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+				}
+			});
+	        
+	        this.grid.gridx += 1;
+	        this.setButton(DELETE_USER_BUTTON_KEY, "Delete User");
+	        this.add(this.components.get(DELETE_USER_BUTTON_KEY), this.grid);
+	        
+	        this.grid.gridx = 0;
+	        this.grid.gridy += 1;
 	        this.setButton(RETURN_CENTRAL_BUTTON_KEY, "Go Back");
 	        this.add(this.components.get(RETURN_CENTRAL_BUTTON_KEY), this.grid);
 	        
@@ -372,10 +426,8 @@ public class AdminUserViewPanel extends JPanel {
 	// --------------------------------------------------------------------------------------
 	public void setTextField(String textFieldKey) {
 		JTextField textField = new JTextField(TEXTFIELD_SIZE);
-		//this.grid.anchor = GridBagConstraints.CENTER;
-		//textField.setFont(new Font("Arial", Font.PLAIN, 14));
-		textField.setBackground(Color.WHITE);
-		textField.setForeground(Color.BLACK);
+		textField.setBackground(Color.DARK_GRAY);
+		textField.setForeground(Color.WHITE);
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
