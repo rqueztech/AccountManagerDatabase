@@ -48,7 +48,7 @@ import com.rqueztech.ui.events.RowFilterListener;
 import com.rqueztech.ui.events.TextFieldListener;
 
 public class AdminUserViewPanel extends JPanel {
-	
+
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
 
