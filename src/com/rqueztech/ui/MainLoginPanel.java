@@ -33,6 +33,7 @@ public class MainLoginPanel extends JPanel {
 	private Image image;
 	private GridBagConstraints grid;
 
+	// Insets for the GridBagLayout
 	private final int TOP_INSET = 0;
 	private final int LEFT_INSET = 0;
 	private final int BOTTOM_INSET = 0;
@@ -51,10 +52,11 @@ public class MainLoginPanel extends JPanel {
 	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
 	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
 	
-	
+	// Initial GridBagLayout values
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
+	// Weight of image gridvalues
 	private final int GRIDX_IMAGEWEIGHT = 1;
 	private final int GRIDY_IMAGEWEIGHT = 1;
 	
@@ -90,6 +92,7 @@ public class MainLoginPanel extends JPanel {
 	        frame.add(this, this.grid);
 	        //--- Finish Constraints End ---
 	        
+	        // Set the Username 
 	        this.setComponentMainPosition();
 	        this.setLabelField(USERNAME_LABEL_KEY, "Enter Username");
 	        this.add(this.components.get(USERNAME_LABEL_KEY), grid);

@@ -40,7 +40,7 @@ public class AdminUserViewPanel extends JPanel {
 	
 	// --- Group 1: Panel related variables ---
 	private static final long serialVersionUID = 1151818027338195157L;
-	
+
 	private Image image;
 	private GridBagConstraints grid;
 
@@ -51,7 +51,7 @@ public class AdminUserViewPanel extends JPanel {
 	
 	// --- Section 2: Password Component Keys
 	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
-	
+	private final String DELETE_USER_BUTTON_KEY = "DELETE_USER_BUTTON_KEY";
 	private final String RETURN_CENTRAL_BUTTON_KEY = "RETURN_CENTRAL_BUTTON_KEY";
 	
 	// --- Section 1: Adminname Component Keys
@@ -82,8 +82,7 @@ public class AdminUserViewPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public AdminUserViewPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
-		// Function that will toggle visibility on and off in password
-		// Field found in this class
+		
 		this.panelCentral = panelCentral;
 		
 		this.components = new ConcurrentHashMap<String, JComponent>();
@@ -230,6 +229,10 @@ public class AdminUserViewPanel extends JPanel {
 	        this.grid.gridx += 1;
 	        this.setButton(ADD_USER_BUTTON_KEY, "Add User");
 	        this.add(this.components.get(ADD_USER_BUTTON_KEY), this.grid);
+	        
+	        this.grid.gridx += 1;
+	        this.setButton(DELETE_USER_BUTTON_KEY, "Delete User");
+	        this.add(this.components.get(DELETE_USER_BUTTON_KEY), this.grid);
 	        
 	        this.grid.gridy += 1;
 	        this.grid.gridx = 0;

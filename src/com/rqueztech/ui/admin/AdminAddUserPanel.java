@@ -30,6 +30,7 @@ import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.AddUserDocumentListener;
 import com.rqueztech.ui.events.PasswordFieldListener;
 import com.rqueztech.ui.events.TextFieldListener;
+import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class AdminAddUserPanel extends JPanel {
 	
@@ -57,6 +58,7 @@ public class AdminAddUserPanel extends JPanel {
 	
 	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
 	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	private final String PASSPHRASE_VISIBILITY_BUTTON_KEY = "PASSPHRASE_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 4: Set Combo Box
 	private final int GRID_X_INITIAL = 0;
@@ -65,7 +67,7 @@ public class AdminAddUserPanel extends JPanel {
 	private final int GRIDX_IMAGEWEIGHT = 1;
 	private final int GRIDY_IMAGEWEIGHT = 1;
 	
-	private final int TEXTFIELD_SIZE = 10;
+	private final int TEXTFIELD_SIZE = 5;
 	
 	private PanelCentral panelCentral;
 	
@@ -73,11 +75,15 @@ public class AdminAddUserPanel extends JPanel {
 	private ConcurrentHashMap <String, JComponent> components;
 	private JComboBox<String> gender;
 	
+	private TogglePasswordVisibility togglePasswordVisibility;
+	
 	// --------------------------------------------------------------------------------------
 	public AdminAddUserPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
 		this.panelCentral = panelCentral;
+		
+		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -118,14 +124,20 @@ public class AdminAddUserPanel extends JPanel {
 	        this.setTextField(LASTNAME_TEXTFIELD_KEY);
 	        this.add(this.components.get(LASTNAME_TEXTFIELD_KEY), grid);
 	        
+	        // Passphrase Label
 	        this.grid.gridy += 1;
 	        this.setLabelField(PASSPHRASE_LABEL_KEY, "Enter Passphrase");
 	        this.add(this.components.get(PASSPHRASE_LABEL_KEY), grid);
 	        
-	        // Lastname textfield
+	        // Passphrase textfield
 	        this.grid.gridy += 1;
 	        this.setPasswordField(PASSPHRASE_TEXTFIELD_KEY);
 	        this.add(this.components.get(PASSPHRASE_TEXTFIELD_KEY), grid);
+	        
+	        // Passphrase button
+	        this.grid.gridx += 2;
+	        this.setButton(PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visibility");
+	        this.add(this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        // Combo Box. Note: ComboBox is not added to the existing
 	        // 
@@ -146,7 +158,22 @@ public class AdminAddUserPanel extends JPanel {
 	        this.invokeActionListeners();
 	        this.invokeDocumentListeners();
 	        
-	        //this.enablePasswordTogglers();
+	        this.enablePasswordTogglers();
+		});
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void enablePasswordTogglers() {
+		this.toggleEnterPasswordVisibility();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void toggleEnterPasswordVisibility() {
+		JButton toggleButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
+		
+		toggleButton.addActionListener( e -> {
+			JPasswordField enterPasswordTextField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
+			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
 		});
 	}
 	
@@ -261,19 +288,6 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	// This will set the label down one
-	public void setNewLabelPosition() {
-		this.grid.gridx = 0;
-        this.grid.gridy += 1;
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setNewTextfieldPosition() {
-		this.grid.gridx = 0;
-		this.grid.gridy += 1;
-	}
-	
-	// --------------------------------------------------------------------------------------
 	public void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
@@ -363,7 +377,7 @@ public class AdminAddUserPanel extends JPanel {
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
 		labelField.setForeground(Color.WHITE);
-		this.grid.gridwidth = 1;
+		this.grid.gridwidth = 3;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
         
