@@ -26,8 +26,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
-import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -37,14 +35,10 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.PasswordFieldListener;
-import com.rqueztech.ui.events.RowFilterListener;
 import com.rqueztech.ui.events.TextFieldListener;
 
 public class AdminUserViewPanel extends JPanel {

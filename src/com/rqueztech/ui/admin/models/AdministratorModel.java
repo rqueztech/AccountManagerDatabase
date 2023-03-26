@@ -8,24 +8,11 @@ public class AdministratorModel {
 	private char[] adminPassword;
 	private byte adminSalt;
 	private int adminNumber;
-	
-	public AdministratorModel(char[] adminFirstName, 
-			char[] adminLastName, char[] adminPassphrase, 
-			char[] adminPassword, byte adminSalt,
-			int adminNumber) {
-		
-		this.adminFirstName = adminFirstName;
-		this.adminLastName = adminLastName;
-		this.adminPassphrase = adminPassphrase;
-		this.adminPassword = adminPassword;
-		this.adminSalt = adminSalt;
-		this.adminNumber = adminNumber;
-	}
 
 	private InputValidations inputValidations;
 	
 	// --------------------------------------------------------------------------------------
-	public AdministratorModel(char[] adminFirstName, char[] adminLastName, char[] adminPassphrase, char[] adminPassword,
+	public AdministratorModel(char[] adminFirstName, char[] adminLastName, char[] adminPassword,
 			byte adminSalt, int adminNumber) {
 		super();
 		this.setAdminFirstName(adminFirstName);
