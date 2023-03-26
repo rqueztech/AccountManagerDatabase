@@ -348,7 +348,6 @@ public class AdminAddUserPanel extends JPanel {
 	public void setPasswordField(String passwordFieldKey) {
 		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
 		this.grid.anchor = GridBagConstraints.CENTER;
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
 		passwordField.setBackground(Color.WHITE);
 		passwordField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
