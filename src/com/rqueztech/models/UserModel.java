@@ -1,4 +1,4 @@
-package com.rqueztech.ui.user.models;
+package com.rqueztech.models;
 
 import com.rqueztech.ui.validation.InputValidations;
 
@@ -12,13 +12,13 @@ public class UserModel {
 	
 	// --------------------------------------------------------------------------------------
 	public UserModel(char[] userFirstName, char[] userLastName, char[] userPassword, byte userSalt, int userNumber) {
-		this.inputValidations = new InputValidations();
-		
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
 		this.userPassword = userPassword;
 		this.userSalt = userSalt;
 		this.userNumber = userNumber;
+		
+		this.inputValidations = new InputValidations();
 	}
 
 	// --------------------------------------------------------------------------------------

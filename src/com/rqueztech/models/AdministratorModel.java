@@ -1,4 +1,4 @@
-package com.rqueztech.ui.admin.models;
+package com.rqueztech.models;
 
 import com.rqueztech.ui.validation.InputValidations;
 
@@ -8,7 +8,6 @@ public class AdministratorModel {
 	private char[] adminPassword;
 	private byte adminSalt;
 	private int adminNumber;
-
 	private InputValidations inputValidations;
 	
 	// --------------------------------------------------------------------------------------
