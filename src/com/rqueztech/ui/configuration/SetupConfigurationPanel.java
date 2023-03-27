@@ -182,7 +182,7 @@ public class SetupConfigurationPanel extends JPanel {
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.SETUP_AGREEMENT_PANEL).setVisible(true);
 		});
 	}
@@ -196,7 +196,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void clearFields() {
+	public void resetFields() {
 
 		for(Component component : this.components.values()) {
 			if(component instanceof JPasswordField) {
@@ -266,7 +266,7 @@ public class SetupConfigurationPanel extends JPanel {
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
 		});
 	}

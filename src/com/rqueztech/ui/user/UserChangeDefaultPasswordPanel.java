@@ -3,7 +3,6 @@ package com.rqueztech.ui.user;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -144,7 +143,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void clearFields() {
+	public void resetFields() {
 
 		for(Component component : this.components.values()) {
 			if(component instanceof JPasswordField) {
@@ -164,7 +163,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		
 		submitButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_CENTRAL_PANEL).setVisible(true);
 		});
 	}
@@ -175,7 +174,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 		
 		cancelButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
 		});
 	}

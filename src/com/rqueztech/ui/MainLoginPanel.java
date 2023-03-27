@@ -1,9 +1,7 @@
 package com.rqueztech.ui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -11,21 +9,16 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.controllers.admin.MainLoginControl;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
@@ -65,9 +58,7 @@ public class MainLoginPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 10;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
-	
-	private PanelCentral panelCentral;
+	private MainLoginControl mainLoginControl;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
@@ -76,8 +67,6 @@ public class MainLoginPanel extends JPanel {
 	public MainLoginPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
-		this.panelCentral = panelCentral;
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -88,6 +77,11 @@ public class MainLoginPanel extends JPanel {
 	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        
+	        System.out.println(this);
+	        this.mainLoginControl = new MainLoginControl(this, panelCentral);
+	        
+	        
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -125,56 +119,14 @@ public class MainLoginPanel extends JPanel {
 	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
 	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
-	        this.userButtonActionListener();
-	        this.adminButtonActionListener();
-	        this.togglePasswordVisibility();
+	        this.setControllerActionListeners();
 		});
 	}
 	
-	// --------------------------------------------------------------------------------------
-	public void clearFields() {
-		for(Component component : this.components.values()) {
-			if(component instanceof JPasswordField) {
-				((JPasswordField) component).setText("");
-				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
-			}
-			
-			else if(component instanceof JTextField) {
-				((JTextField) component).setText("");
-			}
-		}
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void userButtonActionListener() {
-		JButton userButton = (JButton) this.components.get(USER_LOGIN_BUTTON_KEY);
-		
-		userButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.USER_CHANGE_DEFAULT_PASSWORD_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void adminButtonActionListener() {
-		JButton adminButton = (JButton) this.components.get(ADMIN_LOGIN_BUTTON_KEY);
-		
-		adminButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.clearFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void togglePasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField passwordTextField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(passwordTextField);
-		});
+	public void setControllerActionListeners() {
+		this.mainLoginControl.userButtonActionListener();
+        this.mainLoginControl.adminButtonActionListener();
+        this.mainLoginControl.togglePasswordVisibility();
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -256,6 +208,10 @@ public class MainLoginPanel extends JPanel {
         this.grid.weighty = 0.0;
         
         this.components.put(labelKey, labelField);
+	}
+	
+	public ConcurrentHashMap <String, JComponent> components() {
+		return this.components;
 	}
 	
 	@Override

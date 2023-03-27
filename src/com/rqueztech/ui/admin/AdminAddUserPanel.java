@@ -191,7 +191,7 @@ public class AdminAddUserPanel extends JPanel {
 		
 		userViewButton.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
@@ -254,7 +254,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void clearFields() {
+	public void resetFields() {
 		for(Component component : this.components.values()) {
 			if(component instanceof JPasswordField) {
 				((JPasswordField) component).setText("");
@@ -275,7 +275,7 @@ public class AdminAddUserPanel extends JPanel {
 		
 		adminLogin.addActionListener(e -> {
 			this.setVisible(false);
-			this.clearFields();
+			this.resetFields();
 			
 			// Take the user back to the Admin User View Panel
 			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
