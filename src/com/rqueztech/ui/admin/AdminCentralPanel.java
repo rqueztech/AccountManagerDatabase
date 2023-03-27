@@ -13,18 +13,15 @@ import java.awt.RenderingHints;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.controllers.admin.AdminCentralController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 
 public class AdminCentralPanel extends JPanel {
@@ -38,14 +35,6 @@ public class AdminCentralPanel extends JPanel {
 	private final int LEFT_INSET = 0;
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
-	
-	// --- Section 1: Adminname Component Keys
-	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
-	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
-	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
 	
 	// --- Section 3: Login Button Component Keys
 	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
@@ -62,19 +51,15 @@ public class AdminCentralPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 10;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
-	
-	private PanelCentral panelCentral;
+	private AdminCentralController adminCentralController;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
+	public PanelCentral panelCentral;
 	
 	// --------------------------------------------------------------------------------------
 	public AdminCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
-		// Function that will toggle visibility on and off in password
-		// Field found in this class
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
-		this.panelCentral = panelCentral;
+		
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -82,7 +67,10 @@ public class AdminCentralPanel extends JPanel {
 			// Set the panel to the gridbaglayout, establish the preferred size,
 			// And get the image that will be used in the background
 			this.setLayout(layout);
-	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
+	        
+			this.panelCentral = panelCentral;
+			
+			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
@@ -108,67 +96,7 @@ public class AdminCentralPanel extends JPanel {
 	        this.setButton(ADMIN_ADD_USER_BUTTON_KEY, "Add user");
 	        this.add(this.components.get(ADMIN_ADD_USER_BUTTON_KEY), grid);
 	        
-	        this.adminAddUserButtonListener();
-	        this.logoutButtonActionListener();
-	        this.userViewActionListener();
-	        
-	        //this.enablePasswordTogglers();
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void userViewActionListener() {
-		JButton userViewButton = (JButton) this.components.get(USER_VIEW_BUTTON_KEY);
-		
-		userViewButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void adminAddUserButtonListener() {
-		JButton adminLogin = (JButton) this.components.get(ADMIN_ADD_USER_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void enablePasswordTogglers() {
-		this.toggleEnterPasswordVisibility();
-        this.toggleConfirmPasswordVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleEnterPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField enterPasswordTextField = (JPasswordField) this.components.get(ENTERPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleConfirmPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField confirmPasswordTextField = (JPasswordField) this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(confirmPasswordTextField);
+	        this.adminCentralController = new AdminCentralController(this);
 		});
 	}
 	
@@ -239,6 +167,10 @@ public class AdminCentralPanel extends JPanel {
         this.grid.weighty = 0.0;
         
         this.components.put(labelKey, labelField);
+	}
+	
+	public ConcurrentHashMap<String, JComponent> components() {
+		return this.components;
 	}
 	
 	@Override
