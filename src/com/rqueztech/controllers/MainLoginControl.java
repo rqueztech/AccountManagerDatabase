@@ -1,4 +1,4 @@
-package com.rqueztech.controllers.admin;
+package com.rqueztech.controllers;
 
 import java.awt.Component;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class MainLoginControl {
 		this.mainLoginPanel = mainLoginPanel;
 		this.panelCentral = panelCentral;
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
-		System.out.println(this);
+		
 	}
 	
 	// --------------------------------------------------------------------------------------

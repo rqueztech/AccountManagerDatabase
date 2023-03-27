@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.rqueztech.controllers.admin.MainLoginControl;
+import com.rqueztech.controllers.MainLoginControl;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
@@ -78,10 +78,7 @@ public class MainLoginPanel extends JPanel {
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
-	        System.out.println(this);
 	        this.mainLoginControl = new MainLoginControl(this, panelCentral);
-	        
-	        
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -200,9 +197,10 @@ public class MainLoginPanel extends JPanel {
 	// --------------------------------------------------------------------------------------
 	public void setLabelField(String labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
-		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
 		labelField.setForeground(Color.WHITE);
+		
+		this.grid.anchor = GridBagConstraints.CENTER;
 		this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
