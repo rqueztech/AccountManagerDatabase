@@ -22,6 +22,14 @@ public class MainLoginControl {
 		this.panelCentral = panelCentral;
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
+		this.setControllerActionListeners();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setControllerActionListeners() {
+		this.userButtonActionListener();
+        this.adminButtonActionListener();
+        this.togglePasswordVisibility();
 	}
 	
 	// --------------------------------------------------------------------------------------
