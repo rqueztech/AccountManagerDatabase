@@ -84,18 +84,16 @@ public class SetupConfigurationPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 15;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
-	
 	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
+	private SetupConfigurationController setupConfigurationController;
 	
 	// --------------------------------------------------------------------------------------
 	public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		this.panelCentral = panelCentral;
 		
@@ -168,178 +166,8 @@ public class SetupConfigurationPanel extends JPanel {
 	        this.setAdminButton(SUBMIT_BUTTON_KEY, "Submit");
 	        this.add(this.components.get(SUBMIT_BUTTON_KEY), grid);
 	        
-	        this.enableDocumentListeners();
-	        this.enableTogglers();
-	        
-	        this.submitActionListener();
-	        this.exitActionListener();
+	        this.setupConfigurationController = new SetupConfigurationController(this);
 		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void exitActionListener() {
-		JButton adminLogin = (JButton) this.components.get(EXIT_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.SETUP_AGREEMENT_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void enableTogglers() {
-		this.togglePassphraseVisibility();
-		this.togglePasswordVisibility();
-		this.toggleConfirmPasswordVisibility();
-		this.toggleConfirmPassphraseVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void resetFields() {
-
-		for(Component component : this.components.values()) {
-			if(component instanceof JPasswordField) {
-				((JPasswordField) component).setText("");
-				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
-			}
-			
-			else if(component instanceof JTextField) {
-				((JTextField) component).setText("");
-			}
-		}
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleConfirmPassphraseVisibility() {
-		JButton toggleButton = (JButton) this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField confirmPassphraseTextField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(confirmPassphraseTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void togglePasswordVisibility(){
-		JButton toggleButton = (JButton) this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField passphraseTextField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleConfirmPasswordVisibility(){
-		JButton toggleButton = (JButton) this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField passphraseTextField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void togglePassphraseVisibility() {
-		JButton toggleButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField passphraseTextField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(passphraseTextField);
-		});
-	}
-	
-	public void enableDocumentListeners() {
-		this.setValidPassphraseFeedback();
-		this.setValidConfirmPassphraseFeedback();
-		
-		this.setValidPasswordFeedback();
-		this.setValidConfirmPasswordFeedback();
-		this.setSubmitButtonFeedback();
-		this.submitActionListener();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void submitActionListener() {
-		JButton adminLogin = (JButton) this.components.get(SUBMIT_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setSubmitButtonFeedback() {
-		JButton adminSubmitButton = (JButton) this.components.get(SUBMIT_BUTTON_KEY);
-		
-		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
-		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
-		
-		JPasswordField passphraseField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-		JPasswordField confirmPassphraseField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
-		JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
-		JPasswordField confirmPasswordField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
-		
-		// Create a listener for the first name field
-		TextFieldListener nameFieldListener = 
-				new TextFieldListener(firstName);
-		
-		// Listener for the last name field
-		TextFieldListener lastNameFieldListener = 
-				new TextFieldListener(lastName);
-		
-		firstName.getDocument().addDocumentListener(nameFieldListener);
-		lastName.getDocument().addDocumentListener(lastNameFieldListener);
-		
-		SetupSubmitDocumentListener submitDocumentListener = 
-				new SetupSubmitDocumentListener(adminSubmitButton, firstName, lastName,
-				passphraseField, confirmPassphraseField, passwordField, confirmPasswordField);
-		
-		firstName.getDocument().addDocumentListener(submitDocumentListener);
-		lastName.getDocument().addDocumentListener(submitDocumentListener);
-		passphraseField.getDocument().addDocumentListener(submitDocumentListener);
-		confirmPassphraseField.getDocument().addDocumentListener(submitDocumentListener);
-		passwordField.getDocument().addDocumentListener(submitDocumentListener);
-		confirmPasswordField.getDocument().addDocumentListener(submitDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setValidPassphraseFeedback() {
-		JButton passphraseButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
-		JPasswordField passphraseField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-		
-		PasswordValidationDocumentListener passphraseDocumentListener = new PasswordValidationDocumentListener(passphraseField, passphraseButton);
-		passphraseField.getDocument().addDocumentListener(passphraseDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setValidConfirmPassphraseFeedback() {
-		JButton confirmPassphraseButton = (JButton) this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY);
-		JPasswordField confirmPassphraseField = (JPasswordField) this.components.get(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
-		
-		PasswordValidationDocumentListener confirmPassphraseDocumentListener = new PasswordValidationDocumentListener(confirmPassphraseField, confirmPassphraseButton);
-		confirmPassphraseField.getDocument().addDocumentListener(confirmPassphraseDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setValidPasswordFeedback() {
-		JButton passwordButton = (JButton) this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY);
-		JPasswordField passwordField = (JPasswordField) this.components.get(PASSWORD_TEXTFIELD_KEY);
-		
-		PasswordValidationDocumentListener passwordDocumentListener = new PasswordValidationDocumentListener(passwordField, passwordButton);
-		passwordField.getDocument().addDocumentListener(passwordDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setValidConfirmPasswordFeedback() {
-		JButton confirmPasswordButton = (JButton) this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY);
-		JPasswordField confirmPasswordField = (JPasswordField) this.components.get(CONFIRM_PASSWORD_TEXTFIELD_KEY);
-		
-		PasswordValidationDocumentListener confirmPasswordDocumentListener = new PasswordValidationDocumentListener(confirmPasswordField, confirmPasswordButton);
-		confirmPasswordField.getDocument().addDocumentListener(confirmPasswordDocumentListener);
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -430,6 +258,17 @@ public class SetupConfigurationPanel extends JPanel {
         this.add(this.components.get(labelKey), grid);
 	}
 	
+	// --------------------------------------------------------------------------------------
+	public PanelCentral getPanelCentral() {
+		return this.panelCentral;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public ConcurrentHashMap<String, JComponent> components() {
+		return this.components;
+	}
+	
+	// --------------------------------------------------------------------------------------
 	@Override
 	public void paintComponent(Graphics g) {
 	    
