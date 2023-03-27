@@ -21,7 +21,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
+import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
+import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class LogoutSuccessPanel extends JPanel {
 	
@@ -126,10 +129,9 @@ public class LogoutSuccessPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
+		
         this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -139,11 +141,9 @@ public class LogoutSuccessPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setTextField(String textFieldKey) {
-		JTextField textField = new JTextField(TEXTFIELD_SIZE);
-		this.grid.anchor = GridBagConstraints.CENTER;
+		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
-		textField.setBackground(Color.WHITE);
-		textField.setForeground(Color.BLACK);
+		this.grid.anchor = GridBagConstraints.CENTER;
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -153,11 +153,9 @@ public class LogoutSuccessPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setPasswordField(String passwordFieldKey) {
-		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
+		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
+		
 		this.grid.anchor = GridBagConstraints.CENTER;
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-		passwordField.setBackground(Color.WHITE);
-		passwordField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;

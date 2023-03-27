@@ -26,6 +26,7 @@ import javax.swing.text.StyledDocument;
 
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 
 public class SetupAgreementPanel extends JPanel {
@@ -120,11 +121,10 @@ public class SetupAgreementPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
-        this.grid.anchor = GridBagConstraints.CENTER;
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
+        
+		this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.fill = GridBagConstraints.NONE;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;

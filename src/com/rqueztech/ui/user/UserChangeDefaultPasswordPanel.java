@@ -25,10 +25,12 @@ import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.ChangePasswordDocumentListener;
 import com.rqueztech.ui.events.PasswordValidationDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
+import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 
 public class UserChangeDefaultPasswordPanel extends JPanel {
 	
@@ -264,10 +266,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -277,10 +277,9 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setSubmitButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
+        
         button.setOpaque(false);
         button.setEnabled(false);
         this.grid.gridwidth = 1;
@@ -292,11 +291,8 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setPasswordField(String passwordFieldKey) {
-		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
+		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		this.grid.anchor = GridBagConstraints.CENTER;
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-		passwordField.setBackground(Color.WHITE);
-		passwordField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;

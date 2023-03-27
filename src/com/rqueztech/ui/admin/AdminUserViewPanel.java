@@ -37,9 +37,12 @@ import javax.swing.table.TableRowSorter;
 
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.PasswordFieldListener;
 import com.rqueztech.ui.events.TextFieldListener;
+import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
+import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class AdminUserViewPanel extends JPanel {
 
@@ -425,13 +428,11 @@ public class AdminUserViewPanel extends JPanel {
 
 	// --------------------------------------------------------------------------------------
 	public void setTextField(String textFieldKey) {
-		JTextField textField = new JTextField(TEXTFIELD_SIZE);
+		TextfieldTemplates textField = new TextfieldTemplates(Color.DARK_GRAY, Color.WHITE, TEXTFIELD_SIZE);
+		
 		//this.grid.anchor = GridBagConstraints.CENTER;
 		//textField.setFont(new Font("Arial", Font.PLAIN, 14));
-		textField.setBackground(Color.WHITE);
-		textField.setForeground(Color.BLACK);
-		textField.setBackground(Color.DARK_GRAY);
-		textField.setForeground(Color.WHITE);
+		
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -444,10 +445,8 @@ public class AdminUserViewPanel extends JPanel {
 
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -457,11 +456,9 @@ public class AdminUserViewPanel extends JPanel {
 
 	// --------------------------------------------------------------------------------------
 	public void setAddButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.fill = GridBagConstraints.NONE;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
         button.setEnabled(false);
         button.setOpaque(false);
         this.grid.gridwidth = 1;
@@ -473,11 +470,10 @@ public class AdminUserViewPanel extends JPanel {
 
 	// --------------------------------------------------------------------------------------
 	public void setPasswordField(String passwordFieldKey) {
-		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
+		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
+		
 		this.grid.anchor = GridBagConstraints.CENTER;
 		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-		passwordField.setBackground(Color.WHITE);
-		passwordField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;

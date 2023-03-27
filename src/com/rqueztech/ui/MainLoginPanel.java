@@ -23,8 +23,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
+import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class MainLoginPanel extends JPanel {
 	
@@ -208,10 +210,9 @@ public class MainLoginPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setButton(String buttonKey, String buttonText) {
-		JButton button = new JButton(buttonText);
-        this.grid.anchor = GridBagConstraints.CENTER;
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.WHITE);
+		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
+		
+		this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.gridwidth = 1;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -221,11 +222,9 @@ public class MainLoginPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setTextField(String textFieldKey) {
-		JTextField textField = new JTextField(TEXTFIELD_SIZE);
-		this.grid.anchor = GridBagConstraints.CENTER;
+		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
-		textField.setBackground(Color.WHITE);
-		textField.setForeground(Color.BLACK);
+		this.grid.anchor = GridBagConstraints.CENTER;
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
