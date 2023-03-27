@@ -75,6 +75,7 @@ public class AdminAddUserPanel extends JPanel {
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	private JComboBox<String> gender;
+	private PanelCentral panelCentral;
 	
 	private AdminAddUserController adminAddUserController;
 	
@@ -86,6 +87,8 @@ public class AdminAddUserPanel extends JPanel {
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
 	        
+			this.panelCentral = panelCentral;
+			
 			// Set the panel to the gridbaglayout, establish the preferred size,
 			// And get the image that will be used in the background
 			this.setLayout(layout);
@@ -153,7 +156,7 @@ public class AdminAddUserPanel extends JPanel {
 	        this.setAddButton(ADD_USER_BUTTON_KEY, "Add user");
 	        this.add(this.components.get(ADD_USER_BUTTON_KEY), grid);
 	        
-	        this.adminAddUserController = new AdminAddUserController(this, panelCentral);
+	        this.adminAddUserController = new AdminAddUserController(this);
 		});
 	}
 	
@@ -262,8 +265,14 @@ public class AdminAddUserPanel extends JPanel {
 		return this.components;
 	}
 	
+	// --------------------------------------------------------------------------------------
 	public JComboBox<String> getGender() {
 		return this.gender;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public PanelCentral getPanelCentral() {
+		return this.panelCentral;
 	}
 	
 	// --------------------------------------------------------------------------------------

@@ -17,14 +17,12 @@ import com.rqueztech.ui.events.TogglePasswordVisibility;
 
 public class AdminAddUserController {
 	private AdminAddUserPanel adminAddUserPanel;
-	private PanelCentral panelCentral;
 	private TogglePasswordVisibility togglePasswordVisibility;
 	
-	public AdminAddUserController(AdminAddUserPanel adminAddUserPanel, PanelCentral panelCentral) {
+	public AdminAddUserController(AdminAddUserPanel adminAddUserPanel) {
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		this.adminAddUserPanel = adminAddUserPanel;
-		this.panelCentral = panelCentral;
 		
 		this.invokeActionListeners();
         this.invokeDocumentListeners();
@@ -36,7 +34,6 @@ public class AdminAddUserController {
 		this.userViewButtonListener();
         this.cancelButtonActionListener();
 	}
-	
 	
 	// --------------------------------------------------------------------------------------
 	public void invokeDocumentListeners() {
@@ -53,7 +50,7 @@ public class AdminAddUserController {
 		userViewButton.addActionListener(e -> {
 			this.adminAddUserPanel.setVisible(false);
 			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
+			this.adminAddUserPanel.getPanelCentral().getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	
@@ -82,7 +79,7 @@ public class AdminAddUserController {
 			this.resetFields();
 			
 			// Take the user back to the Admin User View Panel
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
+			this.adminAddUserPanel.getPanelCentral().getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	
