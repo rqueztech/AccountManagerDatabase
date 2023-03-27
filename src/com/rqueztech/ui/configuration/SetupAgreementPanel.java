@@ -24,6 +24,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import com.rqueztech.controllers.configuration.SetupAgreementController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
@@ -55,6 +56,7 @@ public class SetupAgreementPanel extends JPanel {
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
+	private SetupAgreementController setupAgreementController;
 	
 	// --------------------------------------------------------------------------------------
 	public SetupAgreementPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
@@ -62,7 +64,7 @@ public class SetupAgreementPanel extends JPanel {
 
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
-	        
+			
 			// Set the panel to the gridbaglayout, establish the preferred size,
 			// And get the image that will be used in the background
 			this.setLayout(layout);
@@ -85,19 +87,13 @@ public class SetupAgreementPanel extends JPanel {
 	        this.setButton(SETUPAGREEMENT_BUTTON_KEY, "Start Configuration");
 	        this.add(this.components.get(SETUPAGREEMENT_BUTTON_KEY), grid);
 	        
-	        
-	        this.configurationActionListener();
+	        this.setupAgreementController = new SetupAgreementController(this);
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void configurationActionListener() {
-		JButton configurationButton = (JButton) this.components.get(SETUPAGREEMENT_BUTTON_KEY);
-		
-		configurationButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.SETUP_CONFIGURATION_PANEL).setVisible(true);
-		});
+	public ConcurrentHashMap<String, JComponent> components() {
+		return this.components;
 	}
 	
 	// --------------------------------------------------------------------------------------
@@ -130,6 +126,11 @@ public class SetupAgreementPanel extends JPanel {
         this.grid.weighty = 0.0;
         
         this.components.put(buttonKey, button);
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public PanelCentral getPanelCentral() {
+		return this.panelCentral;
 	}
 	
 	// --------------------------------------------------------------------------------------
