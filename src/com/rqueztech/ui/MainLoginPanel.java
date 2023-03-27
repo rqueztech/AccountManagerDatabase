@@ -78,8 +78,6 @@ public class MainLoginPanel extends JPanel {
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
 	        this.components = new ConcurrentHashMap <String, JComponent> ();
 	        
-	        this.mainLoginControl = new MainLoginControl(this, panelCentral);
-	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
 	        this.setBackgroundImageConstraints();
@@ -103,27 +101,26 @@ public class MainLoginPanel extends JPanel {
 	        this.setPasswordField(PASSWORD_TEXTFIELD_KEY);
 	        this.add(this.components.get(PASSWORD_TEXTFIELD_KEY), grid);
 	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        // Creates the button to toggle visibility on/off in visibility button key
+	        this.grid.gridx += 3;
 	        this.setButton(VISIBILITY_BUTTON_KEY, "Visible");
 	        this.add(this.components.get(VISIBILITY_BUTTON_KEY), grid);
 	        
-	        this.grid.gridx = 0; // Buttons are not fixed, therefore coordinates are custom set
+	        // Creates the user login button
+	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
 	        this.setButton(USER_LOGIN_BUTTON_KEY, "User");
 	        this.add(this.components.get(USER_LOGIN_BUTTON_KEY), grid);
 	        
+	        // Creates the admin login button
 	        this.grid.gridx += 1;
 	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
 	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
-	        this.setControllerActionListeners();
+	        // Calls the mainlogin control function to set the listeners for the
+	        // Current view
+	        this.mainLoginControl = new MainLoginControl(this, panelCentral);
 		});
-	}
-	
-	public void setControllerActionListeners() {
-		this.mainLoginControl.userButtonActionListener();
-        this.mainLoginControl.adminButtonActionListener();
-        this.mainLoginControl.togglePasswordVisibility();
 	}
 	
 	// --------------------------------------------------------------------------------------
