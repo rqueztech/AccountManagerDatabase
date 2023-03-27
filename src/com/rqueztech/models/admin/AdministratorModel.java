@@ -1,8 +1,9 @@
-package com.rqueztech.models;
+package com.rqueztech.models.admin;
 
 import com.rqueztech.ui.validation.InputValidations;
 
 public class AdministratorModel {
+	private char[] adminAccountName;
 	private char[] adminFirstName;
 	private char[] adminLastName;
 	private char[] adminPassword;
@@ -11,9 +12,16 @@ public class AdministratorModel {
 	private InputValidations inputValidations;
 	
 	// --------------------------------------------------------------------------------------
-	public AdministratorModel(char[] adminFirstName, char[] adminLastName, char[] adminPassword,
-			byte adminSalt, int adminNumber) {
+	public AdministratorModel(
+			char[] adminAccountName,
+			char[] adminFirstName,
+			char[] adminLastName,
+			char[] adminPassword,
+			byte adminSalt,
+			int adminNumber) {
+		
 		super();
+		this.setAdminName(adminAccountName);
 		this.setAdminFirstName(adminFirstName);
 		this.setAdminLastName(adminLastName);
 		this.setAdminPassword(adminPassword);
@@ -21,6 +29,16 @@ public class AdministratorModel {
 		this.setAdminNumber(adminNumber);
 		
 		this.inputValidations = new InputValidations();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public char[] getAdminName() {
+		return this.adminAccountName;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setAdminName(char[] adminAccountName) {
+		this.adminAccountName = adminAccountName;
 	}
 	
 	// --------------------------------------------------------------------------------------

@@ -1,24 +1,52 @@
-package com.rqueztech.models;
+package com.rqueztech.models.user;
 
 import com.rqueztech.ui.validation.InputValidations;
 
 public class UserModel {
+	private char[] userAccountName;
 	private char[] userFirstName;
 	private char[] userLastName;
 	private char[] userPassword;
+	private String gender; 
 	private byte userSalt;
 	private int userNumber;
 	private InputValidations inputValidations;
 	
 	// --------------------------------------------------------------------------------------
-	public UserModel(char[] userFirstName, char[] userLastName, char[] userPassword, byte userSalt, int userNumber) {
-		this.userFirstName = userFirstName;
-		this.userLastName = userLastName;
-		this.userPassword = userPassword;
-		this.userSalt = userSalt;
-		this.userNumber = userNumber;
+	public UserModel(
+			char[] userAccountName,
+			char[] userFirstName,
+			char[] userLastName,
+			char[] userPassword,
+			String gender,
+			byte userSalt,
+			int userNumber) {
+		
+		super();
+		this.setUserName(userAccountName);
+		this.setUserFirstName(userFirstName);
+		this.setUserLastName(userLastName);
+		this.setUserPassword(userPassword);
+		this.setUserSalt(userSalt);
+		this.setUserNumber(userNumber);
 		
 		this.inputValidations = new InputValidations();
+	}
+	
+	// --------------------------------------------------------------------------------------
+	
+	
+	// --------------------------------------------------------------------------------------
+	
+	
+	// --------------------------------------------------------------------------------------
+	public char[] getUserName() {
+		return this.userAccountName;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	public void setUserName(char[] userAccountName) {
+		this.userAccountName = userAccountName;
 	}
 
 	// --------------------------------------------------------------------------------------
