@@ -23,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.controllers.admin.AdminAddUserController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
@@ -71,21 +72,16 @@ public class AdminAddUserPanel extends JPanel {
 	
 	private final int TEXTFIELD_SIZE = 5;
 	
-	private PanelCentral panelCentral;
-	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 	private JComboBox<String> gender;
 	
-	private TogglePasswordVisibility togglePasswordVisibility;
+	private AdminAddUserController adminAddUserController;
 	
 	// --------------------------------------------------------------------------------------
 	public AdminAddUserPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 		// Function that will toggle visibility on and off in password
 		// Field found in this class
-		this.panelCentral = panelCentral;
-		
-		this.togglePasswordVisibility = new TogglePasswordVisibility();
 		
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -157,128 +153,7 @@ public class AdminAddUserPanel extends JPanel {
 	        this.setAddButton(ADD_USER_BUTTON_KEY, "Add user");
 	        this.add(this.components.get(ADD_USER_BUTTON_KEY), grid);
 	        
-	        this.invokeActionListeners();
-	        this.invokeDocumentListeners();
-	        
-	        this.enablePasswordTogglers();
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void enablePasswordTogglers() {
-		this.toggleEnterPasswordVisibility();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void toggleEnterPasswordVisibility() {
-		JButton toggleButton = (JButton) this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY);
-		
-		toggleButton.addActionListener( e -> {
-			JPasswordField enterPasswordTextField = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void invokeActionListeners() {
-		this.userViewButtonListener();
-        this.cancelButtonActionListener();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void userViewButtonListener() {
-		JButton userViewButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
-		
-		userViewButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
-		});
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void invokeDocumentListeners() {
-		this.firstNameListener();
-		this.lastNameListener();
-		this.passphraseNameListener();
-		this.addUserButtonListener();
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void addUserButtonListener() {
-		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
-		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
-		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-		
-		JButton addUserButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
-		
-		AddUserDocumentListener addUserDocumentListener = 
-				new AddUserDocumentListener(addUserButton, firstName, lastName,
-						passphrase, this.gender);
-		
-		firstName.getDocument().addDocumentListener(addUserDocumentListener);
-		lastName.getDocument().addDocumentListener(addUserDocumentListener);
-		passphrase.getDocument().addDocumentListener(addUserDocumentListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void firstNameListener() {
-		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
-		
-		// Create a listener for the first name field
-		TextFieldListener nameFieldListener = 
-				new TextFieldListener(firstName);
-		
-		firstName.getDocument().addDocumentListener(nameFieldListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void lastNameListener() {
-		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
-		
-		// Listener for the last name field
-		TextFieldListener lastNameFieldListener = 
-				new TextFieldListener(lastName);
-		
-		lastName.getDocument().addDocumentListener(lastNameFieldListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void passphraseNameListener() {
-		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-		// Listener for the last name field
-		PasswordFieldListener passwordFieldListener = 
-				new PasswordFieldListener(passphrase);
-
-		passphrase.getDocument().addDocumentListener(passwordFieldListener);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void resetFields() {
-		for(Component component : this.components.values()) {
-			if(component instanceof JPasswordField) {
-				((JPasswordField) component).setText("");
-				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
-			}
-			
-			else if(component instanceof JTextField) {
-				((JTextField) component).setText("");
-			}
-		}
-		
-		this.gender.setSelectedIndex(0);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void cancelButtonActionListener() {
-		JButton adminLogin = (JButton) this.components.get(CANCEL_BUTTON_KEY);
-		
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			
-			// Take the user back to the Admin User View Panel
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
+	        this.adminAddUserController = new AdminAddUserController(this, panelCentral);
 		});
 	}
 	
@@ -382,6 +257,16 @@ public class AdminAddUserPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 	
+	// --------------------------------------------------------------------------------------
+	public ConcurrentHashMap<String, JComponent> components() {
+		return this.components;
+	}
+	
+	public JComboBox<String> getGender() {
+		return this.gender;
+	}
+	
+	// --------------------------------------------------------------------------------------
 	@Override
 	public void paintComponent(Graphics g) {
 	    

@@ -35,6 +35,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.rqueztech.controllers.admin.AdminUserViewController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
@@ -89,6 +90,8 @@ public class AdminUserViewPanel extends JPanel {
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
 
+	private AdminUserViewController adminUserViewController;
+	
 	// --------------------------------------------------------------------------------------
 	public AdminUserViewPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 
@@ -295,105 +298,12 @@ public class AdminUserViewPanel extends JPanel {
 	        this.grid.gridx = 0;
 	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Logout");
 	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), this.grid);
-
-	        this.invokeActionListeners();
+		
+	        this.adminUserViewController = new AdminUserViewController(this);
 		});
 
 	}
-
-	// --------------------------------------------------------------------------------------
-	public void invokeActionListeners() {
-		this.userViewButtonListener();
-        this.exitButtonActionListener();
-        this.logoutButtonActionListener();
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void logoutButtonActionListener() {
-		JButton userViewButton = (JButton) this.components.get(ADMIN_LOGOUT_BUTTON_KEY);
-
-		userViewButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.LOGOUT_SUCCESS_PANEL).setVisible(true);
-		});
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void userViewButtonListener() {
-		JButton userViewButton = (JButton) this.components.get(ADD_USER_BUTTON_KEY);
-
-		userViewButton.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_ADD_USER_PANEL).setVisible(true);
-		});
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void exitButtonActionListener() {
-		JButton adminLogin = (JButton) this.components.get(RETURN_CENTRAL_BUTTON_KEY);
-
-		adminLogin.addActionListener(e -> {
-			this.setVisible(false);
-			this.resetFields();
-			this.panelCentral.getCurrentPanel().get(PanelCentralEnums.ADMIN_CENTRAL_PANEL).setVisible(true);
-		});
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void invokeDocumentListeners() {
-		this.firstNameListener();
-		this.lastNameListener();
-		this.passphraseNameListener();
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void firstNameListener() {
-		JTextField firstName = (JTextField) this.components.get(FIRSTNAME_TEXTFIELD_KEY);
-
-		// Create a listener for the first name field
-		TextFieldListener nameFieldListener =
-				new TextFieldListener(firstName);
-
-		firstName.getDocument().addDocumentListener(nameFieldListener);
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void lastNameListener() {
-		JTextField lastName = (JTextField) this.components.get(LASTNAME_TEXTFIELD_KEY);
-
-		// Listener for the last name field
-		TextFieldListener lastNameFieldListener =
-				new TextFieldListener(lastName);
-
-		lastName.getDocument().addDocumentListener(lastNameFieldListener);
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void passphraseNameListener() {
-		JPasswordField passphrase = (JPasswordField) this.components.get(PASSPHRASE_TEXTFIELD_KEY);
-		// Listener for the last name field
-		PasswordFieldListener passwordFieldListener =
-				new PasswordFieldListener(passphrase);
-
-		passphrase.getDocument().addDocumentListener(passwordFieldListener);
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void resetFields() {
-		for(Component component : this.components.values()) {
-			if(component instanceof JPasswordField) {
-				((JPasswordField) component).setText("");
-				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
-			}
-
-			else if(component instanceof JTextField) {
-				((JTextField) component).setText("");
-			}
-		}
-	}
-
+	
 	// --------------------------------------------------------------------------------------
 	public void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
@@ -494,6 +404,14 @@ public class AdminUserViewPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 
+	public ConcurrentHashMap<String, JComponent> components() {
+		return this.components;
+	}
+	
+	public PanelCentral getPanelCentral() {
+		return this.panelCentral;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 
