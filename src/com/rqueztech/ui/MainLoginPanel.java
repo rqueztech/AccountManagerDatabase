@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
+import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class MainLoginPanel extends JPanel {
@@ -234,11 +235,9 @@ public class MainLoginPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	public void setPasswordField(String passwordFieldKey) {
-		JPasswordField passwordField = new JPasswordField(TEXTFIELD_SIZE);
+		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
+		
 		this.grid.anchor = GridBagConstraints.CENTER;
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-		passwordField.setBackground(Color.WHITE);
-		passwordField.setForeground(Color.BLACK);
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
