@@ -12,20 +12,14 @@ import java.awt.RenderingHints;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.controllers.user.UserCentralController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
-import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 
 public class UserCentralPanel extends JPanel {
 	
@@ -39,14 +33,6 @@ public class UserCentralPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
-	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
-	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
-	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
-	
 	// --- Section 3: Login Button Component Keys
 	private final String USER_LOGOUT_BUTTON_KEY = "USER_LOGOUT_BUTTON_KEY";
 	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
@@ -57,7 +43,6 @@ public class UserCentralPanel extends JPanel {
 	private final int GRIDX_IMAGEWEIGHT = 1;
 	private final int GRIDY_IMAGEWEIGHT = 1;
 	
-	private final int TEXTFIELD_SIZE = 10;
 	
 	private UserCentralController userCentralController;
 	
@@ -105,14 +90,14 @@ public class UserCentralPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
+	private void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -124,7 +109,7 @@ public class UserCentralPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         
@@ -134,33 +119,9 @@ public class UserCentralPanel extends JPanel {
         
         this.components.put(buttonKey, button);
 	}
-	
+
 	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
-		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
-		this.grid.anchor = GridBagConstraints.CENTER;
-		this.grid.gridwidth = 2;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(passwordFieldKey, passwordField);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setLabelField(String labelKey, String labelText) {
-		JLabel labelField = new JLabel(labelText);
-		this.grid.anchor = GridBagConstraints.CENTER;
-		labelField.setBackground(Color.BLACK);
-		labelField.setForeground(Color.WHITE);
-		this.grid.gridwidth = 1;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(labelKey, labelField);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> components() {
+	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

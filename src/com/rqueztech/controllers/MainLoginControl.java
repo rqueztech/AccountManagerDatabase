@@ -26,15 +26,15 @@ public class MainLoginControl {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setControllerActionListeners() {
+	private void setControllerActionListeners() {
 		this.userButtonActionListener();
         this.adminButtonActionListener();
         this.togglePasswordVisibility();
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void resetFields() {
-		for(Component component : this.mainLoginPanel.components().values()) {
+	private void resetFields() {
+		for(Component component : this.mainLoginPanel.getComponentsMap().values()) {
 			if(component instanceof JPasswordField) {
 				((JPasswordField) component).setText("");
 				Arrays.fill(((JPasswordField) component).getPassword(), '\0');
@@ -47,8 +47,8 @@ public class MainLoginControl {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void userButtonActionListener() {
-		JButton userButton = (JButton) this.mainLoginPanel.components().get("USER_LOGIN_BUTTON_KEY");
+	private void userButtonActionListener() {
+		JButton userButton = (JButton) this.mainLoginPanel.getComponentsMap().get("USER_LOGIN_BUTTON_KEY");
 		
 		userButton.addActionListener(e -> {
 			this.cleanUpNavigateAway();
@@ -57,8 +57,8 @@ public class MainLoginControl {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void adminButtonActionListener() {
-		JButton adminButton = (JButton) this.mainLoginPanel.components().get("ADMIN_LOGIN_BUTTON_KEY");
+	private void adminButtonActionListener() {
+		JButton adminButton = (JButton) this.mainLoginPanel.getComponentsMap().get("ADMIN_LOGIN_BUTTON_KEY");
 		
 		adminButton.addActionListener(e -> {
 			this.cleanUpNavigateAway();
@@ -67,17 +67,17 @@ public class MainLoginControl {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void togglePasswordVisibility() {
-		JButton toggleButton = (JButton) this.mainLoginPanel.components().get("VISIBILITY_BUTTON_KEY");
+	private void togglePasswordVisibility() {
+		JButton toggleButton = (JButton) this.mainLoginPanel.getComponentsMap().get("VISIBILITY_BUTTON_KEY");
 		
 		toggleButton.addActionListener( e -> {
-			JPasswordField passwordTextField = (JPasswordField) this.mainLoginPanel.components().get("PASSWORD_TEXTFIELD_KEY");
+			JPasswordField passwordTextField = (JPasswordField) this.mainLoginPanel.getComponentsMap().get("PASSWORD_TEXTFIELD_KEY");
 			this.togglePasswordVisibility.passwordToggler(passwordTextField);
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void cleanUpNavigateAway() {
+	private void cleanUpNavigateAway() {
 		this.mainLoginPanel.setVisible(false);
 		this.resetFields();
 	}

@@ -1,7 +1,5 @@
 package com.tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import com.rqueztech.ui.BaseFrame;

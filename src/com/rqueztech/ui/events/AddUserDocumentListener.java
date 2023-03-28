@@ -74,13 +74,13 @@ public class AddUserDocumentListener implements DocumentListener {
 	
 	// Toggle the opacity
 	// --------------------------------------------------------------------------------------
-	public void opacityToggleOn() {
+	private void opacityToggleOn() {
 		this.addUserButton.setOpaque(true);
 		this.addUserButton.setEnabled(true);
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void opacityToggleOff() {
+	private void opacityToggleOff() {
 		this.addUserButton.setOpaque(false);
 		this.addUserButton.setEnabled(false);
 	}

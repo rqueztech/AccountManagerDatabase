@@ -88,17 +88,17 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 	}
 	
 	// Toggle the opacity
-	public void opacityToggleOn() {
+	private void opacityToggleOn() {
 		this.adminButton.setOpaque(true);
 		this.adminButton.setEnabled(true);
 	}
 	
-	public void opacityToggleOff() {
+	private void opacityToggleOff() {
 		this.adminButton.setOpaque(false);
 		this.adminButton.setEnabled(false);
 	}
 	
-	public boolean passwordsConflict() {
+	private boolean passwordsConflict() {
 		if(Arrays.equals(this.passphraseField.getPassword(), this.passwordField.getPassword())) {
 			return true;
 		}

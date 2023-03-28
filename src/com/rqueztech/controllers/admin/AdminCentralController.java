@@ -13,15 +13,15 @@ public class AdminCentralController {
 		this.setActionListeners();
 	}
 	
-	public void setActionListeners() {
+	private void setActionListeners() {
 		this.adminAddUserButtonListener();
         this.logoutButtonActionListener();
         this.userViewActionListener();
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void userViewActionListener() {
-		JButton userViewButton = (JButton) this.adminCentralPanel.components().get("USER_VIEW_BUTTON_KEY");
+	private void userViewActionListener() {
+		JButton userViewButton = (JButton) this.adminCentralPanel.getComponentsMap().get("USER_VIEW_BUTTON_KEY");
 		
 		userViewButton.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);
@@ -30,8 +30,8 @@ public class AdminCentralController {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void adminAddUserButtonListener() {
-		JButton adminLogin = (JButton) this.adminCentralPanel.components().get("ADMIN_ADD_USER_BUTTON_KEY");
+	private void adminAddUserButtonListener() {
+		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get("ADMIN_ADD_USER_BUTTON_KEY");
 		
 		adminLogin.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);
@@ -40,8 +40,8 @@ public class AdminCentralController {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.adminCentralPanel.components().get("ADMIN_LOGOUT_BUTTON_KEY");
+	private void logoutButtonActionListener() {
+		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get("ADMIN_LOGOUT_BUTTON_KEY");
 		
 		adminLogin.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);

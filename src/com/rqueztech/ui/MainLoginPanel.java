@@ -124,7 +124,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
+	private void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
@@ -132,19 +132,19 @@ public class MainLoginPanel extends JPanel {
 	
 	// --------------------------------------------------------------------------------------
 	// This will set the label down one
-	public void setNewLabelPosition() {
+	private void setNewLabelPosition() {
 		this.grid.gridx = 0;
         this.grid.gridy += 1;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setNewTextfieldPosition() {
+	private void setNewTextfieldPosition() {
 		this.grid.gridx = 0;
 		this.grid.gridy += 1;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -156,7 +156,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -168,7 +168,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setTextField(String textFieldKey) {
+	private void setTextField(String textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -180,7 +180,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
+	private void setPasswordField(String passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -192,7 +192,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(String labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		labelField.setBackground(Color.BLACK);
 		labelField.setForeground(Color.WHITE);
@@ -205,7 +205,7 @@ public class MainLoginPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 	
-	public ConcurrentHashMap <String, JComponent> components() {
+	public ConcurrentHashMap <String, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

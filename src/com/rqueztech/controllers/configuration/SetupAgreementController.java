@@ -6,7 +6,7 @@ import com.rqueztech.ui.configuration.SetupAgreementPanel;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 
 public class SetupAgreementController {
-	public SetupAgreementPanel setupAgreementPanel;
+	private SetupAgreementPanel setupAgreementPanel;
 	
 	public SetupAgreementController(SetupAgreementPanel setupAgreementPanel) {
 		this.setupAgreementPanel = setupAgreementPanel;
@@ -15,7 +15,7 @@ public class SetupAgreementController {
 	
 	// --------------------------------------------------------------------------------------
 	public void setupAgreementActionListener() {
-		JButton configurationButton = (JButton) this.setupAgreementPanel.components().get("SETUPAGREEMENT_BUTTON_KEY");
+		JButton configurationButton = (JButton) this.setupAgreementPanel.getComponentsMap().get("SETUPAGREEMENT_BUTTON_KEY");
 		
 		configurationButton.addActionListener(e -> {
 			this.setupAgreementPanel.setVisible(false);

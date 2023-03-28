@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -28,7 +27,6 @@ import com.rqueztech.controllers.configuration.SetupAgreementController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
 
 public class SetupAgreementPanel extends JPanel {
 	
@@ -92,19 +90,19 @@ public class SetupAgreementPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> components() {
+	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
+	private void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -116,7 +114,7 @@ public class SetupAgreementPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -134,7 +132,7 @@ public class SetupAgreementPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setTextPane(String textPaneKey, String textPaneMessage) {
+	private void setTextPane(String textPaneKey, String textPaneMessage) {
 	    JTextPane textPane = new JTextPane();
 	    
 	    StyledDocument doc = textPane.getStyledDocument();

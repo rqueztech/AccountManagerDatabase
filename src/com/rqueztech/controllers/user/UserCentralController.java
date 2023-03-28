@@ -15,7 +15,7 @@ public class UserCentralController {
 	
 	// --------------------------------------------------------------------------------------
 	public void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.userCentralPanel.components().get("USER_LOGOUT_BUTTON_KEY");
+		JButton adminLogin = (JButton) this.userCentralPanel.getComponentsMap().get("USER_LOGOUT_BUTTON_KEY");
 		
 		adminLogin.addActionListener(e -> {
 			this.userCentralPanel.setVisible(false);

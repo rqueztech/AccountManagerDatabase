@@ -59,11 +59,11 @@ public class PasswordValidationDocumentListener implements DocumentListener {
 		this.updateToolTip();
 	}
 	
-	public void resetButtons() {
+	private void resetButtons() {
 		this.currentButton.setBackground(Color.BLACK);
 	}
 	
-	public void updateButton() {
+	private void updateButton() {
 		if(this.inputValidations.validatePassword(this.passwordField.getPassword())) {
 			this.currentButton.setBackground(Color.GREEN);
 			this.passwordField.setToolTipText("Meets Requirements");
@@ -76,7 +76,7 @@ public class PasswordValidationDocumentListener implements DocumentListener {
 		this.updateToolTip();
 	}
 	
-	public void updateToolTip() {
+	private void updateToolTip() {
 		int flags = 0;
 		
 		if(this.passwordField.getPassword().length < 8) {
@@ -118,7 +118,7 @@ public class PasswordValidationDocumentListener implements DocumentListener {
 	    passwordField.setToolTipText(sb.toString());
 	}
 	
-	public void resetButton() {
+	private void resetButton() {
 		if(this.passwordField.getPassword().length == 0) {
 			this.currentButton.setBackground(Color.BLACK);
 			this.sb.setLength(0);
@@ -126,7 +126,7 @@ public class PasswordValidationDocumentListener implements DocumentListener {
 		}
 	}
 	
-	public void updateStatus() {
+	private void updateStatus() {
 		if(this.passwordField.getPassword().length >= 8
 		&& this.inputValidations.containsLegalCharacters
 		(this.passwordField.getPassword())) {

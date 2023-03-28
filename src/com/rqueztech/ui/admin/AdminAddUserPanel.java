@@ -1,7 +1,6 @@
 package com.rqueztech.ui.admin;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,28 +9,19 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.controllers.admin.AdminAddUserController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.AddUserDocumentListener;
-import com.rqueztech.ui.events.PasswordFieldListener;
-import com.rqueztech.ui.events.TextFieldListener;
-import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
@@ -161,14 +151,14 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
+	private void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -180,7 +170,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setTextField(String textFieldKey) {
+	private void setTextField(String textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		//this.grid.anchor = GridBagConstraints.CENTER;
@@ -197,7 +187,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -209,7 +199,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setAddButton(String buttonKey, String buttonText) {
+	private void setAddButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -223,7 +213,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
+	private void setPasswordField(String passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -235,7 +225,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComboBox() {
+	private void setComboBox() {
 		// Gender Dropbox
 		this.gender.setForeground(Color.white);
 		this.gender.setBackground(Color.black);
@@ -248,7 +238,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(String labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -261,7 +251,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> components() {
+	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

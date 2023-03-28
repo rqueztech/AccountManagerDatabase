@@ -3,7 +3,6 @@ package com.rqueztech.ui.admin;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -12,7 +11,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -20,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -39,10 +36,6 @@ import com.rqueztech.controllers.admin.AdminUserViewController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
-import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.events.PasswordFieldListener;
-import com.rqueztech.ui.events.TextFieldListener;
-import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class AdminUserViewPanel extends JPanel {
@@ -63,17 +56,10 @@ public class AdminUserViewPanel extends JPanel {
 	private final String DELETE_USER_BUTTON_KEY = "DELETE_USER_BUTTON_KEY";
 	private final String RETURN_CENTRAL_BUTTON_KEY = "RETURN_CENTRAL_BUTTON_KEY";
 
-	// --- Section 1: Adminname Component Keys
-	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
-
-	// --- Section 1: Adminname Component Keys
-	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
-
 	// --- Section 3: Login Button Component Keys
 	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
 	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
-
-	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
+	
 	private final String RETURN_CENTRAL_TEXTFIELD_KEY = "RETURN_CENTRAL_TEXTFIELD_KEY";
 
 	// --- Section 4: Set Combo Box
@@ -303,29 +289,9 @@ public class AdminUserViewPanel extends JPanel {
 		});
 
 	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
-		this.grid.insets = new Insets(2, 2, 2, 2);
-        this.grid.gridx = GRID_X_INITIAL;
-        this.grid.gridy = GRID_Y_INITIAL;
-	}
 
 	// --------------------------------------------------------------------------------------
-	// This will set the label down one
-	public void setNewLabelPosition() {
-		this.grid.gridx = 0;
-        this.grid.gridy += 1;
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void setNewTextfieldPosition() {
-		this.grid.gridx = 0;
-		this.grid.gridy += 1;
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -337,7 +303,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setTextField(String textFieldKey) {
+	private void setTextField(String textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.DARK_GRAY, Color.WHITE, TEXTFIELD_SIZE);
 		
 		//this.grid.anchor = GridBagConstraints.CENTER;
@@ -354,7 +320,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.gridwidth = 1;
@@ -365,34 +331,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setAddButton(String buttonKey, String buttonText) {
-		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
-        this.grid.anchor = GridBagConstraints.CENTER;
-        this.grid.fill = GridBagConstraints.NONE;
-        button.setEnabled(false);
-        button.setOpaque(false);
-        this.grid.gridwidth = 1;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-
-        this.components.put(buttonKey, button);
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
-		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
-		
-		this.grid.anchor = GridBagConstraints.CENTER;
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-		this.grid.gridwidth = 2;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-
-        this.components.put(passwordFieldKey, passwordField);
-	}
-
-	// --------------------------------------------------------------------------------------
-	public void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(String labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -404,7 +343,7 @@ public class AdminUserViewPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 
-	public ConcurrentHashMap<String, JComponent> components() {
+	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

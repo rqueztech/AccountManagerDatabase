@@ -14,14 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.enums.PanelCentralEnums;
-import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
-import com.rqueztech.ui.textfields.TextfieldTemplates;
 
 public class LogoutSuccessPanel extends JPanel {
 	
@@ -44,8 +41,6 @@ public class LogoutSuccessPanel extends JPanel {
 	
 	private final int GRIDX_IMAGEWEIGHT = 1;
 	private final int GRIDY_IMAGEWEIGHT = 1;
-	
-	private final int TEXTFIELD_SIZE = 10;
 	
 	// --- Group 2: Panel Map ---
 	private ConcurrentHashMap <String, JComponent> components;
@@ -83,7 +78,7 @@ public class LogoutSuccessPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void logoutActionListener() {
+	private void logoutActionListener() {
 		JButton logoutButton = (JButton) this.components.get(LOGOUT_SUCCESS_BUTTON_KEY);
 		
 		logoutButton.addActionListener(e -> {
@@ -93,27 +88,14 @@ public class LogoutSuccessPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setComponentMainPosition() {
+	private void setComponentMainPosition() {
 		this.grid.insets = new Insets(2, 2, 2, 2);
         this.grid.gridx = GRID_X_INITIAL;
         this.grid.gridy = GRID_Y_INITIAL;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	// This will set the label down one
-	public void setNewLabelPosition() {
-		this.grid.gridx = 0;
-        this.grid.gridy += 1;
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setNewTextfieldPosition() {
-		this.grid.gridx = 0;
-		this.grid.gridy += 1;
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setBackgroundImageConstraints() {
+	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
         this.grid.fill = GridBagConstraints.BOTH; // Fill both vertically and horizontally
@@ -125,7 +107,7 @@ public class LogoutSuccessPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setButton(String buttonKey, String buttonText) {
+	private void setButton(String buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
 		
         this.grid.anchor = GridBagConstraints.CENTER;
@@ -134,43 +116,6 @@ public class LogoutSuccessPanel extends JPanel {
         this.grid.weighty = 0.0;
         
         this.components.put(buttonKey, button);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setTextField(String textFieldKey) {
-		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
-		
-		this.grid.anchor = GridBagConstraints.CENTER;
-		this.grid.gridwidth = 2;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(textFieldKey, textField);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
-		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
-		
-		this.grid.anchor = GridBagConstraints.CENTER;
-		this.grid.gridwidth = 2;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(passwordFieldKey, passwordField);
-	}
-	
-	// --------------------------------------------------------------------------------------
-	public void setLabelField(String labelKey, String labelText) {
-		JLabel labelField = new JLabel(labelText);
-		this.grid.anchor = GridBagConstraints.CENTER;
-		labelField.setBackground(Color.BLACK);
-		labelField.setForeground(Color.WHITE);
-		this.grid.gridwidth = 1;
-        this.grid.weightx = 0.0;
-        this.grid.weighty = 0.0;
-        
-        this.components.put(labelKey, labelField);
 	}
 	
 	@Override

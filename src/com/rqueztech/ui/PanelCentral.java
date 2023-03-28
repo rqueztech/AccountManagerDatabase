@@ -5,7 +5,6 @@ It extends JFrame and contains a ConcurrentHashMap of all the panels as well as 
 
 package com.rqueztech.ui;
 
-import java.awt.Image;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JPanel;
@@ -16,8 +15,6 @@ public class PanelCentral extends JPanel {
 	
 	private static final long serialVersionUID = -652692111395861275L;
 	
-	// Variables for the image and the card layout
-	public Image image;
 	
 	// Reference to the BaseFrame objects
 	private final ConcurrentHashMap <PanelCentralEnums, JPanel> panels;
@@ -35,7 +32,7 @@ public class PanelCentral extends JPanel {
 		return this.panels;
 	}
 	
-	public void setConcurrentHashMap(PanelCentralEnums panelCentralEnum, JPanel panel) {
+	void setConcurrentHashMap(PanelCentralEnums panelCentralEnum, JPanel panel) {
 		this.panels.put(panelCentralEnum, panel);
 	}
 }
