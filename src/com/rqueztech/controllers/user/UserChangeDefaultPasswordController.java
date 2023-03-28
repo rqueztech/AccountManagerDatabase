@@ -120,7 +120,7 @@ public class UserChangeDefaultPasswordController {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void toggleConfirmPasswordVisibility() {
+	void toggleConfirmPasswordVisibility() {
 		JButton toggleButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY");
 		
 		toggleButton.addActionListener( e -> {
