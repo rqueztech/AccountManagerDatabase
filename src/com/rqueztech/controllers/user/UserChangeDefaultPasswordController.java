@@ -12,6 +12,7 @@ import com.rqueztech.ui.events.ChangePasswordDocumentListener;
 import com.rqueztech.ui.events.PasswordValidationDocumentListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 import com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
+import com.rqueztech.ui.user.enums.UserChangeDefaultPasswordEnums;
 
 public class UserChangeDefaultPasswordController {
 	private UserChangeDefaultPasswordPanel userChangeDefaultPasswordPanel;
@@ -45,7 +46,7 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void submitButtonActionListener() {
-		JButton submitButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("SUBMIT_LOGIN_BUTTON_KEY");
+		JButton submitButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.SUBMIT_LOGIN_BUTTON_KEY);
 		
 		submitButton.addActionListener(e -> {
 			this.userChangeDefaultPasswordPanel.setVisible(false);
@@ -56,7 +57,7 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void cancelButtonActionListener() {
-		JButton cancelButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CANCEL_CHANGE_BUTTON_KEY");
+		JButton cancelButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CANCEL_CHANGE_BUTTON_KEY);
 		
 		cancelButton.addActionListener(e -> {
 			this.userChangeDefaultPasswordPanel.setVisible(false);
@@ -80,9 +81,9 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void submitButtonListener() {
-		JButton submitButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("SUBMIT_LOGIN_BUTTON_KEY");
-		JPasswordField enterPassword = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("ENTERPASSWORD_TEXTFIELD_KEY");
-		JPasswordField confirmPassword = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY");
+		JButton submitButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.SUBMIT_LOGIN_BUTTON_KEY);
+		JPasswordField enterPassword = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_TEXTFIELD_KEY);
+		JPasswordField confirmPassword = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
 		
 		ChangePasswordDocumentListener changePasswordDocumentListener
 			= new ChangePasswordDocumentListener(submitButton, enterPassword, confirmPassword);
@@ -93,8 +94,8 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void passwordListener() {
-		JButton passwordButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("ENTERPASSWORD_VISIBILITY_BUTTON_KEY");
-		JPasswordField passwordField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("ENTERPASSWORD_TEXTFIELD_KEY");
+		JButton passwordButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
+		JPasswordField passwordField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_TEXTFIELD_KEY);
 		
 		PasswordValidationDocumentListener passwordDocumentListener = new PasswordValidationDocumentListener(passwordField, passwordButton);
 		passwordField.getDocument().addDocumentListener(passwordDocumentListener);
@@ -102,8 +103,8 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void confirmPasswordListener() {
-		JButton passphraseButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY");
-		JPasswordField passphraseField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY");
+		JButton passphraseButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
+		JPasswordField passphraseField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
 		
 		PasswordValidationDocumentListener passwordDocumentListener = new PasswordValidationDocumentListener(passphraseField, passphraseButton);
 		passphraseField.getDocument().addDocumentListener(passwordDocumentListener);
@@ -111,20 +112,20 @@ public class UserChangeDefaultPasswordController {
 	
 	// --------------------------------------------------------------------------------------
 	private void toggleEnterPasswordVisibility() {
-		JButton toggleButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("ENTERPASSWORD_VISIBILITY_BUTTON_KEY");
+		JButton toggleButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_VISIBILITY_BUTTON_KEY);
 		
 		toggleButton.addActionListener( e -> {
-			JPasswordField enterPasswordTextField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("ENTERPASSWORD_TEXTFIELD_KEY");
+			JPasswordField enterPasswordTextField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_TEXTFIELD_KEY);
 			this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
 		});
 	}
 	
 	// --------------------------------------------------------------------------------------
 	void toggleConfirmPasswordVisibility() {
-		JButton toggleButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY");
+		JButton toggleButton = (JButton) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY);
 		
 		toggleButton.addActionListener( e -> {
-			JPasswordField confirmPasswordTextField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get("CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY");
+			JPasswordField confirmPasswordTextField = (JPasswordField) this.userChangeDefaultPasswordPanel.getComponentsMap().get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
 			this.togglePasswordVisibility.passwordToggler(confirmPasswordTextField);
 		});
 	}

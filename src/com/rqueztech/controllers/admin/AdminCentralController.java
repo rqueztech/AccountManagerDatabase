@@ -3,6 +3,7 @@ package com.rqueztech.controllers.admin;
 import javax.swing.JButton;
 
 import com.rqueztech.ui.admin.AdminCentralPanel;
+import com.rqueztech.ui.admin.enums.AdminCentralPanelEnums;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 
 public class AdminCentralController {
@@ -21,7 +22,7 @@ public class AdminCentralController {
 	
 	// --------------------------------------------------------------------------------------
 	private void userViewActionListener() {
-		JButton userViewButton = (JButton) this.adminCentralPanel.getComponentsMap().get("USER_VIEW_BUTTON_KEY");
+		JButton userViewButton = (JButton) this.adminCentralPanel.getComponentsMap().get(AdminCentralPanelEnums.USER_VIEW_BUTTON_KEY);
 		
 		userViewButton.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);
@@ -31,7 +32,7 @@ public class AdminCentralController {
 	
 	// --------------------------------------------------------------------------------------
 	private void adminAddUserButtonListener() {
-		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get("ADMIN_ADD_USER_BUTTON_KEY");
+		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get(AdminCentralPanelEnums.ADMIN_ADD_USER_BUTTON_KEY);
 		
 		adminLogin.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);
@@ -41,7 +42,7 @@ public class AdminCentralController {
 	
 	// --------------------------------------------------------------------------------------
 	private void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get("ADMIN_LOGOUT_BUTTON_KEY");
+		JButton adminLogin = (JButton) this.adminCentralPanel.getComponentsMap().get(AdminCentralPanelEnums.ADMIN_LOGOUT_BUTTON_KEY);
 		
 		adminLogin.addActionListener(e -> {
 			this.adminCentralPanel.setVisible(false);

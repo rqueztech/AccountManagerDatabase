@@ -8,6 +8,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.rqueztech.ui.admin.AdminUserViewPanel;
+import com.rqueztech.ui.admin.enums.AdminUserViewEnums;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 
 public class AdminUserViewController {
@@ -27,7 +28,7 @@ public class AdminUserViewController {
 
 	// --------------------------------------------------------------------------------------
 	private void logoutButtonActionListener() {
-		JButton userViewButton = (JButton) this.adminUserViewPanel.getComponentsMap().get("ADMIN_LOGOUT_BUTTON_KEY");
+		JButton userViewButton = (JButton) this.adminUserViewPanel.getComponentsMap().get(AdminUserViewEnums.ADMIN_LOGOUT_BUTTON_KEY);
 
 		userViewButton.addActionListener(e -> {
 			this.adminUserViewPanel.setVisible(false);
@@ -38,7 +39,7 @@ public class AdminUserViewController {
 
 	// --------------------------------------------------------------------------------------
 	private void userViewButtonListener() {
-		JButton userViewButton = (JButton) this.adminUserViewPanel.getComponentsMap().get("ADD_USER_BUTTON_KEY");
+		JButton userViewButton = (JButton) this.adminUserViewPanel.getComponentsMap().get(AdminUserViewEnums.ADD_USER_BUTTON_KEY);
 
 		userViewButton.addActionListener(e -> {
 			this.adminUserViewPanel.setVisible(false);
@@ -49,7 +50,7 @@ public class AdminUserViewController {
 
 	// --------------------------------------------------------------------------------------
 	private void exitButtonActionListener() {
-		JButton adminLogin = (JButton) this.adminUserViewPanel.getComponentsMap().get("RETURN_CENTRAL_BUTTON_KEY");
+		JButton adminLogin = (JButton) this.adminUserViewPanel.getComponentsMap().get(AdminUserViewEnums.RETURN_CENTRAL_BUTTON_KEY);
 
 		adminLogin.addActionListener(e -> {
 			this.adminUserViewPanel.setVisible(false);

@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import com.rqueztech.ui.MainLoginPanel;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.enums.MainLoginPanelEnums;
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
 
@@ -48,7 +49,7 @@ public class MainLoginControl {
 	
 	// --------------------------------------------------------------------------------------
 	private void userButtonActionListener() {
-		JButton userButton = (JButton) this.mainLoginPanel.getComponentsMap().get("USER_LOGIN_BUTTON_KEY");
+		JButton userButton = (JButton) this.mainLoginPanel.getComponentsMap().get(MainLoginPanelEnums.USER_LOGIN_BUTTON_KEY);
 		
 		userButton.addActionListener(e -> {
 			this.cleanUpNavigateAway();
@@ -58,7 +59,7 @@ public class MainLoginControl {
 	
 	// --------------------------------------------------------------------------------------
 	private void adminButtonActionListener() {
-		JButton adminButton = (JButton) this.mainLoginPanel.getComponentsMap().get("ADMIN_LOGIN_BUTTON_KEY");
+		JButton adminButton = (JButton) this.mainLoginPanel.getComponentsMap().get(MainLoginPanelEnums.ADMIN_LOGIN_BUTTON_KEY);
 		
 		adminButton.addActionListener(e -> {
 			this.cleanUpNavigateAway();
@@ -68,10 +69,10 @@ public class MainLoginControl {
 	
 	// --------------------------------------------------------------------------------------
 	private void togglePasswordVisibility() {
-		JButton toggleButton = (JButton) this.mainLoginPanel.getComponentsMap().get("VISIBILITY_BUTTON_KEY");
+		JButton toggleButton = (JButton) this.mainLoginPanel.getComponentsMap().get(MainLoginPanelEnums.VISIBILITY_BUTTON_KEY);
 		
 		toggleButton.addActionListener( e -> {
-			JPasswordField passwordTextField = (JPasswordField) this.mainLoginPanel.getComponentsMap().get("PASSWORD_TEXTFIELD_KEY");
+			JPasswordField passwordTextField = (JPasswordField) this.mainLoginPanel.getComponentsMap().get(MainLoginPanelEnums.PASSWORD_TEXTFIELD_KEY);
 			this.togglePasswordVisibility.passwordToggler(passwordTextField);
 		});
 	}

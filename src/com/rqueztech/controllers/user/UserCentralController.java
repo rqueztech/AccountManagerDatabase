@@ -4,6 +4,7 @@ import javax.swing.JButton;
 
 import com.rqueztech.ui.enums.PanelCentralEnums;
 import com.rqueztech.ui.user.UserCentralPanel;
+import com.rqueztech.ui.user.enums.UserCentralPanelEnums;
 
 public class UserCentralController {
 	private UserCentralPanel userCentralPanel;
@@ -15,7 +16,7 @@ public class UserCentralController {
 	
 	// --------------------------------------------------------------------------------------
 	public void logoutButtonActionListener() {
-		JButton adminLogin = (JButton) this.userCentralPanel.getComponentsMap().get("USER_LOGOUT_BUTTON_KEY");
+		JButton adminLogin = (JButton) this.userCentralPanel.getComponentsMap().get(UserCentralPanelEnums.USER_LOGOUT_BUTTON_KEY);
 		
 		adminLogin.addActionListener(e -> {
 			this.userCentralPanel.setVisible(false);
