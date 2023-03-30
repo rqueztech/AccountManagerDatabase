@@ -31,10 +31,27 @@ public class InputValidations {
 	}
 	
 	// ------------------------------------------------------------------------------------
+	private boolean matchRegex(Pattern pattern, String input) {
+		Matcher matcher = pattern.matcher(input);
+		return matcher.matches();
+	}
+	
+	// ------------------------------------------------------------------------------------
+	private boolean matchPasswordRegex(Pattern pattern, String isMeetsPasswordRequirements) {
+		Matcher matcher = pattern.matcher(isMeetsPasswordRequirements);
+		return matcher.matches();
+	}
+	
+	// ------------------------------------------------------------------------------------
 	public boolean noEntryFound(char[] inputMeetsPasswordRequirements) {
 		// If the password requirements are not met, print a message and then give specific feedback
 		CharBuffer inputBuffer = CharBuffer.wrap(inputMeetsPasswordRequirements);
 		return matchRegex(NO_ENTRY_FOUND_PATTERN, inputBuffer);
+	}
+	
+	// ------------------------------------------------------------------------------------
+	public boolean noEntryFound(String inputMeetsPasswordRequirements) {
+		return matchRegex(NO_ENTRY_FOUND_PATTERN, inputMeetsPasswordRequirements);
 	}
 	
 	// ------------------------------------------------------------------------------------
@@ -45,10 +62,22 @@ public class InputValidations {
 	}
 	
 	// ------------------------------------------------------------------------------------
+	public boolean validatePassword(String inputMeetsPasswordRequirements) {
+		// If the password requirements are not met, print a message and then give specific feedback
+		return matchPasswordRegex(PASSWORD_REQUIREMENTS_PATTERN, inputMeetsPasswordRequirements);
+	}
+	
+	// ------------------------------------------------------------------------------------
 	public boolean containsLegalCharacters(char[] inputLegalCharacters) {
 		// Return true or false (dependent on if the regex matches)
 		CharBuffer inputBuffer = CharBuffer.wrap(inputLegalCharacters);
 		return matchRegex(LEGAL_CHARACTERS_PATTERN, inputBuffer);
+	}
+	
+	// ------------------------------------------------------------------------------------
+	public boolean containsLegalCharacters(String inputLegalCharacters) {
+		// Return true or false (dependent on if the regex matches)
+		return matchRegex(LEGAL_CHARACTERS_PATTERN, inputLegalCharacters);
 	}
 
 	// ------------------------------------------------------------------------------------
@@ -58,6 +87,13 @@ public class InputValidations {
 		CharBuffer inputBuffer = CharBuffer.wrap(inputLettersAndNumbers);
 		return matchRegex(ONLY_LETTERS_AND_NUMBERS_PATTERN, inputBuffer);
 	}
+	
+	// ------------------------------------------------------------------------------------
+	// Check so see if input entered by the user is legal. If all characters
+	// Entered are legal, then it will be return true. Otherwise, returns false.
+	public boolean isOnlyLettersAndNumbers(String inputLettersAndNumbers) {
+		return matchRegex(ONLY_LETTERS_AND_NUMBERS_PATTERN, inputLettersAndNumbers);
+	}
 
 	// ------------------------------------------------------------------------------------
 	// Check so see if input entered by the user is legal. If all characters
@@ -66,11 +102,23 @@ public class InputValidations {
 		CharBuffer inputBuffer = CharBuffer.wrap(inputOnlyLetters);
 		return matchRegex(ONLY_LETTER_CHARACTERS_PATTERN, inputBuffer);
 	}
+	
+	// ------------------------------------------------------------------------------------
+	// Check so see if input entered by the user is legal. If all characters
+	// Entered are legal, then it will be return true. Otherwise, returns false.
+	public boolean isOnlyLetterCharacters(String inputOnlyLetters) {
+		return matchRegex(ONLY_LETTER_CHARACTERS_PATTERN, inputOnlyLetters);
+	}
 
 	// ------------------------------------------------------------------------------------
 	public boolean isNoUpperCaseCharacters(char[] inputNoUpperCase) {
 		CharBuffer inputBuffer = CharBuffer.wrap(inputNoUpperCase);
 		return matchRegex(NO_UPPERCASE_CHARACTERS_PATTERN, inputBuffer);
+	}
+	
+	// ------------------------------------------------------------------------------------
+	public boolean isNoUpperCaseCharacters(String inputNoUpperCase) {
+		return matchRegex(NO_UPPERCASE_CHARACTERS_PATTERN, inputNoUpperCase);
 	}
 
 	// ------------------------------------------------------------------------------------
@@ -78,11 +126,21 @@ public class InputValidations {
 		CharBuffer inputBuffer = CharBuffer.wrap(inputNoLowerCase);
 		return matchRegex(NO_LOWERCASE_CHARACTERS_PATTERN, inputBuffer);
 	}
+	
+	// ------------------------------------------------------------------------------------
+	public boolean isNoLowerCaseCharacters(String inputNoLowerCase) {
+		return matchRegex(NO_LOWERCASE_CHARACTERS_PATTERN, inputNoLowerCase);
+	}
 
 	// ------------------------------------------------------------------------------------
 	public boolean isNoSpecialCharacters(char[] inputNoSpecialCharacters) {
 		CharBuffer inputBuffer = CharBuffer.wrap(inputNoSpecialCharacters);
 		return matchRegex(NO_SPECIAL_CHARACTERS_PATTERN, inputBuffer);
+	}
+	
+	// ------------------------------------------------------------------------------------
+	public boolean isNoSpecialCharacters(String inputNoSpecialCharacters) {
+		return matchRegex(NO_SPECIAL_CHARACTERS_PATTERN, inputNoSpecialCharacters);
 	}
 
 	// ------------------------------------------------------------------------------------
@@ -91,5 +149,8 @@ public class InputValidations {
 		return matchRegex(NO_NUMBERS_PATTERN, inputBuffer);
 	}
 	
-	
+	// ------------------------------------------------------------------------------------
+	public boolean isNoNumbersFound(String inputNoNumbersFound) {
+		return matchRegex(NO_NUMBERS_PATTERN, inputNoNumbersFound);
+	}
 }
