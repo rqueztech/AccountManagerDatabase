@@ -3,30 +3,31 @@ package com.rqueztech.models.user;
 import com.rqueztech.ui.validation.InputValidations;
 
 public class UserModel {
-	private char[] userAccountName;
-	private char[] userFirstName;
-	private char[] userLastName;
+	private String userAccountName;
+	private String userFirstName;
+	private String userLastName;
 	private char[] userPassword;
-	private String gender; 
 	private byte userSalt;
+	private String gender; 
 	private int userNumber;
+	
 	private InputValidations inputValidations;
 	
 	// --------------------------------------------------------------------------------------
 	public UserModel(
-			char[] userAccountName,
-			char[] userFirstName,
-			char[] userLastName,
+			String userAccountName,
+			String userFirstName,
+			String userLastName,
 			char[] userPassword,
 			String gender,
 			byte userSalt,
 			int userNumber) {
 		
-		super();
 		this.setUserName(userAccountName);
 		this.setUserFirstName(userFirstName);
 		this.setUserLastName(userLastName);
 		this.setUserPassword(userPassword);
+		this.setGender(gender);
 		this.setUserSalt(userSalt);
 		this.setUserNumber(userNumber);
 		
@@ -34,40 +35,44 @@ public class UserModel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	
+	public String getGender() {
+		return this.gender;
+	}
 	
 	// --------------------------------------------------------------------------------------
-	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	
 	// --------------------------------------------------------------------------------------
-	public char[] getUserName() {
+	public String getUserName() {
 		return this.userAccountName;
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setUserName(char[] userAccountName) {
+	public void setUserName(String userAccountName) {
 		this.userAccountName = userAccountName;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public char[] getUserFirstName() {
+	public String getUserFirstName() {
 		return userFirstName;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setUserFirstName(char[] userFirstName) {
+	public void setUserFirstName(String userFirstName) {
 		if(this.inputValidations.isOnlyLetterCharacters(userFirstName)) {
 			this.userFirstName = userFirstName;
 		}
 	}
 
 	// --------------------------------------------------------------------------------------
-	public char[] getUserLastName() {
+	public String getUserLastName() {
 		return userLastName;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setUserLastName(char[] userLastName) {
+	public void setUserLastName(String userLastName) {
 		if(this.inputValidations.isOnlyLetterCharacters(userLastName)) {
 			this.userLastName = userLastName;
 		}
