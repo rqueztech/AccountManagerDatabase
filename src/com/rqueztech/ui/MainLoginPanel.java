@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 
 import com.rqueztech.controllers.MainLoginControl;
 import com.rqueztech.ui.buttons.ButtonTemplates;
+import com.rqueztech.ui.enums.MainLoginPanelEnums;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
@@ -35,20 +36,6 @@ public class MainLoginPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
-	private final String USERNAME_LABEL_KEY = "USERNAME_LABEL_KEY";
-	private final String USERNAME_TEXTFIELD_KEY = "USERNAME_TEXTFIELD_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String PASSWORD_LABEL_KEY = "PASSWORD_LABEL_KEY";
-	private final String PASSWORD_TEXTFIELD_KEY = "PASSWORD_TEXTFIELD_KEY";
-	private final String VISIBILITY_BUTTON_KEY = "VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 3: Login Button Component Keys
-	private final String USER_LOGIN_BUTTON_KEY = "USER_LOGIN_BUTTON_KEY";
-	private final String ADMIN_LOGIN_BUTTON_KEY = "ADMIN_LOGIN_BUTTON_KEY";
-	
-	// Initial GridBagLayout values
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
@@ -61,7 +48,7 @@ public class MainLoginPanel extends JPanel {
 	private MainLoginControl mainLoginControl;
 	
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <MainLoginPanelEnums, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
 	public MainLoginPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
@@ -76,7 +63,7 @@ public class MainLoginPanel extends JPanel {
 			this.setLayout(layout);
 	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        this.components = new ConcurrentHashMap <MainLoginPanelEnums, JComponent> ();
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -86,36 +73,36 @@ public class MainLoginPanel extends JPanel {
 	        
 	        // Set the Username 
 	        this.setComponentMainPosition();
-	        this.setLabelField(USERNAME_LABEL_KEY, "Enter Username");
-	        this.add(this.components.get(USERNAME_LABEL_KEY), grid);
+	        this.setLabelField(MainLoginPanelEnums.USERNAME_LABEL_KEY, "Enter Username");
+	        this.add(this.components.get(MainLoginPanelEnums.USERNAME_LABEL_KEY), grid);
 	        
 	        this.setNewTextfieldPosition(); // All textfields are fixed, therefore coordinates set in function
-	        this.setTextField(USERNAME_TEXTFIELD_KEY);
-	        this.add(this.components.get(USERNAME_TEXTFIELD_KEY), grid);
+	        this.setTextField(MainLoginPanelEnums.USERNAME_TEXTFIELD_KEY);
+	        this.add(this.components.get(MainLoginPanelEnums.USERNAME_TEXTFIELD_KEY), grid);
 	        
 	        this.setNewLabelPosition(); // All labels are fixed, therefore coordinates set in function
-	        this.setLabelField(PASSWORD_LABEL_KEY, "Enter Password");
-	        this.add(this.components.get(PASSWORD_LABEL_KEY), grid);
+	        this.setLabelField(MainLoginPanelEnums.PASSWORD_LABEL_KEY, "Enter Password");
+	        this.add(this.components.get(MainLoginPanelEnums.PASSWORD_LABEL_KEY), grid);
 	        
 	        this.setNewTextfieldPosition(); // All textfields are fixed, therefore coordinates set in function
-	        this.setPasswordField(PASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(PASSWORD_TEXTFIELD_KEY), grid);
+	        this.setPasswordField(MainLoginPanelEnums.PASSWORD_TEXTFIELD_KEY);
+	        this.add(this.components.get(MainLoginPanelEnums.PASSWORD_TEXTFIELD_KEY), grid);
 	        
 	        // Creates the button to toggle visibility on/off in visibility button key
 	        this.grid.gridx += 3;
-	        this.setButton(VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(MainLoginPanelEnums.VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(MainLoginPanelEnums.VISIBILITY_BUTTON_KEY), grid);
 	        
 	        // Creates the user login button
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setButton(USER_LOGIN_BUTTON_KEY, "User");
-	        this.add(this.components.get(USER_LOGIN_BUTTON_KEY), grid);
+	        this.setButton(MainLoginPanelEnums.USER_LOGIN_BUTTON_KEY, "User");
+	        this.add(this.components.get(MainLoginPanelEnums.USER_LOGIN_BUTTON_KEY), grid);
 	        
 	        // Creates the admin login button
 	        this.grid.gridx += 1;
-	        this.setButton(ADMIN_LOGIN_BUTTON_KEY, "Admin");
-	        this.add(this.components.get(ADMIN_LOGIN_BUTTON_KEY), grid);
+	        this.setButton(MainLoginPanelEnums.ADMIN_LOGIN_BUTTON_KEY, "Admin");
+	        this.add(this.components.get(MainLoginPanelEnums.ADMIN_LOGIN_BUTTON_KEY), grid);
 	        
 	        // Calls the mainlogin control function to set the listeners for the
 	        // Current view
@@ -156,7 +143,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(MainLoginPanelEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -168,7 +155,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setTextField(String textFieldKey) {
+	private void setTextField(MainLoginPanelEnums textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -180,7 +167,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setPasswordField(String passwordFieldKey) {
+	private void setPasswordField(MainLoginPanelEnums passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -192,7 +179,7 @@ public class MainLoginPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(MainLoginPanelEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		labelField.setBackground(Color.BLACK);
 		labelField.setForeground(Color.WHITE);
@@ -205,7 +192,7 @@ public class MainLoginPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 	
-	public ConcurrentHashMap <String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap <MainLoginPanelEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

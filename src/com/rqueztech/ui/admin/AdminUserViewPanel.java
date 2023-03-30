@@ -35,6 +35,7 @@ import javax.swing.table.TableRowSorter;
 import com.rqueztech.controllers.admin.AdminUserViewController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.admin.enums.AdminUserViewEnums;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
@@ -51,17 +52,6 @@ public class AdminUserViewPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 
-	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
-	private final String DELETE_USER_BUTTON_KEY = "DELETE_USER_BUTTON_KEY";
-	private final String RETURN_CENTRAL_BUTTON_KEY = "RETURN_CENTRAL_BUTTON_KEY";
-
-	// --- Section 3: Login Button Component Keys
-	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
-	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
-	
-	private final String RETURN_CENTRAL_TEXTFIELD_KEY = "RETURN_CENTRAL_TEXTFIELD_KEY";
-
 	// --- Section 4: Set Combo Box
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -74,7 +64,7 @@ public class AdminUserViewPanel extends JPanel {
 	private PanelCentral panelCentral;
 
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <AdminUserViewEnums, JComponent> components;
 
 	private AdminUserViewController adminUserViewController;
 	
@@ -83,7 +73,7 @@ public class AdminUserViewPanel extends JPanel {
 
 		this.panelCentral = panelCentral;
 
-		this.components = new ConcurrentHashMap<String, JComponent>();
+		this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
 
 		// Dispatch responsibilities on EDT.
 		SwingUtilities.invokeLater(() -> {
@@ -91,7 +81,7 @@ public class AdminUserViewPanel extends JPanel {
 			this.setLayout(layout);
 			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 			this.image = new ImageIcon("backgroundd.jpg").getImage();
-			this.components = new ConcurrentHashMap <String, JComponent> ();
+			this.components = new ConcurrentHashMap <AdminUserViewEnums, JComponent> ();
 
 			this.setBackgroundImageConstraints();
 			frame.add(this, this.grid);
@@ -104,8 +94,8 @@ public class AdminUserViewPanel extends JPanel {
 	        this.grid.gridx = 0;
 	        this.grid.gridy = 0;
 
-	        this.setLabelField(CONFIRMPASSWORDPASSWORD_LABEL_KEY, "User Table");
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
+	        this.setLabelField(AdminUserViewEnums.CONFIRMPASSWORDPASSWORD_LABEL_KEY, "User Table");
+	        this.add(this.components.get(AdminUserViewEnums.CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
 
 	        this.grid.gridy += 1;
 
@@ -225,10 +215,10 @@ public class AdminUserViewPanel extends JPanel {
 	        this.add(scrollPane, this.grid);
 
 	        this.grid.gridy += 1;
-	        this.setTextField(RETURN_CENTRAL_TEXTFIELD_KEY);
-	        this.add(this.components.get(RETURN_CENTRAL_TEXTFIELD_KEY), this.grid);
+	        this.setTextField(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY);
+	        this.add(this.components.get(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY), this.grid);
 
-		    JTextField textFilterField = (JTextField) this.components.get(RETURN_CENTRAL_TEXTFIELD_KEY);
+		    JTextField textFilterField = (JTextField) this.components.get(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY);
 
 		    textFilterField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -264,26 +254,26 @@ public class AdminUserViewPanel extends JPanel {
 			});
 
 	        this.grid.gridx += 1;
-	        this.setButton(DELETE_USER_BUTTON_KEY, "Delete User");
-	        this.add(this.components.get(DELETE_USER_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums.DELETE_USER_BUTTON_KEY, "Delete User");
+	        this.add(this.components.get(AdminUserViewEnums.DELETE_USER_BUTTON_KEY), this.grid);
 
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setButton(RETURN_CENTRAL_BUTTON_KEY, "Go Back");
-	        this.add(this.components.get(RETURN_CENTRAL_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums.RETURN_CENTRAL_BUTTON_KEY, "Go Back");
+	        this.add(this.components.get(AdminUserViewEnums.RETURN_CENTRAL_BUTTON_KEY), this.grid);
 
 	        this.grid.gridx += 1;
-	        this.setButton(ADD_USER_BUTTON_KEY, "Add User");
-	        this.add(this.components.get(ADD_USER_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums.ADD_USER_BUTTON_KEY, "Add User");
+	        this.add(this.components.get(AdminUserViewEnums.ADD_USER_BUTTON_KEY), this.grid);
 
 	        this.grid.gridx += 1;
-	        this.setButton(DELETE_USER_BUTTON_KEY, "Delete User");
-	        this.add(this.components.get(DELETE_USER_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums.DELETE_USER_BUTTON_KEY, "Delete User");
+	        this.add(this.components.get(AdminUserViewEnums.DELETE_USER_BUTTON_KEY), this.grid);
 
 	        this.grid.gridy += 1;
 	        this.grid.gridx = 0;
-	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Logout");
-	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums.ADMIN_LOGOUT_BUTTON_KEY, "Logout");
+	        this.add(this.components.get(AdminUserViewEnums.ADMIN_LOGOUT_BUTTON_KEY), this.grid);
 		
 	        this.adminUserViewController = new AdminUserViewController(this);
 		});
@@ -303,7 +293,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	private void setTextField(String textFieldKey) {
+	private void setTextField(AdminUserViewEnums textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.DARK_GRAY, Color.WHITE, TEXTFIELD_SIZE);
 		
 		//this.grid.anchor = GridBagConstraints.CENTER;
@@ -320,7 +310,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(AdminUserViewEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.gridwidth = 1;
@@ -331,7 +321,7 @@ public class AdminUserViewPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	private void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(AdminUserViewEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -343,7 +333,7 @@ public class AdminUserViewPanel extends JPanel {
         this.components.put(labelKey, labelField);
 	}
 
-	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap<AdminUserViewEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

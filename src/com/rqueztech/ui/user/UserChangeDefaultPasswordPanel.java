@@ -22,6 +22,7 @@ import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
+import com.rqueztech.ui.user.enums.UserChangeDefaultPasswordEnums;
 
 public class UserChangeDefaultPasswordPanel extends JPanel {
 	
@@ -37,20 +38,6 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
-	private final String ENTERPASSWORD_LABEL_KEY = "ENTERPASSWORD_LABEL_KEY";
-	private final String ENTERPASSWORD_TEXTFIELD_KEY = "ENTERPASSWORD_TEXTFIELD_KEY";
-	private final String ENTERPASSWORD_VISIBILITY_BUTTON_KEY = "ENTERPASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String CONFIRMPASSWORDPASSWORD_LABEL_KEY = "CONFIRMPASSWORDPASSWORD_LABEL_KEY";
-	private final String CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY = "CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY";
-	private final String CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	// --- Section 3: Login Button Component Keys
-	private final String CANCEL_CHANGE_BUTTON_KEY = "CANCEL_CHANGE_BUTTON_KEY";
-	private final String SUBMIT_LOGIN_BUTTON_KEY = "SUBMIT_LOGIN_BUTTON_KEY";
-	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
@@ -62,7 +49,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	private UserChangeDefaultPasswordController userChangeDefaultPasswordController;
 	
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <UserChangeDefaultPasswordEnums, JComponent> components;
 	
 	// --------------------------------------------------------------------------------------
 	public UserChangeDefaultPasswordPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
@@ -79,7 +66,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 					new Dimension(frame.getHeight(), frame.getWidth())); // Set the size to the 
 	        																			// dimensions of the BaseFrame
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        this.components = new ConcurrentHashMap <UserChangeDefaultPasswordEnums, JComponent> ();
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -89,41 +76,41 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	        
 	        
 	        this.setComponentMainPosition();
-	        this.setLabelField(ENTERPASSWORD_LABEL_KEY, "Enter New Password");
-	        this.add(this.components.get(ENTERPASSWORD_LABEL_KEY), grid);
+	        this.setLabelField(UserChangeDefaultPasswordEnums.ENTERPASSWORD_LABEL_KEY, "Enter New Password");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_LABEL_KEY), grid);
 	        
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setPasswordField(ENTERPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(ENTERPASSWORD_TEXTFIELD_KEY), grid);
+	        this.setPasswordField(UserChangeDefaultPasswordEnums.ENTERPASSWORD_TEXTFIELD_KEY);
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_TEXTFIELD_KEY), grid);
 	        
 	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(ENTERPASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(ENTERPASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(UserChangeDefaultPasswordEnums.ENTERPASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.ENTERPASSWORD_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setLabelField(CONFIRMPASSWORDPASSWORD_LABEL_KEY, "Confirm New Password");
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
+	        this.setLabelField(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_LABEL_KEY, "Confirm New Password");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_LABEL_KEY), grid);
 	        
 	        this.grid.gridx = 0;
 			this.grid.gridy += 1;
-	        this.setPasswordField(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
-	        this.add(this.components.get(CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY), grid);
+	        this.setPasswordField(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY);
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORDPASSWORD_TEXTFIELD_KEY), grid);
 	        
 	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinates are custom set
-	        this.setButton(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY, "Visibile");
-	        this.add(this.components.get(CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(UserChangeDefaultPasswordEnums.CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY, "Visibile");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.CONFIRMPASSWORD_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setButton(CANCEL_CHANGE_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(CANCEL_CHANGE_BUTTON_KEY), grid);
+	        this.setButton(UserChangeDefaultPasswordEnums.CANCEL_CHANGE_BUTTON_KEY, "Cancel");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.CANCEL_CHANGE_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx = 1;
-	        this.setSubmitButton(SUBMIT_LOGIN_BUTTON_KEY, "Submit");
-	        this.add(this.components.get(SUBMIT_LOGIN_BUTTON_KEY), grid);
+	        this.setSubmitButton(UserChangeDefaultPasswordEnums.SUBMIT_LOGIN_BUTTON_KEY, "Submit");
+	        this.add(this.components.get(UserChangeDefaultPasswordEnums.SUBMIT_LOGIN_BUTTON_KEY), grid);
 	        
 	        this.userChangeDefaultPasswordController = new UserChangeDefaultPasswordController(this);
 		});
@@ -150,7 +137,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(UserChangeDefaultPasswordEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.gridwidth = 1;
@@ -161,7 +148,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setSubmitButton(String buttonKey, String buttonText) {
+	private void setSubmitButton(UserChangeDefaultPasswordEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         
@@ -175,7 +162,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
+	public void setPasswordField(UserChangeDefaultPasswordEnums passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		this.grid.gridwidth = 2;
@@ -186,7 +173,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(UserChangeDefaultPasswordEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -199,7 +186,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap<UserChangeDefaultPasswordEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

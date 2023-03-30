@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import com.rqueztech.controllers.admin.AdminCentralController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.admin.enums.AdminCentralPanelEnums;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 
 public class AdminCentralPanel extends JPanel {
@@ -33,13 +34,6 @@ public class AdminCentralPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 3: Login Button Component Keys
-	private final String ADMIN_LOGOUT_BUTTON_KEY = "ADMIN_LOGOUT_BUTTON_KEY";
-	private final String ADMIN_ADD_USER_BUTTON_KEY = "ADMIN_ADD_USER_BUTTON_KEY";
-	
-	// --- Section 4: Add User Button
-	private final String USER_VIEW_BUTTON_KEY = "USER_VIEW_BUTTON_KEY";
-	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
@@ -49,7 +43,7 @@ public class AdminCentralPanel extends JPanel {
 	private AdminCentralController adminCentralController;
 	
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <AdminCentralPanelEnums, JComponent> components;
 	public PanelCentral panelCentral;
 	
 	// --------------------------------------------------------------------------------------
@@ -67,7 +61,7 @@ public class AdminCentralPanel extends JPanel {
 			
 			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        this.components = new ConcurrentHashMap <AdminCentralPanelEnums, JComponent> ();
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -80,16 +74,16 @@ public class AdminCentralPanel extends JPanel {
 	        
 	        this.grid.gridx = 0;
 	        this.grid.gridy = 0;
-	        this.setButton(ADMIN_LOGOUT_BUTTON_KEY, "Logout");
-	        this.add(this.components.get(ADMIN_LOGOUT_BUTTON_KEY), grid);
+	        this.setButton(AdminCentralPanelEnums.ADMIN_LOGOUT_BUTTON_KEY, "Logout");
+	        this.add(this.components.get(AdminCentralPanelEnums.ADMIN_LOGOUT_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
-	        this.setButton(USER_VIEW_BUTTON_KEY, "User View");
-	        this.add(this.components.get(USER_VIEW_BUTTON_KEY), grid);
+	        this.setButton(AdminCentralPanelEnums.USER_VIEW_BUTTON_KEY, "User View");
+	        this.add(this.components.get(AdminCentralPanelEnums.USER_VIEW_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
-	        this.setButton(ADMIN_ADD_USER_BUTTON_KEY, "Add user");
-	        this.add(this.components.get(ADMIN_ADD_USER_BUTTON_KEY), grid);
+	        this.setButton(AdminCentralPanelEnums.ADMIN_ADD_USER_BUTTON_KEY, "Add user");
+	        this.add(this.components.get(AdminCentralPanelEnums.ADMIN_ADD_USER_BUTTON_KEY), grid);
 	        
 	        this.adminCentralController = new AdminCentralController(this);
 		});
@@ -115,7 +109,7 @@ public class AdminCentralPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(AdminCentralPanelEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
         this.grid.gridwidth = 1;
@@ -126,7 +120,7 @@ public class AdminCentralPanel extends JPanel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap<AdminCentralPanelEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

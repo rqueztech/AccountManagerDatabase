@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 import com.rqueztech.controllers.admin.AdminAddUserController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
+import com.rqueztech.ui.admin.enums.AdminAddUserEnums;
 import com.rqueztech.ui.buttons.ButtonTemplates;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
@@ -37,22 +38,6 @@ public class AdminAddUserPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Adminname Component Keys
-	private final String FIRSTNAME_LABEL_KEY = "FIRSTNAME_LABEL_KEY";
-	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
-
-	// --- Section 1: Adminname Component Keys
-	private final String LASTNAME_LABEL_KEY = "LASTNAME_LABEL_KEY";
-	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
-	
-	// --- Section 3: Login Button Component Keys
-	private final String CANCEL_BUTTON_KEY = "CANCEL_BUTTON_KEY";
-	private final String ADD_USER_BUTTON_KEY = "ADD_USER_BUTTON_KEY";
-	
-	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
-	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
-	private final String PASSPHRASE_VISIBILITY_BUTTON_KEY = "PASSPHRASE_VISIBILITY_BUTTON_KEY";
-	
 	// --- Section 4: Set Combo Box
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
@@ -63,9 +48,10 @@ public class AdminAddUserPanel extends JPanel {
 	private final int TEXTFIELD_SIZE = 5;
 	
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <AdminAddUserEnums, JComponent> components;
 	private JComboBox<String> gender;
 	private PanelCentral panelCentral;
+	String[] genderOptions = { "Select", "Male", "Female", "Undisclosed" };
 	
 	private AdminAddUserController adminAddUserController;
 	
@@ -84,51 +70,50 @@ public class AdminAddUserPanel extends JPanel {
 			this.setLayout(layout);
 	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon("backgroundd.jpg").getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        this.components = new ConcurrentHashMap <AdminAddUserEnums, JComponent> ();
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
 	        this.setBackgroundImageConstraints();
 	        frame.add(this, this.grid);
 	        //--- Finish Constraints End ---
-	        String[] genderOptions = { "Select", "Male", "Female", "Undisclosed" };
 	        this.gender = new JComboBox<String>(genderOptions);
 	        
 	        this.setComponentMainPosition();
 	        this.grid.gridx = 0;
 	        this.grid.gridy = 0;
 	        
-	        this.setLabelField(FIRSTNAME_LABEL_KEY, "Enter First Name");
-	        this.add(this.components.get(FIRSTNAME_LABEL_KEY), grid);
+	        this.setLabelField(AdminAddUserEnums.FIRSTNAME_LABEL_KEY, "Enter First Name");
+	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_LABEL_KEY), grid);
 	        
 	        // Firstname textfield
 	        this.grid.gridy += 1;	// Increase vertical grid by one
-	        this.setTextField(FIRSTNAME_TEXTFIELD_KEY);	// Set the textfield key
-	        this.add(this.components.get(FIRSTNAME_TEXTFIELD_KEY), grid);	// Add the component to the grid
+	        this.setTextField(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY);	// Set the textfield key
+	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY), grid);	// Add the component to the grid
 	        
 	        this.grid.gridy += 1;
-	        this.setLabelField(LASTNAME_LABEL_KEY, "Enter Last Name");
-	        this.add(this.components.get(LASTNAME_LABEL_KEY), grid);
+	        this.setLabelField(AdminAddUserEnums.LASTNAME_LABEL_KEY, "Enter Last Name");
+	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_LABEL_KEY), grid);
 	        
 	        // Lastname textfield
 	        this.grid.gridy += 1;
-	        this.setTextField(LASTNAME_TEXTFIELD_KEY);
-	        this.add(this.components.get(LASTNAME_TEXTFIELD_KEY), grid);
+	        this.setTextField(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY);
+	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY), grid);
 	        
 	        // Passphrase Label
 	        this.grid.gridy += 1;
-	        this.setLabelField(PASSPHRASE_LABEL_KEY, "Enter Passphrase");
-	        this.add(this.components.get(PASSPHRASE_LABEL_KEY), grid);
+	        this.setLabelField(AdminAddUserEnums.PASSPHRASE_LABEL_KEY, "Enter Passphrase");
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_LABEL_KEY), grid);
 	        
 	        // Passphrase textfield
 	        this.grid.gridy += 1;
-	        this.setPasswordField(PASSPHRASE_TEXTFIELD_KEY);
-	        this.add(this.components.get(PASSPHRASE_TEXTFIELD_KEY), grid);
+	        this.setPasswordField(AdminAddUserEnums.PASSPHRASE_TEXTFIELD_KEY);
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_TEXTFIELD_KEY), grid);
 	        
 	        // Passphrase button
 	        this.grid.gridx += 2;
-	        this.setButton(PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visibility");
-	        this.add(this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(AdminAddUserEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visibility");
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        // Combo Box. Note: ComboBox is not added to the existing
 	        // 
@@ -139,14 +124,14 @@ public class AdminAddUserPanel extends JPanel {
 	        
 	        // Set the exit button
 	        this.grid.gridy += 1;
-	        this.setButton(CANCEL_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(CANCEL_BUTTON_KEY), grid);
+	        this.setButton(AdminAddUserEnums.CANCEL_BUTTON_KEY, "Cancel");
+	        this.add(this.components.get(AdminAddUserEnums.CANCEL_BUTTON_KEY), grid);
 	        
 	        this.grid.gridx += 1;
-	        this.setAddButton(ADD_USER_BUTTON_KEY, "Add user");
-	        this.add(this.components.get(ADD_USER_BUTTON_KEY), grid);
+	        this.setAddButton(AdminAddUserEnums.ADD_USER_BUTTON_KEY, "Add user");
+	        this.add(this.components.get(AdminAddUserEnums.ADD_USER_BUTTON_KEY), grid);
 	        
-	        this.adminAddUserController = new AdminAddUserController(this);
+	        this.adminAddUserController = new AdminAddUserController(this, gender);
 		});
 	}
 	
@@ -170,7 +155,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setTextField(String textFieldKey) {
+	private void setTextField(AdminAddUserEnums textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		//this.grid.anchor = GridBagConstraints.CENTER;
@@ -187,7 +172,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(AdminAddUserEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -199,7 +184,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setAddButton(String buttonKey, String buttonText) {
+	private void setAddButton(AdminAddUserEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -213,7 +198,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setPasswordField(String passwordFieldKey) {
+	private void setPasswordField(AdminAddUserEnums passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -238,7 +223,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(AdminAddUserEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -251,7 +236,7 @@ public class AdminAddUserPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap<AdminAddUserEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	
