@@ -24,5 +24,4 @@ module com.rqueztech {
 	
 	requires transitive java.desktop;
 	requires transitive org.junit.jupiter.api;
-	requires com.opencsv;
 }
