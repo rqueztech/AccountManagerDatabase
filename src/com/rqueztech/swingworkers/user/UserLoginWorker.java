@@ -15,7 +15,6 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
 	@Override
 	protected Boolean doInBackground() throws Exception {
 		boolean success = get();
-		System.out.println("UserLoginWorker");
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -52,12 +52,12 @@ public class AdminAddAdminWorker extends SwingWorker<Boolean, Void> {
 
 			if (success) {
 				String dataPassed = String
-						.format("%s, %s, %s, ",
+						.format("ISTHISTHEONE?%s, %s, %s, ",
 								this.adminAccountName,
 								this.adminFirstName,
 								this.adminLastName);
 				
-				JOptionPane.showMessageDialog(null, dataPassed);
+				//JOptionPane.showMessageDialog(null, dataPassed);
 			} else {
 				JOptionPane.showMessageDialog(null, "AdminAddAdminWorker FAIL");
 			}
