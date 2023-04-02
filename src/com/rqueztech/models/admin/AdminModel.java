@@ -21,7 +21,7 @@ public class AdminModel {
 			byte adminSalt,
 			int adminNumber) {
 		
-		this.setAdminName(adminAccountName);
+		this.setAdminAccountNameName(adminAccountName);
 		this.setAdminFirstName(adminFirstName);
 		this.setAdminLastName(adminLastName);
 		this.setAdminPassword(adminPassword);
@@ -37,7 +37,7 @@ public class AdminModel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setAdminName(String adminAccountName) {
+	public void setAdminAccountNameName(String adminAccountName) {
 		this.adminAccountName = adminAccountName;
 	}
 	

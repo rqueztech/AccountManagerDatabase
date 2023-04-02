@@ -6,8 +6,8 @@ public class UserModel {
 	private String userAccountName;
 	private String userFirstName;
 	private String userLastName;
-	private char[] userPassword;
-	private byte userSalt;
+	private byte[] userHashedPassword;
+	private byte[] userSalt;
 	private String gender; 
 	private int userNumber;
 	
@@ -18,15 +18,15 @@ public class UserModel {
 			String userAccountName,
 			String userFirstName,
 			String userLastName,
-			char[] userPassword,
+			byte[] userHashedPassword,
 			String gender,
-			byte userSalt,
+			byte[] userSalt,
 			int userNumber) {
 		
 		this.setUserName(userAccountName);
 		this.setUserFirstName(userFirstName);
 		this.setUserLastName(userLastName);
-		this.setUserPassword(userPassword);
+		this.setUserPassword(userHashedPassword);
 		this.setGender(gender);
 		this.setUserSalt(userSalt);
 		this.setUserNumber(userNumber);
@@ -79,24 +79,22 @@ public class UserModel {
 	}
 
 	// --------------------------------------------------------------------------------------
-	public char[] getUserPassword() {
-		return userPassword;
+	public byte[] getUserPassword() {
+		return userHashedPassword;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setUserPassword(char[] userPassword) {
-		if(this.inputValidations.validatePassword(userPassword)) {
-			this.userPassword = userPassword;
-		}
+	public void setUserPassword(byte[] userHashedPassword) {
+		this.userHashedPassword = userHashedPassword;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public byte getUserSalt() {
-		return userSalt;
+	public byte[] getUserSalt() {
+		return this.userSalt;
 	}
 
 	// --------------------------------------------------------------------------------------
-	public void setUserSalt(byte userSalt) {
+	public void setUserSalt(byte[] userSalt) {
 		this.userSalt = userSalt;
 	}
 

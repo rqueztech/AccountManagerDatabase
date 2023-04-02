@@ -84,36 +84,36 @@ public class AdminAddUserPanel extends JPanel {
 	        this.grid.gridy = 0;
 	        
 	        this.setLabelField(AdminAddUserEnums.FIRSTNAME_LABEL_KEY, "Enter First Name");
-	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_LABEL_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_LABEL_KEY), this.grid);
 	        
 	        // Firstname textfield
 	        this.grid.gridy += 1;	// Increase vertical grid by one
 	        this.setTextField(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY);	// Set the textfield key
-	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY), grid);	// Add the component to the grid
+	        this.add(this.components.get(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY), this.grid);	// Add the component to the grid
 	        
 	        this.grid.gridy += 1;
 	        this.setLabelField(AdminAddUserEnums.LASTNAME_LABEL_KEY, "Enter Last Name");
-	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_LABEL_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_LABEL_KEY), this.grid);
 	        
 	        // Lastname textfield
 	        this.grid.gridy += 1;
 	        this.setTextField(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY);
-	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY), this.grid);
 	        
 	        // Passphrase Label
 	        this.grid.gridy += 1;
 	        this.setLabelField(AdminAddUserEnums.PASSPHRASE_LABEL_KEY, "Enter Passphrase");
-	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_LABEL_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_LABEL_KEY), this.grid);
 	        
 	        // Passphrase textfield
 	        this.grid.gridy += 1;
 	        this.setPasswordField(AdminAddUserEnums.PASSPHRASE_TEXTFIELD_KEY);
-	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_TEXTFIELD_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_TEXTFIELD_KEY), this.grid);
 	        
 	        // Passphrase button
 	        this.grid.gridx += 2;
 	        this.setButton(AdminAddUserEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visibility");
-	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY), this.grid);
 	        
 	        // Combo Box. Note: ComboBox is not added to the existing
 	        // 
@@ -125,11 +125,11 @@ public class AdminAddUserPanel extends JPanel {
 	        // Set the exit button
 	        this.grid.gridy += 1;
 	        this.setButton(AdminAddUserEnums.CANCEL_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(AdminAddUserEnums.CANCEL_BUTTON_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.CANCEL_BUTTON_KEY), this.grid);
 	        
 	        this.grid.gridx += 1;
 	        this.setAddButton(AdminAddUserEnums.ADD_USER_BUTTON_KEY, "Add user");
-	        this.add(this.components.get(AdminAddUserEnums.ADD_USER_BUTTON_KEY), grid);
+	        this.add(this.components.get(AdminAddUserEnums.ADD_USER_BUTTON_KEY), this.grid);
 	        
 	        this.adminAddUserController = new AdminAddUserController(this, gender);
 		});
@@ -168,7 +168,7 @@ public class AdminAddUserPanel extends JPanel {
         this.grid.gridy += 1;
         
         this.components.put(textFieldKey, textField);
-        this.add(this.components.get(textFieldKey), grid);
+        this.add(this.components.get(textFieldKey), this.grid);
 	}
 	
 	// --------------------------------------------------------------------------------------
