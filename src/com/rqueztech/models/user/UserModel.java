@@ -23,6 +23,10 @@ public class UserModel {
 			byte[] userSalt,
 			int userNumber) {
 		
+		System.out.println("HERE");
+		
+		this.inputValidations = new InputValidations();
+		
 		this.setUserName(userAccountName);
 		this.setUserFirstName(userFirstName);
 		this.setUserLastName(userLastName);
@@ -30,8 +34,6 @@ public class UserModel {
 		this.setGender(gender);
 		this.setUserSalt(userSalt);
 		this.setUserNumber(userNumber);
-		
-		this.inputValidations = new InputValidations();
 	}
 	
 	// --------------------------------------------------------------------------------------

@@ -1,10 +1,7 @@
 package com.rqueztech.swingworkers.admin;
 
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import com.rqueztech.encryption.PasswordEncryption;
@@ -24,6 +21,8 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
 	private String userAccountName;
 	private byte[] newUserSalt;
 	private char[] defaultUserPassword;
+	
+	// This is the current user's number
 	private int userNumber;
 	
 	// Hash the password from all of these parameters
@@ -61,32 +60,10 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
 		// Note: Please change in the future
 		this.userNumber = 0;	// Current number is 0. Placeholder.
 		
-		System.out.println("HERE WE ARE YO");
-		
+		// Finally: Create the new user model with all of the appropriate information
 		return new UserModel(this.userAccountName,this.userFirstName,this.userLastName,this.
 				userNewHashedPassword,this.gender,this.newUserSalt,this.userNumber);
-	}
-
-	@Override
-	protected void done() {
-		String message = String.format("PLEASE REMOVE WHEN DONE!"
-				+ "\nAccount Name: %s "
-				+ "\nAccount: %s "
-				+ "\nFirst Name: %s "
-				+ "\nLast Name%s "
-				+ "\nHashed Password: %s "
-				+ "\nGender: %s +"
-				+ "\nUser Number: %s",
-		    this.userAccountName,
-			this.userFirstName,
-			this.userLastName,
-			this.userNewHashedPassword,
-			this.gender,
-			this.newUserSalt,
-			this.userNumber
-		);
 		
-		JOptionPane.showConfirmDialog(null, message);
 	}
 	
 	// --------------------------------------------------------------------------------------

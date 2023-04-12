@@ -2,7 +2,9 @@ package com.rqueztech.controllers.admin;
 
 import java.awt.Component;
 import java.util.Arrays;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.jar.JarOutputStream;
 
 import javax.swing.JButton;
@@ -12,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.rqueztech.models.user.UserModel;
 import com.rqueztech.swingworkers.admin.AdminAddUserWorker;
 import com.rqueztech.ui.admin.AdminAddUserPanel;
 import com.rqueztech.ui.admin.enums.AdminAddUserEnums;
@@ -20,12 +23,15 @@ import com.rqueztech.ui.events.AddUserDocumentListener;
 import com.rqueztech.ui.events.PasswordFieldListener;
 import com.rqueztech.ui.events.TextFieldListener;
 import com.rqueztech.ui.events.TogglePasswordVisibility;
+import com.rqueztech.ui.validation.InputValidations;
 
 public class AdminAddUserController {
 	
 	private AdminAddUserPanel adminAddUserPanel;
 	private TogglePasswordVisibility togglePasswordVisibility;
 	private ConcurrentHashMap <AdminAddUserEnums, JComponent> components;
+	
+	private InputValidations inputValidations;
 	
 	private JComboBox <String> gender;
 	
@@ -34,6 +40,7 @@ public class AdminAddUserController {
 	
 	public AdminAddUserController(AdminAddUserPanel adminAddUserPanel, JComboBox<String> gender) {
 		this.togglePasswordVisibility = new TogglePasswordVisibility();
+		this.inputValidations = new InputValidations(); 
 		
 		this.adminAddUserPanel = adminAddUserPanel;
 		this.components = adminAddUserPanel.getComponentsMap();
@@ -74,7 +81,37 @@ public class AdminAddUserController {
 			this.adminAddUserPanel.getPanelCentral().getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 			
 			AdminAddUserWorker adminAddUserWorker =
-					new AdminAddUserWorker(userFirstName, userLastName, gender);
+					new AdminAddUserWorker(userFirstName, userLastName, gender) {
+				
+				@Override
+				protected void done() {
+				    try {
+				        // Get the result of the SwingWorker's background task
+				        UserModel result = get();
+				        
+				        // Handle the successful completion of the task here
+				        String message = "User added successfully.\n"
+				        		+ result.getUserName() + "\n"
+				        		+ result.getUserFirstName() + "\n"
+				        		+ result.getUserLastName() + "\n"
+				        		+ result.getGender() + "\n"
+				        		+ result.getUserPassword() + "\n"
+				        		+ result.getUserLastName() + "\n"
+				        		+ result.getUserNumber();
+				        JOptionPane.showMessageDialog(null, message);
+				        
+				    } catch (InterruptedException | ExecutionException ex) {
+				        // Handle any exceptions that were thrown during the background task here
+				        String errorMessage = "Error: " + ex.getMessage();
+				        JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+				    } catch (CancellationException ex) {
+				        // Handle cancellation of the background task here
+				        String message = "The task was cancelled.";
+				        JOptionPane.showMessageDialog(null, message);
+				    }
+				}
+
+			};
 			
 			this.resetInstanceFields();
 			this.resetFields();
