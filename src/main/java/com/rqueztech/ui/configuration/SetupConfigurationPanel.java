@@ -17,9 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.rqueztech.controllers.configuration.SetupConfigurationController;
 import com.rqueztech.ui.BaseFrame;
 import com.rqueztech.ui.PanelCentral;
 import com.rqueztech.ui.buttons.ButtonTemplates;
+import com.rqueztech.ui.configuration.enums.SetupConfigurationPanelEnums;
 import com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import com.rqueztech.ui.textfields.TextfieldTemplates;
 
@@ -35,34 +37,6 @@ public class SetupConfigurationPanel extends JPanel {
 	private final int BOTTOM_INSET = 0;
 	private final int RIGHT_INSET = 0;
 	
-	// --- Section 1: Username Component Keys
-	private final String FIRSTNAME_LABEL_KEY = "FIRSTNAME_LABEL_KEY";
-	private final String FIRSTNAME_TEXTFIELD_KEY = "FIRSTNAME_TEXTFIELD_KEY";
-	
-	// --- Section 2: Password Component Keys
-	private final String LASTNAME_LABEL_KEY = "LASTNAME_LABEL_KEY";
-	private final String LASTNAME_TEXTFIELD_KEY = "LASTNAME_TEXTFIELD_KEY";
-	
-	// --- Section 3: Login Button Component Keys
-	private final String EXIT_BUTTON_KEY = "EXIT_BUTTON_KEY";
-	private final String SUBMIT_BUTTON_KEY = "SUBMIT_BUTTON_KEY";
-	
-	private final String PASSPHRASE_LABEL_KEY = "PASSPHRASE_LABEL_KEY";
-	private final String PASSPHRASE_TEXTFIELD_KEY = "PASSPHRASE_TEXTFIELD_KEY";
-	private final String PASSPHRASE_VISIBILITY_BUTTON_KEY = "PASSPHRASE_VISIBILITY_BUTTON_KEY";
-	
-	private final String CONFIRM_PASSPHRASE_LABEL_KEY = "CONFIRM_PASSPHRASE_LABEL_KEY";
-	private final String CONFIRM_PASSPHRASE_TEXTFIELD_KEY = "CONFIRM_PASSPHRASE_TEXTFIELD_KEY";
-	private final String CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY = "CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY";
-	
-	private final String PASSWORD_LABEL_KEY = "PASSWORD_LABEL_KEY";
-	private final String PASSWORD_TEXTFIELD_KEY = "PASSWORD_TEXTFIELD_KEY";
-	private final String PASSWORD_VISIBILITY_BUTTON_KEY = "PASSWORD_VISIBILITY_BUTTON_KEY";
-	
-	private final String CONFIRM_PASSWORD_LABEL_KEY = "CONFIRM_PASSWORD_LABEL_KEY";
-	private final String CONFIRM_PASSWORD_TEXTFIELD_KEY = "CONFIRM_PASSWORD_TEXTFIELD_KEY";
-	private final String CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY = "CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY";
-	
 	private final int GRID_X_INITIAL = 0;
 	private final int GRID_Y_INITIAL = 0;
 	
@@ -77,7 +51,7 @@ public class SetupConfigurationPanel extends JPanel {
 	private PanelCentral panelCentral;
 	
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <String, JComponent> components;
+	private ConcurrentHashMap <SetupConfigurationPanelEnums, JComponent> components;
 	private SetupConfigurationController setupConfigurationController;
 	
 	// --------------------------------------------------------------------------------------
@@ -95,7 +69,7 @@ public class SetupConfigurationPanel extends JPanel {
 			this.setLayout(layout);
 	        this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 	        this.image = new ImageIcon(getClass().getResource("/images/backgroundd.jpg")).getImage();
-	        this.components = new ConcurrentHashMap <String, JComponent> ();
+	        this.components = new ConcurrentHashMap <SetupConfigurationPanelEnums, JComponent> ();
 	        
 	        // --- Start Constraints ---
 	        // Set all of the constraints for the background image
@@ -110,51 +84,51 @@ public class SetupConfigurationPanel extends JPanel {
 	        this.grid.gridx = GRID_X_INITIAL;
 	        this.grid.gridy = GRID_Y_INITIAL;
 	        
-	        this.setLabelField(FIRSTNAME_LABEL_KEY, "Enter FirstName");
-	        this.setTextField(FIRSTNAME_TEXTFIELD_KEY);
+	        this.setLabelField(SetupConfigurationPanelEnums.FIRSTNAME_LABEL_KEY, "Enter FirstName");
+	        this.setTextField(SetupConfigurationPanelEnums.FIRSTNAME_TEXTFIELD_KEY);
 	        
-	        this.setLabelField(LASTNAME_LABEL_KEY, "Enter LastName");
-	        this.setTextField(LASTNAME_TEXTFIELD_KEY);
+	        this.setLabelField(SetupConfigurationPanelEnums.LASTNAME_LABEL_KEY, "Enter LastName");
+	        this.setTextField(SetupConfigurationPanelEnums.LASTNAME_TEXTFIELD_KEY);
 	        
-	        this.setLabelField(PASSPHRASE_LABEL_KEY, "Enter Passphrase");
-	        this.setPasswordField(PASSPHRASE_TEXTFIELD_KEY);
-	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
-	        
-	        this.setLabelField(CONFIRM_PASSPHRASE_LABEL_KEY, "Confirm Passphrase");
-	        this.setPasswordField(CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
+	        this.setLabelField(SetupConfigurationPanelEnums.PASSPHRASE_LABEL_KEY, "Enter Passphrase");
+	        this.setPasswordField(SetupConfigurationPanelEnums.PASSPHRASE_TEXTFIELD_KEY);
 	        
 	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(SetupConfigurationPanelEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
 	        
-	        this.setLabelField(PASSWORD_LABEL_KEY, "Enter New Password");
-	        this.setPasswordField(PASSWORD_TEXTFIELD_KEY);
-	        
-	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(PASSWORD_VISIBILITY_BUTTON_KEY), grid);
-	        
-	        this.setLabelField(CONFIRM_PASSWORD_LABEL_KEY, "Confirm New Password");
-	        this.setPasswordField(CONFIRM_PASSWORD_TEXTFIELD_KEY);
+	        this.setLabelField(SetupConfigurationPanelEnums.CONFIRM_PASSPHRASE_LABEL_KEY, "Confirm Passphrase");
+	        this.setPasswordField(SetupConfigurationPanelEnums.CONFIRM_PASSPHRASE_TEXTFIELD_KEY);
 	        
 	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
-	        this.setButton(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
-	        this.add(this.components.get(CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        this.setButton(SetupConfigurationPanelEnums.CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.CONFIRM_PASSPHRASE_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.setLabelField(SetupConfigurationPanelEnums.PASSWORD_LABEL_KEY, "Enter New Password");
+	        this.setPasswordField(SetupConfigurationPanelEnums.PASSWORD_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(SetupConfigurationPanelEnums.PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.PASSWORD_VISIBILITY_BUTTON_KEY), grid);
+	        
+	        this.setLabelField(SetupConfigurationPanelEnums.CONFIRM_PASSWORD_LABEL_KEY, "Confirm New Password");
+	        this.setPasswordField(SetupConfigurationPanelEnums.CONFIRM_PASSWORD_TEXTFIELD_KEY);
+	        
+	        this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
+	        this.setButton(SetupConfigurationPanelEnums.CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY, "Visible");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.CONFIRM_PASSWORD_VISIBILITY_BUTTON_KEY), grid);
 	        
 	        this.grid.fill = GridBagConstraints.HORIZONTAL;
 	        this.grid.anchor = GridBagConstraints.EAST;
 	        this.grid.gridx = GRID_X_CURRENT; // Buttons are not fixed, therefore coordinates are custom set
 	        this.grid.gridy += GRID_Y_CURRENT;
-	        this.setButton(EXIT_BUTTON_KEY, "Cancel");
-	        this.add(this.components.get(EXIT_BUTTON_KEY), grid);
+	        this.setButton(SetupConfigurationPanelEnums.EXIT_BUTTON_KEY, "Cancel");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.EXIT_BUTTON_KEY), grid);
 	        
 	        this.grid.anchor = GridBagConstraints.WEST;
 	        this.grid.gridx += 1;
-	        this.setAdminButton(SUBMIT_BUTTON_KEY, "Submit");
-	        this.add(this.components.get(SUBMIT_BUTTON_KEY), grid);
+	        this.setAdminButton(SetupConfigurationPanelEnums.SUBMIT_BUTTON_KEY, "Submit");
+	        this.add(this.components.get(SetupConfigurationPanelEnums.SUBMIT_BUTTON_KEY), grid);
 	        
 	        this.setupConfigurationController = new SetupConfigurationController(this);
 		});
@@ -173,7 +147,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setButton(String buttonKey, String buttonText) {
+	private void setButton(SetupConfigurationPanelEnums buttonKey, String buttonText) {
 		
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         //this.grid.anchor = GridBagConstraints.CENTER;
@@ -185,7 +159,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setAdminButton(String buttonKey, String buttonText) {
+	private void setAdminButton(SetupConfigurationPanelEnums buttonKey, String buttonText) {
 		
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         //this.grid.anchor = GridBagConstraints.CENTER;
@@ -200,7 +174,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setTextField(String textFieldKey) {
+	public void setTextField(SetupConfigurationPanelEnums textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		//this.grid.anchor = GridBagConstraints.CENTER;
@@ -217,7 +191,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public void setPasswordField(String passwordFieldKey) {
+	public void setPasswordField(SetupConfigurationPanelEnums passwordFieldKey) {
 		PasswordFieldTemplates passwordField = new PasswordFieldTemplates(Color.WHITE, Color.BLACK, TEXTFIELD_SIZE);
 		
 		this.grid.gridwidth = 2;
@@ -232,7 +206,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	private void setLabelField(String labelKey, String labelText) {
+	private void setLabelField(SetupConfigurationPanelEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		//this.grid.anchor = GridBagConstraints.CENTER;
 		labelField.setBackground(Color.BLACK);
@@ -254,7 +228,7 @@ public class SetupConfigurationPanel extends JPanel {
 	}
 	
 	// --------------------------------------------------------------------------------------
-	public ConcurrentHashMap<String, JComponent> getComponentsMap() {
+	public ConcurrentHashMap<SetupConfigurationPanelEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
 	

@@ -11,6 +11,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\admin\AdminLoginWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\events\PasswordValidationDocumentListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\models\package-info.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\enums\SetupConfigurationPanelEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\controllers\MainLoginControl.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\textfields\package-info.java
@@ -26,6 +27,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\interfaces\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\configuration\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\controllers\configuration\SetupAgreementController.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\controllers\configuration\SetupConfigurationController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\user\enums\UserCentralPanelEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\events\PasswordFieldListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\events\package-info.java
@@ -49,7 +51,6 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\controllers\admin\UserHashMapController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\package-info.java
-C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\tests\ConfigurationPanelTest.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\admin\AdminAddUserPanel.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\passwordfields\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\csv\package-info.java
@@ -63,15 +64,14 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\csv\admin\AdminCSVWriter.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\admin\enums\AdminUserViewEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\enums\package-info.java
-C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\tests\InputOperationsTest.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\admin\AdminAddUserWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\enums\MainLoginPanelEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\interfaces\admin\AdminAddUserModelControlInterface.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\models\admin\AdminHashMap.java
-C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\tests\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\models\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\admin\enums\AdminCentralPanelEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\enums\package-info.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\configuration\SetupConfigurationWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\tests\inputvalidation\InputValidationsValidatePasswordTest.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\controllers\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\admin\package-info.java
@@ -91,7 +91,6 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\user\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\textfields\TextfieldTemplates.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\swingworkers\admin\AdminAddAdminWorker.java
-C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\SetupConfigurationController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\ui\configuration\SetupAgreementPanel.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\models\user\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\com\rqueztech\encryption\PasswordEncryption.java

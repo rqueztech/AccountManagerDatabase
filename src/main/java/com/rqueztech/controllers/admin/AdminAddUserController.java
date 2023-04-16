@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.jar.JarOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -77,9 +76,6 @@ public class AdminAddUserController {
 			String userFirstName = ((JTextField) this.components.get(AdminAddUserEnums.FIRSTNAME_TEXTFIELD_KEY)).getText(); 
 			String userLastName =  ((JTextField) this.components.get(AdminAddUserEnums.LASTNAME_TEXTFIELD_KEY)).getText();
 			
-			this.adminAddUserPanel.setVisible(false);
-			this.adminAddUserPanel.getPanelCentral().getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
-			
 			AdminAddUserWorker adminAddUserWorker =
 					new AdminAddUserWorker(userFirstName, userLastName, gender) {
 				
@@ -117,6 +113,9 @@ public class AdminAddUserController {
 			this.resetFields();
 			
 			adminAddUserWorker.execute();
+			
+			this.adminAddUserPanel.setVisible(false);
+			this.adminAddUserPanel.getPanelCentral().getCurrentPanel().get(PanelCentralEnums.ADMIN_USER_VIEW_PANEL).setVisible(true);
 		});
 	}
 	

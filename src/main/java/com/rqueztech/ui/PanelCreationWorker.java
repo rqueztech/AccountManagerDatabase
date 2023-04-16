@@ -62,7 +62,7 @@ class PanelCreationWorker extends SwingWorker<ConcurrentHashMap<PanelCentralEnum
 				this.panelCentral.setConcurrentHashMap(entry.getKey(), entry.getValue());
 			}
 			
-			this.panels.get(PanelCentralEnums.MAIN_LOGIN_PANEL).setVisible(true);
+			this.panels.get(PanelCentralEnums.SETUP_AGREEMENT_PANEL).setVisible(true);
 			
 			frame.setVisible(true);
 			
