@@ -19,16 +19,16 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 	private JPasswordField passwordField;
 	private JPasswordField confirmPasswordField;
 	private InputValidations inputValidations;
-	
-	public SetupSubmitDocumentListener(JButton adminButton, JTextField firstName, 
-			JTextField lastName, JPasswordField passphraseField, 
-		JPasswordField confirmPassphraseField, JPasswordField passwordField, 
+
+	public SetupSubmitDocumentListener(JButton adminButton, JTextField firstName,
+			JTextField lastName, JPasswordField passphraseField,
+		JPasswordField confirmPassphraseField, JPasswordField passwordField,
 		JPasswordField confirmPasswordField) {
-		
+
 		this.inputValidations = new InputValidations();
-		
+
 		this.adminButton = adminButton;
-		
+
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.passphraseField = passphraseField;
@@ -36,11 +36,11 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 		this.passwordField = passwordField;
 		this.confirmPasswordField = confirmPasswordField;
 	}
-	
+
 	public boolean isNullCheckPass() {
 		// Check to see that none of the passwords are equal to null. There
 		// Is no point to proceed if so.
-		if(this.firstName != null && this.lastName != null
+		if (this.firstName != null && this.lastName != null
 		&& this.passphraseField != null && this.confirmPassphraseField != null
 		&& this.passwordField != null && this.confirmPasswordField != null
 		&& this.firstName.getText().length() > 0
@@ -51,22 +51,22 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 		&& this.confirmPasswordField.getPassword().length > 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean isPasswordsMatch() {
 		// If the password fields match, return true. Passwords do match
 		if (Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {		
 			return true;
 		}
-		
+
 		// If the password fields don't match, return false
 		return false;
 	}
-	
+
 	public boolean isPasswordsValid() {
-		if(this.inputValidations.isOnlyLetterCharacters(this.firstName.getText().toCharArray())
+		if (this.inputValidations.isOnlyLetterCharacters(this.firstName.getText().toCharArray())
 		&& this.inputValidations.isOnlyLetterCharacters(this.lastName.getText().toCharArray())
 		&& this.inputValidations.validatePassword(this.passphraseField.getPassword())
 		&& this.inputValidations.validatePassword(this.confirmPassphraseField.getPassword())
@@ -75,46 +75,46 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean isPassphrasePasswordMatch() {
-		if(Arrays.equals(passphraseField.getPassword(), confirmPassphraseField.getPassword())) {
+		if (Arrays.equals(passphraseField.getPassword(), confirmPassphraseField.getPassword())) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	// Toggle the opacity
 	private void opacityToggleOn() {
 		this.adminButton.setOpaque(true);
 		this.adminButton.setEnabled(true);
 	}
-	
+
 	private void opacityToggleOff() {
 		this.adminButton.setOpaque(false);
 		this.adminButton.setEnabled(false);
 	}
-	
+
 	private boolean passwordsConflict() {
-		if(Arrays.equals(this.passphraseField.getPassword(), this.passwordField.getPassword())) {
+		if (Arrays.equals(this.passphraseField.getPassword(), this.passwordField.getPassword())) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		if(this.isNullCheckPass() && this.isPasswordsValid()
+		if (this.isNullCheckPass() && this.isPasswordsValid()
 		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
 		&& !this.passwordsConflict()) {
 			this.opacityToggleOn();
 		}
-		
+
 		else {
 			this.opacityToggleOff();
 		}
@@ -123,12 +123,12 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		if(this.isNullCheckPass() && this.isPasswordsValid()
+		if (this.isNullCheckPass() && this.isPasswordsValid()
 		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
 		&& !this.passwordsConflict()) {
 			this.opacityToggleOn();
 		}
-		
+
 		else {
 			this.opacityToggleOff();
 		}
@@ -137,12 +137,12 @@ public class SetupSubmitDocumentListener implements DocumentListener {
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		if(this.isNullCheckPass() && this.isPasswordsValid()
+		if (this.isNullCheckPass() && this.isPasswordsValid()
 		&& this.isPassphrasePasswordMatch() && this.isPasswordsMatch()
 		&& !this.passwordsConflict()) {
 			this.opacityToggleOn();
 		}
-		
+
 		else {
 			this.opacityToggleOff();
 		}

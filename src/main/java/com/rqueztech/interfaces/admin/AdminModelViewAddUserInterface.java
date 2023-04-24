@@ -6,7 +6,7 @@ import com.rqueztech.models.user.UserModel;
 // Was entered in the panel and send it to the controller
 public interface AdminModelViewAddUserInterface {
 	UserModel getUser();
-	
+
 	void setUserFirstName(String userFirstName);
 	void setUserLastName(String userLastName);
 	void setUserGender(String gender);

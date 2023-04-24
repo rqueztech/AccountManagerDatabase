@@ -6,7 +6,7 @@ import javax.swing.JPasswordField;
 
 public class PasswordFieldTemplates extends JPasswordField {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5199761523331905717L;
 

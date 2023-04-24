@@ -10,17 +10,17 @@ import com.rqueztech.encryption.PasswordEncryption;
 public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
 
 	private PasswordEncryption passwordEncryption;
-	
+
 	private String adminName;
 	private char[] enteredPassword;
 	private byte storedAdminSalt;
-	
+
 	public AdminLoginWorker(String adminName, char[] enteredPassword, char[] enteredPassphrase) {
 		this.passwordEncryption = new PasswordEncryption();
 		this.adminName = adminName;
 		this.enteredPassword = enteredPassword;
 	}
-	
+
 	@Override
 	protected Boolean doInBackground() throws Exception {
 		// TODO Auto-generated method stub

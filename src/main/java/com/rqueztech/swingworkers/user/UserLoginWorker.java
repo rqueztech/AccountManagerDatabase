@@ -6,12 +6,12 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
 	private String userName;
 	private char[] enteredPassword;
 	private byte storedUserSalt;
-	
+
 	public UserLoginWorker(String userName, char[] enteredPassword) {
 		this.userName = userName;
 		this.enteredPassword = enteredPassword;
 	}
-	
+
 	@Override
 	protected Boolean doInBackground() throws Exception {
 		boolean success = get();
@@ -21,6 +21,6 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
 
 	@Override
 	protected void done() {
-		
+
 	}
 }

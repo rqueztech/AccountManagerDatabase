@@ -3,30 +3,48 @@
   <groupId>acc-mgr-db</groupId>
   <artifactId>AccountManagerDatabase</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.0.0</version>
-        
+
        <executions>
-          <execution>
+		  <execution>
             <goals>
                 <goal>java</goal>
             </goals>
           </execution>
         </executions>
-        
+
         <configuration>
 		  <!-- Executes the main class in the project -->
-          <mainClass>com.rqueztech.Main</mainClass>     
+          <mainClass>com.rqueztech.Main</mainClass>    
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.2</version>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <consoleOutput>true</consoleOutput>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
-  
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
     <dependency>
@@ -35,7 +53,14 @@
       <version>5.7.1</version>
     </dependency>
 
-	
+	<!-- https://mvnrepository.com/artifact/org.easytesting/fest-swing -->
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-swing</artifactId>
+      <version>1.2.1</version>
+      <scope>test</scope>
+    </dependency>
+
 	<!-- https://mvnrepository.com/artifact/org.testng/testng -->
     <dependency>
         <groupId>org.testng</groupId>
@@ -43,16 +68,30 @@
         <version>7.7.1</version>
         <scope>test</scope>
     </dependency>
-	
+
 	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>4.8.3</version>
     </dependency>
-  
+
+    <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+	<dependency>
+	    <groupId>com.puppycrawl.tools</groupId>
+	    <artifactId>checkstyle</artifactId>
+	    <version>10.9.3</version>
+	</dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.maven.doxia/doxia-site-renderer -->
+    <dependency>
+      <groupId>org.apache.maven.doxia</groupId>
+      <artifactId>doxia-site-renderer</artifactId>
+      <version>2.0.0-M7</version>
+    </dependency>
+
   </dependencies>
-  
+
   <properties>
 	<maven.compiler.source>1.8</maven.compiler.source>
 	<maven.compiler.target>1.8</maven.compiler.target>
@@ -60,4 +99,21 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
   
+     <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.9.1</version>
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>checkstyle</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+      </plugins>
+    </reporting>
+
 </project>

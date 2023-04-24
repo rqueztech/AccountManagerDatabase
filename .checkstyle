@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fileset-config file-format-version="1.2.0" simple-config="true" sync-formatter="false">
+  <local-check-config name="Checker" location="internal_config_1681792957254.xml" type="internal" description="">
+    <property name="org.checkstyle.sun.suppressionfilter.config" value="${basedir}"/>
+    <property name="org.checkstyle.sun.suppressionxpathfilter.config" value="${basedir}"/>
+  </local-check-config>
+  <fileset name="all" enabled="true" check-config-name="Checker" local="false">
+    <file-match-pattern match-pattern="." include-pattern="true"/>
+  </fileset>
+</fileset-config>

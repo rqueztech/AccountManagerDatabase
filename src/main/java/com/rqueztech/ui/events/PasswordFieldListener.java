@@ -5,14 +5,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class PasswordFieldListener implements DocumentListener {
-	
+
 	private JPasswordField passwordField;
-	
+
 	public PasswordFieldListener(JPasswordField passwordField) {
 		this.passwordField = passwordField;
-		
+
 	}
-	
+
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
@@ -28,6 +28,6 @@ public class PasswordFieldListener implements DocumentListener {
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

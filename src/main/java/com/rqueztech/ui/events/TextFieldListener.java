@@ -5,14 +5,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class TextFieldListener implements DocumentListener {
-	
+
 	private JTextField textField;
-	
+
 	public TextFieldListener(JTextField textField) {
 		this.textField = textField;
-		
+
 	}
-	
+
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
@@ -28,6 +28,6 @@ public class TextFieldListener implements DocumentListener {
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

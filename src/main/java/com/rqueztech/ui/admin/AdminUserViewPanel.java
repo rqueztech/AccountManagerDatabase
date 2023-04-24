@@ -64,11 +64,11 @@ public class AdminUserViewPanel extends JPanel {
 	private PanelCentral panelCentral;
 
 	// --- Group 2: Panel Map ---
-	private ConcurrentHashMap <AdminUserViewEnums, JComponent> components;
+	private ConcurrentHashMap<AdminUserViewEnums, JComponent> components;
 
 	private AdminUserViewController adminUserViewController;
-	
-	// --------------------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
 	public AdminUserViewPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
 
 		this.panelCentral = panelCentral;
@@ -81,7 +81,7 @@ public class AdminUserViewPanel extends JPanel {
 			this.setLayout(layout);
 			this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
 			this.image = new ImageIcon(getClass().getResource("/images/backgroundd.jpg")).getImage();
-			this.components = new ConcurrentHashMap <AdminUserViewEnums, JComponent> ();
+			this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent> ();
 
 			this.setBackgroundImageConstraints();
 			frame.add(this, this.grid);
@@ -151,7 +151,9 @@ public class AdminUserViewPanel extends JPanel {
 	        table.setForeground(Color.WHITE);
 
 	        JScrollPane scrollPane = new JScrollPane(table);
-	        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	        scrollPane.setVerticalScrollBarPolicy(JScrollPane
+	        		.VERTICAL_SCROLLBAR_ALWAYS);
+
 	        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 
 	        	@Override
@@ -177,10 +179,12 @@ public class AdminUserViewPanel extends JPanel {
 	            }
 
 	            @Override
-	            protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+	            protected void paintTrack(Graphics g, JComponent c,
+	            		Rectangle trackBounds) {
 	                // paint the track with your desired color
 	                g.setColor(Color.DARK_GRAY);
-	                g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
+	                g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width,
+	                		trackBounds.height);
 	            }
 	        });
 
@@ -193,9 +197,14 @@ public class AdminUserViewPanel extends JPanel {
 				private static final long serialVersionUID = -4480519341127736765L;
 
 				@Override
-	            public Component getTableCellRendererComponent(JTable table, Object value,
-	                    boolean isSelected, boolean hasFocus, int row, int column) {
-	                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	            public Component getTableCellRendererComponent(JTable table,
+	            		Object value, boolean isSelected, boolean hasFocus,
+	            		int row, int column) {
+
+	                JLabel label = (JLabel)
+	                		super.getTableCellRendererComponent(table, value,
+	                				isSelected, hasFocus, row, column);
+
 	                label.setForeground(Color.WHITE);
 	                label.setBackground(Color.BLACK);
 	                return label;
@@ -216,9 +225,13 @@ public class AdminUserViewPanel extends JPanel {
 
 	        this.grid.gridy += 1;
 	        this.setTextField(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY);
-	        this.add(this.components.get(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY), this.grid);
 
-		    JTextField textFilterField = (JTextField) this.components.get(AdminUserViewEnums.RETURN_CENTRAL_TEXTFIELD_KEY);
+	        this.add(this.components.get(AdminUserViewEnums
+	        		.RETURN_CENTRAL_TEXTFIELD_KEY), this.grid);
+
+		    JTextField textFilterField = (JTextField)
+		    		this.components.get(AdminUserViewEnums
+		    				.RETURN_CENTRAL_TEXTFIELD_KEY);
 
 		    textFilterField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -227,7 +240,7 @@ public class AdminUserViewPanel extends JPanel {
 					// TODO Auto-generated method stub
 					String text = textFilterField.getText();
 
-					if(text.trim().length() == 0) {
+					if (text.trim().length() == 0) {
 						rowSorter.setRowFilter(null);
 					} else {
 						rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
@@ -254,13 +267,20 @@ public class AdminUserViewPanel extends JPanel {
 			});
 
 	        this.grid.gridx += 1;
-	        this.setButton(AdminUserViewEnums.DELETE_USER_BUTTON_KEY, "Delete User");
-	        this.add(this.components.get(AdminUserViewEnums.DELETE_USER_BUTTON_KEY), this.grid);
+
+	        this.setButton(AdminUserViewEnums
+	        		.DELETE_USER_BUTTON_KEY, "Delete User");
+
+	        this.add(this.components.get(AdminUserViewEnums
+	        		.DELETE_USER_BUTTON_KEY), this.grid);
 
 	        this.grid.gridx = 0;
 	        this.grid.gridy += 1;
-	        this.setButton(AdminUserViewEnums.RETURN_CENTRAL_BUTTON_KEY, "Go Back");
-	        this.add(this.components.get(AdminUserViewEnums.RETURN_CENTRAL_BUTTON_KEY), this.grid);
+	        this.setButton(AdminUserViewEnums
+	        		.RETURN_CENTRAL_BUTTON_KEY, "Go Back");
+
+	        this.add(this.components.get(AdminUserViewEnums.
+	        		RETURN_CENTRAL_BUTTON_KEY), this.grid);
 
 	        this.grid.gridx += 1;
 	        this.setButton(AdminUserViewEnums.ADD_USER_BUTTON_KEY, "Add User");
@@ -274,13 +294,13 @@ public class AdminUserViewPanel extends JPanel {
 	        this.grid.gridx = 0;
 	        this.setButton(AdminUserViewEnums.ADMIN_LOGOUT_BUTTON_KEY, "Logout");
 	        this.add(this.components.get(AdminUserViewEnums.ADMIN_LOGOUT_BUTTON_KEY), this.grid);
-		
+
 	        this.adminUserViewController = new AdminUserViewController(this);
 		});
 
 	}
 
-	// --------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	private void setBackgroundImageConstraints() {
 		// Set everything to initial status.
 		this.grid = new GridBagConstraints(); // Set the gridbag constraints
@@ -292,13 +312,13 @@ public class AdminUserViewPanel extends JPanel {
         this.grid.insets = new Insets(TOP_INSET, LEFT_INSET, BOTTOM_INSET, RIGHT_INSET); // Insets values all 0 (Initial)
 	}
 
-	// --------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	private void setTextField(AdminUserViewEnums textFieldKey) {
 		TextfieldTemplates textField = new TextfieldTemplates(Color.DARK_GRAY, Color.WHITE, TEXTFIELD_SIZE);
-		
+
 		//this.grid.anchor = GridBagConstraints.CENTER;
 		//textField.setFont(new Font("Arial", Font.PLAIN, 14));
-		
+
 		this.grid.gridwidth = 2;
         this.grid.weightx = 0.0;
         this.grid.weighty = 0.0;
@@ -309,7 +329,7 @@ public class AdminUserViewPanel extends JPanel {
         this.add(this.components.get(textFieldKey), grid);
 	}
 
-	// --------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	private void setButton(AdminUserViewEnums buttonKey, String buttonText) {
 		ButtonTemplates button = new ButtonTemplates(buttonText, Color.BLACK, Color.WHITE);
         this.grid.anchor = GridBagConstraints.CENTER;
@@ -320,7 +340,7 @@ public class AdminUserViewPanel extends JPanel {
         this.components.put(buttonKey, button);
 	}
 
-	// --------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	private void setLabelField(AdminUserViewEnums labelKey, String labelText) {
 		JLabel labelField = new JLabel(labelText);
 		this.grid.anchor = GridBagConstraints.CENTER;
@@ -336,11 +356,11 @@ public class AdminUserViewPanel extends JPanel {
 	public ConcurrentHashMap<AdminUserViewEnums, JComponent> getComponentsMap() {
 		return this.components;
 	}
-	
+
 	public PanelCentral getPanelCentral() {
 		return this.panelCentral;
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 

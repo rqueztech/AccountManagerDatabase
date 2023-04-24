@@ -2,7 +2,7 @@ package com.rqueztech.models.configuration;
 
 public class ConfigurationModel {
 	private int userNumber;
-	
+
 	public ConfigurationModel(int userNumber, int adminNumber, String password, String salt) {
 		this.userNumber = userNumber;
 		this.adminNumber = adminNumber;
