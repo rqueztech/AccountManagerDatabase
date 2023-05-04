@@ -62,8 +62,18 @@ public class PasswordEncryption {
     }
   }
 
-  // Validate the password by hashing it through the algorithm using the password entered
-  // With the stored salt value.
+  /**
+  * Validates the entered password by hashing it through the algorithm using
+  the password entered with the stored salt value and comparing it to the
+  stored password hash.
+  *
+  * @param enteredPassword the password entered by the user to be validated
+  * @param storedSaltValue the salt value stored for the user's password
+  * @param storedPasswordHash the hashed password value stored for the user
+  *
+  * @return true if the entered password is valid and matches the stored
+  password hash, false otherwise
+  */
   public static boolean validateEnteredPassword(char[] enteredPassword,
       byte[] storedSaltValue, byte[] storedPasswordHash) {
 

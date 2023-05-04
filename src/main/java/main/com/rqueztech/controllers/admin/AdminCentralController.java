@@ -27,39 +27,53 @@ public class AdminCentralController {
   // --------------------------------------------------------------------------
   private void userViewActionListener() {
     JButton userViewButton = (JButton) this.adminCentralPanel
-              .getComponentsMap().get(AdminCentralPanelEnums
-                .USERVIEWBUTTONKEY);
+        .getComponentsMap().get(AdminCentralPanelEnums.USERVIEWBUTTONKEY);
 
     userViewButton.addActionListener(e -> {
       this.adminCentralPanel.setVisible(false);
       this.adminCentralPanel.panelCentral.getCurrentPanel()
-              .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
+          .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
     });
   }
 
   // --------------------------------------------------------------------------
   private void adminAddUserButtonListener() {
     JButton adminLogin = (JButton) this.adminCentralPanel
-              .getComponentsMap().get(AdminCentralPanelEnums
-                .ADMINADDUSERBUTTONKEY);
+        .getComponentsMap().get(AdminCentralPanelEnums
+        .ADMINADDUSERBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
       this.adminCentralPanel.setVisible(false);
       this.adminCentralPanel.panelCentral.getCurrentPanel()
-              .get(PanelCentralEnums.ADMINADDUSERPANEL).setVisible(true);
+          .get(PanelCentralEnums.ADMINADDUSERPANEL).setVisible(true);
     });
   }
 
   // --------------------------------------------------------------------------
   private void logoutButtonActionListener() {
     JButton adminLogin = (JButton) this.adminCentralPanel
-              .getComponentsMap().get(AdminCentralPanelEnums
-                .ADMINLOGOUTBUTTONKEY);
+        .getComponentsMap().get(AdminCentralPanelEnums
+        .ADMINLOGOUTBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
+      System.out.println(
+          this.adminCentralPanel
+          .getLoggedInAdmin()
+          .getCurrentLoggedInAdmin()
+      );
+      
+      this.adminCentralPanel.getLoggedInAdmin().clearLoggedInAdmin();
+      System.out.println("---------------------------");
+      
+      System.out.println(
+              this.adminCentralPanel
+              .getLoggedInAdmin()
+              .getCurrentLoggedInAdmin()
+          );
+      
       this.adminCentralPanel.setVisible(false);
       this.adminCentralPanel.panelCentral.getCurrentPanel()
-              .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
+        .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
     });
   }
 }

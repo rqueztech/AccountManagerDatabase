@@ -8,6 +8,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import main.com.rqueztech.ui.validation.InputValidations;
 
+/**
+ * The SetupSubmitDocumentListener is responsible for making the initial setup
+ panel responsive to user input. It toggles buttons green and red based on
+ valid or invalid feedback, toggles the submit button, and performs checks
+ on current input.
+ */
 public class SetupSubmitDocumentListener implements DocumentListener {
   private JButton submitButton;
   private JTextField firstNameTextField;

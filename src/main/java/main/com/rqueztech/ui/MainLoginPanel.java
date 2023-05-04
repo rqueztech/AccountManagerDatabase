@@ -9,18 +9,28 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import main.com.rqueztech.controllers.MainLoginControl;
+import main.com.rqueztech.controllers.MainLoginController;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 import main.com.rqueztech.ui.enums.MainLoginPanelEnums;
+import main.com.rqueztech.ui.enums.PanelCentralEnums;
 import main.com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import main.com.rqueztech.ui.textfields.TextfieldTemplates;
 
+/**
+ * The MainLoginPanel contains all of the necessary components, views, and
+ background images for the admin add user panel.
+ *
+ * @extends JPanel extends the JPanel class used to modify the current panel.
+ */
 public class MainLoginPanel extends JPanel {
 
   // --- Group 1: Panel related variables ---
@@ -43,7 +53,7 @@ public class MainLoginPanel extends JPanel {
 
   private final int textfieldSize = 10;
 
-  private MainLoginControl mainLoginControl;
+  private MainLoginController mainLoginControl;
 
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<MainLoginPanelEnums, JComponent> components;
@@ -125,7 +135,7 @@ public class MainLoginPanel extends JPanel {
 
       // Calls the mainlogin control function to set the listeners for the
       // Current view
-      this.mainLoginControl = new MainLoginControl(this, panelCentral);
+      this.mainLoginControl = new MainLoginController(this, panelCentral);
     });
   }
 
@@ -217,6 +227,7 @@ public class MainLoginPanel extends JPanel {
 
     this.components.put(labelKey, labelField);
   }
+
 
   public ConcurrentHashMap<MainLoginPanelEnums, JComponent> getComponentsMap() {
     return this.components;

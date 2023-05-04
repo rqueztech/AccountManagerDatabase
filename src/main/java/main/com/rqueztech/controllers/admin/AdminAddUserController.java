@@ -19,8 +19,8 @@ import main.com.rqueztech.ui.events.TogglePasswordVisibility;
 
 /**
  * The AdminAddUserController is responsible for controlling the events and
- * listeners for the adminAddUser panel. It implements ActionListeners and
- * DocumentListeners to handle the events.
+ listeners for the adminAddUser panel. It implements ActionListeners and
+ DocumentListeners to handle the events.
  */
 public class AdminAddUserController {
 
@@ -31,9 +31,11 @@ public class AdminAddUserController {
   private JComboBox<String> gender;
 
   /**
-   * The AdminAddUserController default controller takes all parameters required.
+   * The AdminAddUserController default controller takes all parameters
+   required.
    *
-   * @param adminAddUserPanel passes the admin add user panel as (AdminAddUserPanel)
+   * @param adminAddUserPanel passes the admin add user panel as
+   (AdminAddUserPanel)
    * @param gender takes input on user gender as (a JComponent)
    */
   public AdminAddUserController(AdminAddUserPanel adminAddUserPanel,

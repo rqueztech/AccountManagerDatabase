@@ -17,11 +17,24 @@ import main.com.rqueztech.ui.events.SetupSubmitDocumentListener;
 import main.com.rqueztech.ui.events.TextFieldListener;
 import main.com.rqueztech.ui.events.TogglePasswordVisibility;
 
+/**
+ * The SetupConfigurationController is responsible for controlling the events
+　and　listeners for the adminAddUser panel. It implements ActionListeners and
+ DocumentListeners to handle the events.
+ */
 public class SetupConfigurationController {
   private SetupConfigurationPanel setupConfigurationPanel;
   private TogglePasswordVisibility togglePasswordVisibility;
-  private ConcurrentHashMap<SetupConfigurationPanelEnums, JComponent> components;
+  private ConcurrentHashMap<SetupConfigurationPanelEnums, JComponent>
+      components;
 
+  /**
+   * Stores all of the events and listeners responsible for the panel's
+   functionality.
+   *
+   * @param setupConfigurationPanel stores all of the components that create
+   that set the setup configuration panel.
+   */
   public SetupConfigurationController(SetupConfigurationPanel
       setupConfigurationPanel) {
 

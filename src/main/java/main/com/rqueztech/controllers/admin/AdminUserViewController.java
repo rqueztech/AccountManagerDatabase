@@ -31,8 +31,8 @@ public class AdminUserViewController {
   // --------------------------------------------------------------------------
   private void logoutButtonActionListener() {
     JButton userViewButton = (JButton) this.adminUserViewPanel
-              .getComponentsMap()
-              .get(AdminUserViewEnums.ADMINLOGOUTBUTTONKEY);
+        .getComponentsMap()
+        .get(AdminUserViewEnums.ADMINLOGOUTBUTTONKEY);
 
     userViewButton.addActionListener(e -> {
       this.adminUserViewPanel.setVisible(false);
@@ -45,28 +45,30 @@ public class AdminUserViewController {
   // --------------------------------------------------------------------------
   private void userViewButtonListener() {
     JButton userViewButton = (JButton) this.adminUserViewPanel
-              .getComponentsMap().get(AdminUserViewEnums
-                .ADDUSERBUTTONKEY);
+        .getComponentsMap()
+        .get(AdminUserViewEnums.ADDUSERBUTTONKEY);
 
     userViewButton.addActionListener(e -> {
       this.adminUserViewPanel.setVisible(false);
       this.resetFields();
       this.adminUserViewPanel.getPanelCentral().getCurrentPanel()
-              .get(PanelCentralEnums.ADMINADDUSERPANEL).setVisible(true);
+        .get(PanelCentralEnums.ADMINADDUSERPANEL)
+        .setVisible(true);
     });
   }
 
   // --------------------------------------------------------------------------
   private void exitButtonActionListener() {
     JButton adminLogin = (JButton) this.adminUserViewPanel
-              .getComponentsMap()
-              .get(AdminUserViewEnums.RETURNCENTRALBUTTONKEY);
+        .getComponentsMap()
+        .get(AdminUserViewEnums.RETURNCENTRALBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
       this.adminUserViewPanel.setVisible(false);
       this.resetFields();
       this.adminUserViewPanel.getPanelCentral().getCurrentPanel()
-              .get(PanelCentralEnums.ADMINCENTRALPANEL).setVisible(true);
+        .get(PanelCentralEnums.ADMINCENTRALPANEL)
+        .setVisible(true);
     });
   }
 

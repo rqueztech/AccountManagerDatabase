@@ -22,6 +22,10 @@ import main.com.rqueztech.ui.buttons.ButtonTemplates;
 import main.com.rqueztech.ui.passwordfields.PasswordFieldTemplates;
 import main.com.rqueztech.ui.user.enums.UserChangeDefaultPasswordEnums;
 
+/**
+ * Sets all of the components used to change the default password, stores them
+ into a components hashmap, and puts the panel on the frame.
+ */
 public class UserChangeDefaultPasswordPanel extends JPanel {
 
   private PanelCentral panelCentral;
@@ -49,6 +53,13 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<UserChangeDefaultPasswordEnums, JComponent> components;
 
+  /**
+   * Default constructor that takes parameters and initializes variables.
+   *
+   * @param frame the BaseFrame object that the panel will be added to
+   * @param layout the GridBagLayout object used to set the layout of the panel
+   * @param panelCentral the PanelCentral object that the panel will be added to
+   */
   // --------------------------------------------------------------------------
   public UserChangeDefaultPasswordPanel(BaseFrame frame,
       GridBagLayout layout, PanelCentral panelCentral) {
@@ -78,6 +89,7 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
       this.setComponentMainPosition();
       this.setLabelField(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDLABELKEY, "Enter New Password");
+
       this.add(this.components.get(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDLABELKEY), grid);
 
@@ -85,12 +97,14 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
       this.grid.gridy += 1;
       this.setPasswordField(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDTEXTFIELDKEY);
+
       this.add(this.components.get(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDTEXTFIELDKEY), grid);
 
       this.grid.gridx += 3; // Buttons are not fixed, therefore coordinate are custom set.
       this.setButton(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDVISIBILITYBUTTONKEY, "Visible");
+
       this.add(this.components.get(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDVISIBILITYBUTTONKEY), grid);
 
@@ -106,26 +120,30 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
       this.grid.gridx = 0;
       this.grid.gridy += 1;
       this.setPasswordField(UserChangeDefaultPasswordEnums
-            .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY);
+          .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY);
 
       this.add(this.components.get(UserChangeDefaultPasswordEnums
-              .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY), grid);
+          .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY), grid);
 
       this.grid.gridx += 3; // Buttons are not fixed, therefore coordinates are custom set
       this.setButton(UserChangeDefaultPasswordEnums
-              .CONFIRMPASSWORDVISIBILITYBUTTONKEY, "Visibile");
+          .CONFIRMPASSWORDVISIBILITYBUTTONKEY, "Visibile");
+
       this.add(this.components.get(UserChangeDefaultPasswordEnums
-              .CONFIRMPASSWORDVISIBILITYBUTTONKEY), grid);
+          .CONFIRMPASSWORDVISIBILITYBUTTONKEY), grid);
 
       this.grid.gridx = 0;
       this.grid.gridy += 1;
       this.setButton(UserChangeDefaultPasswordEnums
-                .CANCELCHANGEBUTTONKEY, "Cancel");
-      this.add(this.components.get(UserChangeDefaultPasswordEnums.CANCELCHANGEBUTTONKEY), grid);
+          .CANCELCHANGEBUTTONKEY, "Cancel");
+
+      this.add(this.components.get(UserChangeDefaultPasswordEnums
+          .CANCELCHANGEBUTTONKEY), grid);
 
       this.grid.gridx = 1;
       this.setSubmitButton(UserChangeDefaultPasswordEnums
-                .SUBMITLOGINBUTTONKEY, "Submit");
+          .SUBMITLOGINBUTTONKEY, "Submit");
+
       this.add(this.components.get(UserChangeDefaultPasswordEnums.SUBMITLOGINBUTTONKEY), grid);
 
       this.userChangeDefaultPasswordController = new UserChangeDefaultPasswordController(this);
@@ -183,7 +201,13 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
     this.components.put(buttonKey, button);
   }
 
-  // --------------------------------------------------------------------------
+  /**
+  * Sets the password field with the specified key to a new
+  PasswordFieldTemplates object with the given colors and size, and adds it to
+  the components map.
+  *
+  * @param passwordFieldKey the key representing the password field to be set
+  */
   public void setPasswordField(UserChangeDefaultPasswordEnums passwordFieldKey) {
 
     final PasswordFieldTemplates passwordField = new PasswordFieldTemplates(

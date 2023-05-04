@@ -15,17 +15,24 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import main.com.rqueztech.controllers.admin.AdminCentralController;
+import main.com.rqueztech.models.loggedinadmin.LoggedInAdmin;
 import main.com.rqueztech.ui.BaseFrame;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.admin.enums.AdminCentralPanelEnums;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 
+/**
+ * The class contains all of the panel components and keys necessary for the
+ * admin central panel.
+ */
 public class AdminCentralPanel extends JPanel {
 
   // --- Group 1: Panel related variables ---
   private static final long serialVersionUID = 1151818027338195157L;
   private Image image;
   private GridBagConstraints grid;
+
+  public LoggedInAdmin loggedInAdmin;
 
   private final int topInset = 0;
   private final int leftInset = 0;
@@ -44,14 +51,21 @@ public class AdminCentralPanel extends JPanel {
   private ConcurrentHashMap<AdminCentralPanelEnums, JComponent> components;
   public PanelCentral panelCentral;
 
-  // --------------------------------------------------------------------------
+  /**
+   * Default constructor that takes parameters and initializes variables.
+   *
+   * @param frame the BaseFrame object that the panel will be added to
+   * @param layout the GridBagLayout object used to set the layout of the panel
+   * @param panelCentral the PanelCentral object that the panel will be added to
+   */
   public AdminCentralPanel(BaseFrame frame, GridBagLayout layout,
       PanelCentral panelCentral) {
 
+    // Create an instance to the login admin panel
+    this.loggedInAdmin = new LoggedInAdmin();
 
     // Dispatch responsibilities on EDT.
     SwingUtilities.invokeLater(() -> {
-
       // Set the panel to the gridbaglayout, establish the preferred size,
       // And get the image that will be used in the background
       this.setLayout(layout);
@@ -149,5 +163,10 @@ public class AdminCentralPanel extends JPanel {
         RenderingHints.VALUE_ANTIALIAS_ON);
 
     g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
+  }
+
+  //--------------------------------------------------------------------------
+  public LoggedInAdmin getLoggedInAdmin() {
+    return this.loggedInAdmin;
   }
 }

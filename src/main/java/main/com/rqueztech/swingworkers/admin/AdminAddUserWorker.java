@@ -16,8 +16,13 @@ import main.com.rqueztech.models.user.UserModel;
 
 /**
  * The AdminAddUserWorker class is a SwingWorker that creates a new user model
- * with the specified user information. It also generates a default password for
- * the user and hashes the password using a salt.
+ with the specified user information. It also generates a default password for
+ the user and hashes the password using a salt.
+ *
+ * @extends SwingWorker independent swing worker to ensure that separate thread
+ is used when performing long-running operations that may block the EDT.
+ * @implements AdminModelViewAddUserInterface contains all of the functions to
+ be implemented in the AdminAddUser Swing Worker.
  */
 public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     implements AdminModelViewAddUserInterface {
@@ -183,28 +188,14 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     return PasswordEncryption.hashPassword(this.defaultUserPassword, this.newUserSalt);
   }
 
-  /**
-   * Clears the default password by filling the character with null characters.
-   */
-  // --------------------------------------------------------------------------
   private void clearUserPassword() {
     Arrays.fill(this.defaultUserPassword, '\0');
   }
 
-  /**
-   * Increases the user number by one.
-   */
-  // --------------------------------------------------------------------------
   private void increaseEmployeeNumber() {
     this.userNumber++;
   }
 
-  /**
-   * Returns the user number.
-   *
-   * @return the user number
-   */
-  // --------------------------------------------------------------------------
   private int getEmployeeNumber() {
     return this.userNumber;
   }

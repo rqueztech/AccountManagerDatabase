@@ -53,7 +53,13 @@ public class UserCentralPanel extends JPanel {
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<UserCentralPanelEnums, JComponent> components;
 
-  // --------------------------------------------------------------------------
+  /**
+   * Default constructor that takes parameters and initializes variables.
+   *
+   * @param frame the BaseFrame object that the panel will be added to
+   * @param layout the GridBagLayout object used to set the layout of the panel
+   * @param panelCentral the PanelCentral object that the panel will be added to
+   */
   public UserCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
     // Function that will toggle visibility on and off in password
     // Field found in this class

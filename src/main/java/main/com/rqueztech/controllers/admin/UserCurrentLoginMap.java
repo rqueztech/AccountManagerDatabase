@@ -1,5 +1,5 @@
 package main.com.rqueztech.controllers.admin;
 
-public class AdminHashMapController {
+public class UserCurrentLoginMap {
 
 }

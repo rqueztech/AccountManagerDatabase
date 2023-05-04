@@ -73,7 +73,6 @@ public class SetupConfigurationPanel extends JPanel {
    * @param layout the GridBagLayout object used to set the layout of the panel
    * @param panelCentral the PanelCentral object that the panel will be added to
    */
-  // --------------------------------------------------------------------------
   public SetupConfigurationPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
     // Function that will toggle visibility on and off in password
     // Field found in this class

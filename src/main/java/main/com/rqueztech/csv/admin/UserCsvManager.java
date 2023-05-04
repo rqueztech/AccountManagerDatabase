@@ -33,16 +33,14 @@ public class UserCsvManager {
    * @throws IOException throws IOException if an I/O error occurs
    */
   public void addData(List<String[]> data) throws IOException {
-    Path path = Paths.get(this.filePath);
-    boolean fileExists = Files.exists(path);
-    if (fileExists) {
+    if (this.isFileExists()) {
       System.out.println("The file exists");
     } else {
       System.out.println("The file does not exist");
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
-      String[] header = {"acctName", "fName", "lName", "gender", "password", "salt"};
+      String[] header = {"acctName", "fName", "lName", "gender", "password", "salt", "admNo"};
       csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();
@@ -107,6 +105,10 @@ public class UserCsvManager {
     FileReader reader = new FileReader(filePath);
     CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
+    if (!this.isFileExists()) {
+      return null;
+    }
+
     List<String[]> rows = null;
     try {
       rows = csvReader.readAll();
@@ -124,6 +126,53 @@ public class UserCsvManager {
     return rows;
   }
 
+  /**
+   * Retrieves the row from a CSV file located at the given file path where the value of the
+   * first column matches the given `acctName`.
+   *
+   * @param acctName the account name to match against the first column of the CSV file
+   * @return a String array representing the first matching row in the CSV file, or null if no
+   *         matching row is found
+   * @throws IOException if an I/O error occurs while reading the CSV file.
+   */
+  public String[] retrieveAccountData(String acctName) throws IOException {
+    if (!this.isFileExists()) {
+      return null;
+    }
+
+    // Create a FileReader object to read the CSV file
+    FileReader reader = new FileReader(filePath);
+
+    // Create a CSVReader object using the FileReader object
+    CSVReader csvReader = new CSVReaderBuilder(reader).build();
+
+    List<String[]> rows = null;
+    try {
+      // Read all the rows from the CSV file and store them in a List
+      rows = csvReader.readAll();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CsvException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // Close the CSVReader and FileReader objects
+    csvReader.close();
+    reader.close();
+
+    // Search for the first row where the value of the first column matches the given `acctName`
+    for (String[] row : rows) {
+      if (row[0].equals(acctName)) {
+        return row;
+      }
+    }
+
+    // If no matching row is found, return null
+    return null;
+  }  
+
   private boolean isEqual(String[] arr1, String[] arr2) {
     if (arr1.length != arr2.length) {
       return false;
@@ -136,5 +185,10 @@ public class UserCsvManager {
     }
 
     return true;
+  }
+
+  private boolean isFileExists() {
+    Path path = Paths.get(this.filePath);
+    return Files.exists(path);
   }
 }

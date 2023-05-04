@@ -4,6 +4,10 @@ import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorkerTesting;
 import org.testng.annotations.Test;
 
+/**
+ * The test sets a model with all of the information required to create a user,
+ and tests to see if the user was properly created.h
+ */
 public class CreateUserTest {
   @Test
   public void testDoInBackground() throws Exception {

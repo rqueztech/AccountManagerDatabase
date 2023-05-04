@@ -72,7 +72,13 @@ public class AdminUserViewPanel extends JPanel {
 
   private AdminUserViewController adminUserViewController;
 
-  // --------------------------------------------------------------------------
+  /**
+   * Default constructor that takes parameters and initializes variables.
+   *
+   * @param frame the BaseFrame object that the panel will be added to
+   * @param layout the GridBagLayout object used to set the layout of the panel
+   * @param panelCentral the PanelCentral object that the panel will be added to
+   */
   public AdminUserViewPanel(BaseFrame frame, GridBagLayout layout,
       PanelCentral panelCentral) {
 

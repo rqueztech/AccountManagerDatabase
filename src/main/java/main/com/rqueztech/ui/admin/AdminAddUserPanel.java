@@ -57,9 +57,19 @@ public class AdminAddUserPanel extends JPanel {
   private PanelCentral panelCentral;
   String[] genderOptions = { "Select", "Male", "Female", "Undisclosed" };
 
+  /**
+   * Sets all of the JPanel components used in the creation of the Admin Add
+   User Panel and stores them as a concurrent hashmap.
+   */
   private AdminAddUserController adminAddUserController;
 
-  // --------------------------------------------------------------------------
+  /**
+   * Default constructor that takes parameters and initializes variables.
+   *
+   * @param frame the BaseFrame object that the panel will be added to
+   * @param layout the GridBagLayout object used to set the layout of the panel
+   * @param panelCentral the PanelCentral object that the panel will be added to
+   */
   public AdminAddUserPanel(BaseFrame frame, GridBagLayout layout,
       PanelCentral panelCentral) {
     // Function that will toggle visibility on and off in password
@@ -295,7 +305,8 @@ public class AdminAddUserPanel extends JPanel {
   public void paintComponent(Graphics g) {
 
     Graphics2D g2d = (Graphics2D)  g;
-    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
 
     g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
   }

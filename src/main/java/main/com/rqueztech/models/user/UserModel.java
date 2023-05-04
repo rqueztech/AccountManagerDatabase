@@ -72,23 +72,33 @@ public class UserModel {
     return userFirstName;
   }
 
-  // --------------------------------------------------------------------------
+  /**
+  * Sets the user's first name.
+  *
+  * @param userFirstName The user's first name to set.
+  * @throws IllegalArgumentException If the userFirstName parameter contains non-letter characters.
+  */
   public void setUserFirstName(String userFirstName) {
     if (this.inputValidations.isOnlyLetterCharacters(userFirstName)) {
       this.userFirstName = userFirstName;
     }
   }
 
-  // --------------------------------------------------------------------------
-  public String getUserLastName() {
-    return userLastName;
-  }
-
-  // --------------------------------------------------------------------------
+  /**
+  * Sets the user's last name.
+  *
+  * @param userLastName The user's last name to set.
+  * @throws IllegalArgumentException If the userLastName parameter contains non-letter characters.
+  */
   public void setUserLastName(String userLastName) {
     if (this.inputValidations.isOnlyLetterCharacters(userLastName)) {
       this.userLastName = userLastName;
     }
+  }
+
+  // --------------------------------------------------------------------------
+  public String getUserLastName() {
+    return userLastName;
   }
 
   // --------------------------------------------------------------------------

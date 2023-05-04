@@ -26,6 +26,12 @@ import main.com.rqueztech.ui.BaseFrame;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 
+/**
+ * The SetupAgreementPanel contains all of the necessary components, views,
+ and background images for the admin add user panel.
+ *
+ * @extends JPanel extends the JPanel class used to modify the current panel.
+ */
 public class SetupAgreementPanel extends JPanel {
 
   // --- Group 1: Panel related variables ---
