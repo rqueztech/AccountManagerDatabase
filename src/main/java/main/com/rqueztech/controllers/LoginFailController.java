@@ -44,7 +44,7 @@ public class LoginFailController {
 
     configurationButton.addActionListener(e -> {
       this.loginIncorrectErrorPanel.setVisible(false);
-      this.panelCentral.getCurrentPanel()
+      this.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.MAINLOGINPANEL)
           .setVisible(true);
     });

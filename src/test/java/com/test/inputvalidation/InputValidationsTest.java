@@ -22,7 +22,7 @@ public class InputValidationsTest {
   public void testValidatePasswordWithCharArray() {
     InputValidations inputValidations = new InputValidations();
 
-    for (int counter = 0; counter < 10; counter++) {     
+    for (int counter = 0; counter < 40; counter++) {     
       String input = this.generatePassword();
       boolean result = inputValidations.validatePassword(input);
       Assert.assertTrue(result);
@@ -33,7 +33,7 @@ public class InputValidationsTest {
   public void testValidatePasswordWithString() {
     InputValidations inputValidations = new InputValidations();
 
-    for (int counter = 0; counter < 10; counter++) {
+    for (int counter = 0; counter < 40; counter++) {
       String input = this.generatePassword();
       boolean result = inputValidations.validatePassword(input.toCharArray());
       Assert.assertTrue(result);
@@ -64,6 +64,8 @@ public class InputValidationsTest {
     sb.append(number.charAt(random.nextInt(number.length())));
     sb.append(legalCharacters.charAt(random.nextInt(legalCharacters.length())));
 
+    System.out.println(sb.toString());
+    
     return sb.toString();
   }
 

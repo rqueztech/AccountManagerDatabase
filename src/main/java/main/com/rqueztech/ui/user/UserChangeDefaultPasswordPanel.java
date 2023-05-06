@@ -85,7 +85,6 @@ public class UserChangeDefaultPasswordPanel extends JPanel {
       frame.add(this, this.grid);
       //--- Finish Constraints End ---
 
-
       this.setComponentMainPosition();
       this.setLabelField(UserChangeDefaultPasswordEnums
           .ENTERPASSWORDLABELKEY, "Enter New Password");

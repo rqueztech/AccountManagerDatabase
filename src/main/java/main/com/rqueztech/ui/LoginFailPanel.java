@@ -12,13 +12,14 @@ import java.awt.RenderingHints;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import main.com.rqueztech.controllers.LoginFailController;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 
 /**
- * The LogoutIncorrectErrorPanel displays the logout error message and all
+ * The LoginIncorrectErrorPanel displays the login error message and all
  respective components.
  *
  * @extends JPanel extends the JPanel class used to modify the current panel.
@@ -36,6 +37,7 @@ public class LoginFailPanel extends JPanel {
   private final int rightInset = 0;
 
   // --- Section 3: Login Button Component Keys
+  private final String loginFailLabelKey = "LoginFail";
   private final String loginFailureButtonKey = "LoginFailureButtonKey"; 
   private PanelCentral panelCentral;
   private LoginFailController loginIncorrectErrorController;
@@ -83,8 +85,11 @@ public class LoginFailPanel extends JPanel {
 
       this.setComponentMainPosition();
 
+      this.grid.gridy = 0;
+      this.setLabelField(loginFailLabelKey, "Login name/password incorrect");
+      this.add(this.components.get(loginFailLabelKey), grid);
 
-      this.grid.gridx = 0; // Buttons are not fixed, therefore coordinates are custom set
+      this.grid.gridy = 1; // Buttons are not fixed, therefore coordinates are custom set
       this.setButton(loginFailureButtonKey, "Main Menu");
       this.add(this.components.get(loginFailureButtonKey), grid);
 
@@ -99,6 +104,19 @@ public class LoginFailPanel extends JPanel {
     this.grid.gridy = gridyInitial;
   }
 
+  //--------------------------------------------------------------------------
+  private void setLabelField(String labelKey, String labelText) {
+    JLabel labelField = new JLabel(labelText);
+    this.grid.anchor = GridBagConstraints.CENTER;
+    labelField.setBackground(Color.BLACK);
+    labelField.setForeground(Color.WHITE);
+    this.grid.gridwidth = 1;
+    this.grid.weightx = 0.0;
+    this.grid.weighty = 0.0;
+
+    this.components.put(labelKey, labelField);
+  }  
+  
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.

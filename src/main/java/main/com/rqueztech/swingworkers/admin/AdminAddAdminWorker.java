@@ -91,7 +91,7 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
             + result.getAdminSalt() + "\n"
             + result.getAdminNumber() + "\n"; // End String message
 
-      JOptionPane.showMessageDialog(null, message);
+      //JOptionPane.showMessageDialog(null, message);
 
     } catch (InterruptedException | ExecutionException ex) {
       // Handle any exceptions that were thrown during the background task here

@@ -37,7 +37,7 @@ public class UserCentralController {
 
     logoutButton.addActionListener(e -> {
       this.userCentralPanel.setVisible(false);
-      this.userCentralPanel.getPanelCentral().getCurrentPanel()
+      this.userCentralPanel.getPanelCentral().getPanelsHashMap()
         .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
     });
   }

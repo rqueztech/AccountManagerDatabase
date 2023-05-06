@@ -9,6 +9,7 @@ import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
+import main.com.rqueztech.ui.user.UserCentralPanel;
 
 /**
  * Responsible for authenticating the user login.
@@ -66,29 +67,38 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
   @Override
   protected void done() {
     try {
-      boolean result = get(); // Retrieve the result from doInBackground()
+      boolean authenticated = get(); // Retrieve the result from doInBackground()
 
-      this.panelCentral.getCurrentPanel()
+      this.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.MAINLOGINPANEL)
           .setVisible(false);
 
       /* If the password entered is less than 8 characters and the result is
       true, this indicates that the default password is detected.
       */ 
-      boolean isDefaultPassword = this.userPassword.length < 8 && result;
+      boolean isDefaultPassword = this.userPassword.length < 8 && authenticated;
+  
+      if (isDefaultPassword && authenticated) {
+        UserCentralPanel userCentralPanel = (UserCentralPanel) this.panelCentral.getPanelsHashMap()
+            .get(PanelCentralEnums.USERCENTRALPANEL);  
 
-      if (isDefaultPassword) {
-        this.panelCentral.getCurrentPanel()
-          .get(PanelCentralEnums.USERCHANGEDEFAULTPASSWORDPANEL)
-            .setVisible(true);
-      } else if (result) {
+        userCentralPanel.getLoggedInUser().setLoggedInUser(userName.toCharArray());
+        
+        System.out.println(
+            userCentralPanel.getLoggedInUser().getCurrentLoggedInUser()
+        );
+        
+        this.panelCentral.getPanelsHashMap()
+            .get(PanelCentralEnums.USERCHANGEDEFAULTPASSWORDPANEL)
+              .setVisible(true);
+      } else if (authenticated) {
         // Authentication was successful, update UI accordingly
-        this.panelCentral.getCurrentPanel()
-        .get(PanelCentralEnums.USERCENTRALPANEL)
+        this.panelCentral.getPanelsHashMap()
+          .get(PanelCentralEnums.USERCENTRALPANEL)
             .setVisible(true);
       } else {
         // Authentication failed, show warning message
-        this.panelCentral.getCurrentPanel()
+        this.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.LOGININCORRECTERRORPANEL)
             .setVisible(true);
       }

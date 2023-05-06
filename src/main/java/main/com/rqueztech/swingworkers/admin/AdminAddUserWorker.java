@@ -37,7 +37,8 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
   private String userAccountName;
   private byte[] newUserSalt;
   private char[] defaultUserPassword;
-
+  private char[] adminPassphraseAttempt;
+  
   // This is the current user's number
   private int userNumber;
 
@@ -61,6 +62,11 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
   @Override
   protected UserModel doInBackground() throws Exception {
     // TODO Auto-generated method stub
+    if (PasswordEncryption.validateEnteredPassword(adminPassphraseAttempt,
+        userNewHashedPassword, newUserSalt)) {
+      return null;
+    }
+    
     this.createUserAccountName();
 
     // Key to append: This character will append to the end of
@@ -97,17 +103,21 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
       // Get the result of the SwingWorker's background task
       UserModel result = get();
 
-      // Handle the successful completion of the task here
-      String message = "User added successfully.\n"
-          + result.getUserName() + "\n"
-          + result.getUserFirstName() + "\n"
-          + result.getUserLastName() + "\n"
-          + result.getGender() + "\n"
-          + result.getUserPassword() + "\n"
-          + result.getUserSalt() + "\n"
-          + result.getUserNumber();
-      JOptionPane.showMessageDialog(null, message);
-
+      if (result != null) {
+        // Handle the successful completion of the task here
+        String message = "User added successfully.\n"
+            + result.getUserName() + "\n"
+            + result.getUserFirstName() + "\n"
+            + result.getUserLastName() + "\n"
+            + result.getGender() + "\n"
+            + result.getUserPassword() + "\n"
+            + result.getUserSalt() + "\n"
+            + result.getUserNumber();
+        JOptionPane.showMessageDialog(null, message);
+      } else {
+        JOptionPane.showMessageDialog(null, "Password Incorrect");
+      }
+      
     } catch (InterruptedException | ExecutionException ex) {
       // Handle any exceptions that were thrown during the background task here
       String errorMessage = "Error: " + ex.getMessage();

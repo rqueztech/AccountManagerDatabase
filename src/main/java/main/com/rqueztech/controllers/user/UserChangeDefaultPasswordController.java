@@ -14,6 +14,7 @@ import main.com.rqueztech.ui.enums.PanelCentralEnums;
 import main.com.rqueztech.ui.events.ChangePasswordDocumentListener;
 import main.com.rqueztech.ui.events.PasswordValidationDocumentListener;
 import main.com.rqueztech.ui.events.TogglePasswordVisibility;
+import main.com.rqueztech.ui.user.UserCentralPanel;
 import main.com.rqueztech.ui.user.UserChangeDefaultPasswordPanel;
 import main.com.rqueztech.ui.user.enums.UserChangeDefaultPasswordEnums;
 
@@ -78,11 +79,22 @@ public class UserChangeDefaultPasswordController {
         this.userChangeDefaultPasswordPanel.getComponentsMap()
         .get(UserChangeDefaultPasswordEnums
         .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY);
-
+    
+    
+    
     submitButton.addActionListener(e -> {
+
+      UserCentralPanel userCentralPanel =
+          (UserCentralPanel) this.userChangeDefaultPasswordPanel
+            .getPanelCentral().getPanelsHashMap()
+            .get(PanelCentralEnums.USERCENTRALPANEL);
+      
       UserChangePasswordWorker userChangePasswordWorker =
-          new UserChangePasswordWorker("CBron", enterPassword.getPassword(),
-          confirmPassword.getPassword());
+          new UserChangePasswordWorker(
+            userCentralPanel.getLoggedInUser().getCurrentLoggedInUser(),
+            enterPassword.getPassword(),
+            confirmPassword.getPassword()
+          );
 
       userChangePasswordWorker.execute();
 
@@ -104,7 +116,7 @@ public class UserChangeDefaultPasswordController {
         this.resetFields();
 
         this.userChangeDefaultPasswordPanel.getPanelCentral()
-          .getCurrentPanel().get(PanelCentralEnums.USERCENTRALPANEL)
+          .getPanelsHashMap().get(PanelCentralEnums.USERCENTRALPANEL)
             .setVisible(true);
       } else {
         JOptionPane.showMessageDialog(null, "CHANGE FAILED");
@@ -122,7 +134,7 @@ public class UserChangeDefaultPasswordController {
       this.userChangeDefaultPasswordPanel.setVisible(false);
       this.resetFields();
       this.userChangeDefaultPasswordPanel.getPanelCentral()
-          .getCurrentPanel().get(PanelCentralEnums.MAINLOGINPANEL)
+          .getPanelsHashMap().get(PanelCentralEnums.MAINLOGINPANEL)
           .setVisible(true);
     });
   }

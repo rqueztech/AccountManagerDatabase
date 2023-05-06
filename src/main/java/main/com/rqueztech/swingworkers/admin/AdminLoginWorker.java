@@ -3,7 +3,6 @@ package main.com.rqueztech.swingworkers.admin;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import main.com.rqueztech.csv.admin.AdminCsvManager;
@@ -69,24 +68,24 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
     try {
       boolean authenticated = get(); // Retrieve the authenticated from doInBackground()
 
-      this.panelCentral.getCurrentPanel()
+      this.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.MAINLOGINPANEL)
           .setVisible(false);
 
       if (authenticated) {
         // Authentication was successful, update UI accordingly
         AdminCentralPanel newPanel = (AdminCentralPanel) 
-            this.panelCentral.getCurrentPanel()
+            this.panelCentral.getPanelsHashMap()
             .get(PanelCentralEnums.ADMINCENTRALPANEL);
 
         newPanel.getLoggedInAdmin().setLoggedInAdmin(adminName.toCharArray());
         
-        this.panelCentral.getCurrentPanel()
+        this.panelCentral.getPanelsHashMap()
           .get(PanelCentralEnums.ADMINCENTRALPANEL)
             .setVisible(true);
       } else {
         // Authentication failed, show warning message
-        this.panelCentral.getCurrentPanel()
+        this.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.LOGININCORRECTERRORPANEL)
             .setVisible(true);
       }

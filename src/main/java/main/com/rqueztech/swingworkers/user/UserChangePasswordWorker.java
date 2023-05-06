@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
+import main.com.rqueztech.ui.user.UserCentralPanel;
 
 /**
  * Responsible for authenticating the user login. The class takes the user name
@@ -42,10 +43,10 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
    * @param userNewPassword user password as (a char array)
    * @param userNewPasswordRepeat confirmation as (a char array)
    */
-  public UserChangePasswordWorker(String userName, char[] userNewPassword,
+  public UserChangePasswordWorker(char[] userName, char[] userNewPassword,
       char[] userNewPasswordRepeat) {
 
-    this.userName = userName;
+    this.userName = new String(userName);
     this.userNewPassword = userNewPassword;
     this.userNewPasswordRepeat = userNewPasswordRepeat;
 

@@ -30,7 +30,7 @@ public class SetupAgreementController {
 
     configurationButton.addActionListener(e -> {
       this.setupAgreementPanel.setVisible(false);
-      this.setupAgreementPanel.getPanelCentral().getCurrentPanel()
+      this.setupAgreementPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.SETUPCONFIGURATIONPANEL).setVisible(true);
     });
   }

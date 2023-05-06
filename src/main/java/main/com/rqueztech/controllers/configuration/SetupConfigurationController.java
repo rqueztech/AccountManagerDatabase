@@ -59,7 +59,7 @@ public class SetupConfigurationController {
       this.setupConfigurationPanel.setVisible(false);
       this.resetFields();
       this.setupConfigurationPanel.getPanelCentral()
-              .getCurrentPanel().get(PanelCentralEnums.SETUPAGREEMENTPANEL)
+              .getPanelsHashMap().get(PanelCentralEnums.SETUPAGREEMENTPANEL)
               .setVisible(true);
     });
   }
@@ -189,7 +189,7 @@ public class SetupConfigurationController {
 
       this.setupConfigurationPanel.setVisible(false);
       this.resetFields();
-      this.setupConfigurationPanel.getPanelCentral().getCurrentPanel()
+      this.setupConfigurationPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.MAINLOGINPANEL).setVisible(true);
     });
   }

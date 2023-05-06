@@ -15,6 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import main.com.rqueztech.controllers.user.UserCentralController;
+import main.com.rqueztech.models.loggedinadmin.LoggedInAdmin;
+import main.com.rqueztech.models.loggedinuser.LoggedInUser;
 import main.com.rqueztech.ui.BaseFrame;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
@@ -34,6 +36,8 @@ public class UserCentralPanel extends JPanel {
   private Image image;
   private GridBagConstraints grid;
 
+  public LoggedInUser loggedInUser;
+  
   private final int topInset = 0;
   private final int leftInset = 0;
   private final int bottomInset = 0;
@@ -48,11 +52,10 @@ public class UserCentralPanel extends JPanel {
 
   private UserCentralController userCentralController;
 
-  private PanelCentral panelCentral;
-
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<UserCentralPanelEnums, JComponent> components;
-
+  private PanelCentral panelCentral;
+  
   /**
    * Default constructor that takes parameters and initializes variables.
    *
@@ -61,6 +64,9 @@ public class UserCentralPanel extends JPanel {
    * @param panelCentral the PanelCentral object that the panel will be added to
    */
   public UserCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
+    // Create an instance to the login user panel
+    this.loggedInUser = new LoggedInUser();
+      
     // Function that will toggle visibility on and off in password
     // Field found in this class
     this.panelCentral = panelCentral;
@@ -152,5 +158,10 @@ public class UserCentralPanel extends JPanel {
     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
+  }
+  
+  //--------------------------------------------------------------------------
+  public LoggedInUser getLoggedInUser() {
+    return this.loggedInUser;
   }
 }

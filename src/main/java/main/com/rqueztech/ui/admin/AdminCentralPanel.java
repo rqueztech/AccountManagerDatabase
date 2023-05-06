@@ -22,8 +22,9 @@ import main.com.rqueztech.ui.admin.enums.AdminCentralPanelEnums;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 
 /**
- * The class contains all of the panel components and keys necessary for the
- * admin central panel.
+ * The AdminCentralPanel class is responsible for setting the background image,
+ dimensions, and all of the components necessary to navigate the user
+ interface.
  */
 public class AdminCentralPanel extends JPanel {
 
@@ -74,8 +75,8 @@ public class AdminCentralPanel extends JPanel {
 
       this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
       this.image = new ImageIcon(getClass()
-              .getResource("/images/backgroundd.jpg"))
-              .getImage();
+        .getResource("/images/backgroundd.jpg"))
+        .getImage();
       this.components =
           new ConcurrentHashMap<AdminCentralPanelEnums,
       JComponent>();

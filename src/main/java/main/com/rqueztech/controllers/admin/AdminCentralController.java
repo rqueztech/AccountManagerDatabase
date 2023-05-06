@@ -31,7 +31,7 @@ public class AdminCentralController {
 
     userViewButton.addActionListener(e -> {
       this.adminCentralPanel.setVisible(false);
-      this.adminCentralPanel.panelCentral.getCurrentPanel()
+      this.adminCentralPanel.panelCentral.getPanelsHashMap()
           .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
     });
   }
@@ -44,7 +44,7 @@ public class AdminCentralController {
 
     adminLogin.addActionListener(e -> {
       this.adminCentralPanel.setVisible(false);
-      this.adminCentralPanel.panelCentral.getCurrentPanel()
+      this.adminCentralPanel.panelCentral.getPanelsHashMap()
           .get(PanelCentralEnums.ADMINADDUSERPANEL).setVisible(true);
     });
   }
@@ -72,7 +72,7 @@ public class AdminCentralController {
           );
       
       this.adminCentralPanel.setVisible(false);
-      this.adminCentralPanel.panelCentral.getCurrentPanel()
+      this.adminCentralPanel.panelCentral.getPanelsHashMap()
         .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
     });
   }

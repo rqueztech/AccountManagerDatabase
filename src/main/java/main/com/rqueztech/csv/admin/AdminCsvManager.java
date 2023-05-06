@@ -33,9 +33,8 @@ public class AdminCsvManager {
   public void addData(List<String[]> data) throws IOException {
     Path path = Paths.get(this.filePath);
     boolean fileExists = Files.exists(path);
-    if (fileExists) {
-      System.out.println("The file exists");
-    } else {
+    
+    if (!fileExists) {
       System.out.println("The file does not exist");
 
       // Create a new file with a header row

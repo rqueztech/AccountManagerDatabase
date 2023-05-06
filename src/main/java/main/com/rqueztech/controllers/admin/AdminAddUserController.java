@@ -75,14 +75,14 @@ public class AdminAddUserController {
       // No User Password field Gets passed here.
 
       String gender = (String) this.gender.getSelectedItem();
+      
       String userFirstName = ((JTextField) this.components
-              .get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY))
-              .getText();
+          .get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY))
+          .getText();
 
       String userLastName =  ((JTextField) this.components
-              .get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY))
-              .getText();
-
+          .get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY))
+          .getText();
 
       AdminAddUserWorker adminAddUserWorker =
           new AdminAddUserWorker(userFirstName, userLastName, gender);
@@ -92,7 +92,7 @@ public class AdminAddUserController {
       adminAddUserWorker.execute();
 
       this.adminAddUserPanel.setVisible(false);
-      this.adminAddUserPanel.getPanelCentral().getCurrentPanel()
+      this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
     });
   }
@@ -122,7 +122,7 @@ public class AdminAddUserController {
       this.resetFields();
 
       // Take the user back to the Admin User View Panel
-      this.adminAddUserPanel.getPanelCentral().getCurrentPanel()
+      this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
     });
   }

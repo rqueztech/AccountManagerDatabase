@@ -123,7 +123,7 @@ public class PanelCentral extends JPanel {
   }
 
   //
-  public ConcurrentHashMap<PanelCentralEnums, JPanel> getCurrentPanel() {
+  public ConcurrentHashMap<PanelCentralEnums, JPanel> getPanelsHashMap() {
     return this.panelsHashMap.getPanelsHashMap();
   }
 }

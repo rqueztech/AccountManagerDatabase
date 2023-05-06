@@ -13,8 +13,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
 
@@ -37,6 +40,7 @@ public class LogoutSuccessPanel extends JPanel {
   private final int rightInset = 0;
 
   // --- Section 3: Login Button Component Keys
+  private final String logoutSuccessLabelKey = "LogoutSuccess";
   private final String logoutSuccessButtonKey = "LogoutSuccessButtonKey"; 
   private PanelCentral panelCentral;
 
@@ -82,7 +86,11 @@ public class LogoutSuccessPanel extends JPanel {
 
       this.setComponentMainPosition();
 
-      this.grid.gridx = 0; // Buttons are not fixed, therefore coordinates are custom set
+      this.grid.gridy = 0;
+      this.setLabelField(logoutSuccessLabelKey, "Logout Success");
+      this.add(this.components.get(logoutSuccessLabelKey), grid);
+      
+      this.grid.gridy = 1; // Buttons are not fixed, therefore coordinates are custom set
       this.setButton(logoutSuccessButtonKey, "Logout Successful");
       this.add(this.components.get(logoutSuccessButtonKey), grid);
 
@@ -97,7 +105,7 @@ public class LogoutSuccessPanel extends JPanel {
 
     logoutButton.addActionListener(e -> {
       this.setVisible(false);
-      this.panelCentral.getCurrentPanel().get(PanelCentralEnums.MAINLOGINPANEL)
+      this.panelCentral.getPanelsHashMap().get(PanelCentralEnums.MAINLOGINPANEL)
         .setVisible(true);
     });
   }
@@ -109,6 +117,19 @@ public class LogoutSuccessPanel extends JPanel {
     this.grid.gridy = gridyInitial;
   }
 
+  //--------------------------------------------------------------------------
+  private void setLabelField(String labelKey, String labelText) {
+    JLabel labelField = new JLabel(labelText);
+    this.grid.anchor = GridBagConstraints.CENTER;
+    labelField.setBackground(Color.BLACK);
+    labelField.setForeground(Color.WHITE);
+    this.grid.gridwidth = 1;
+    this.grid.weightx = 0.0;
+    this.grid.weighty = 0.0;
+
+    this.components.put(labelKey, labelField);
+  }
+  
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.
