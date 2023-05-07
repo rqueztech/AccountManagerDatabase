@@ -3,11 +3,12 @@ package com.test.adminfunctions;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.admin.AdminModel;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorkerTesting;
@@ -16,19 +17,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- * The test creates a list of 40 users and passwords, and checks to make sure 
- the users are being created properly. This tests that everything is properly
- being added into the model, the passwords are correct, and the salting
- happening properly.
+ * The test takes a list of names and passwords and inputs and uses said inputs
+ to create administrator accounts.
  */
 public class CreateAdminTest {
   private List<AdminModel> currentAdmin;
+  private File createFile;
 
   // Create variables that will avoid magic numbers
   private final int firstNameColumn = 0;
   private final int lastNameColumn = 1;
   private final int passwordColumn = 2;
-  
+
+  private final String fileLocation = new FileLocations().getAdminDbLocationTest();
+
   private String[][] userData = {
     {"Alina", "Walls", "Wj1*Cn5#"},
     {"Rufus", "Kennedy", "Ns5!Uw4&"},
@@ -73,20 +75,27 @@ public class CreateAdminTest {
   };
 
 
+
   @BeforeMethod
   public void setUp() {
     this.currentAdmin = new ArrayList<AdminModel>();
+    this.createFile = new File(fileLocation);
+    
+    if(this.createFile.exists()) {
+      this.createFile.delete();
+    }
 
     for (String[] arrayIterator : this.userData) {
       AdminAddAdminWorkerTesting adminAddAdminWorkerTesting =
           new AdminAddAdminWorkerTesting(
           arrayIterator[0],
           arrayIterator[1],
-          arrayIterator[2].toCharArray()
+          arrayIterator[2].toCharArray(),
+              new FileLocations().getAdminDbLocationTest() 
         );
-  
+
       adminAddAdminWorkerTesting.execute();
-      
+
       try {
         AdminModel currentAdmin = adminAddAdminWorkerTesting.get();
         this.currentAdmin.add(currentAdmin);
@@ -99,7 +108,7 @@ public class CreateAdminTest {
       }
     }
   }
-  
+
   @Test
   public void nullValueFoundTest() throws Exception {  
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
@@ -113,81 +122,82 @@ public class CreateAdminTest {
       Assert.assertNotNull(currentAdmin.getAdminNumber());
     }
   }
-  
+
   @Test
   public void firstNameValid() throws Exception {  
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
-    
+
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
-      
+
       Assert.assertEquals(currentAdmin.getAdminFirstName(),
           this.userData[rowCurrent][firstNameColumn]);
-      
+
       rowCurrent++;
     }
   }
-  
+
   @Test
   public void lastNameValid() throws Exception {  
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
-    
+
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
-      
+
       Assert.assertEquals(currentAdmin.getAdminLastName(),
           this.userData[rowCurrent][lastNameColumn]);
-      
+
       rowCurrent++;
     }
   }
-  
+
   @Test
   public void saltValid() throws Exception {  
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
-    
+
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
-      
+
       char[] currentPasswordAttempted = 
-    	        this.userData[rowCurrent][passwordColumn]
-    	        .toCharArray();
-      
-      Assert.assertNotNull(currentAdmin.getAdminSalt());
-      Assert.assertTrue(currentAdmin.getAdminSalt().length == 16);
-      
-      
+        this.userData[rowCurrent][passwordColumn]
+        .toCharArray();
+
+      Assert.assertNotNull(currentAdmin.getAdminSalt(), "Admin Salt Null");
+      Assert.assertTrue(currentAdmin.getAdminSalt().length == 16, "Admin Salt Byte Size Incorrect");
+
+
       assertTrue(PasswordEncryption.validateEnteredPassword(
-              currentPasswordAttempted,
-              this.currentAdmin.get(rowCurrent).getAdminSalt(),
-              this.currentAdmin.get(rowCurrent).getAdminPassword()
-          ));
-      
+          currentPasswordAttempted,
+          currentAdmin.getAdminSalt(),
+          currentAdmin.getAdminPassword()
+      ));
+
       rowCurrent++;
     }
   }
-  
+
   @Test
   public void passwordValid() throws Exception {  
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
-    
-    // Iterate through the current 2D Admin array
+
     while (currentAdminIterator.hasNext()) {
+      AdminModel currentAdmin = currentAdminIterator.next();
+
       char[] currentPasswordAttempted = 
-        this.userData[rowCurrent][passwordColumn]
-        .toCharArray();
-      
+        this.userData[rowCurrent][passwordColumn].toCharArray();
+
       assertTrue(PasswordEncryption.validateEnteredPassword(
           currentPasswordAttempted,
-          this.currentAdmin.get(rowCurrent).getAdminSalt(),
-          this.currentAdmin.get(rowCurrent).getAdminPassword()
+          currentAdmin.getAdminSalt(),
+          currentAdmin.getAdminPassword()
       ));
-      
+
       rowCurrent++;
     }
   }
+
 }

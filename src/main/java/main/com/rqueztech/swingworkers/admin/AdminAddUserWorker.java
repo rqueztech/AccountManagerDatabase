@@ -9,6 +9,8 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.interfaces.admin.AdminModelViewAddUserInterface;
@@ -38,12 +40,13 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
   private byte[] newUserSalt;
   private char[] defaultUserPassword;
   private char[] adminPassphraseAttempt;
-  
+
   // This is the current user's number
   private int userNumber;
 
   // hash the password from all of these parameters
   private byte[] userNewHashedPassword;
+  private final String fileLocationString;
 
   /**
    * Constructs a new AdminAddUserWorker with the specified user information.
@@ -52,10 +55,16 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
    * @param userLastName The last name of the user to be added
    * @param gender The gender of the user to be added
    */
-  public AdminAddUserWorker(String userFirstName, String userLastName, String gender) {
+  public AdminAddUserWorker(
+      String userFirstName,
+      String userLastName,
+      String gender,
+      final String fileLocation) {
+
     this.userFirstName = userFirstName;
     this.userLastName = userLastName;
     this.gender = gender;
+    this.fileLocationString = fileLocation;
   }
 
   // --------------------------------------------------------------------------
@@ -66,7 +75,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
         userNewHashedPassword, newUserSalt)) {
       return null;
     }
-    
+
     this.createUserAccountName();
 
     // Key to append: This character will append to the end of
@@ -117,7 +126,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
       } else {
         JOptionPane.showMessageDialog(null, "Password Incorrect");
       }
-      
+
     } catch (InterruptedException | ExecutionException ex) {
       // Handle any exceptions that were thrown during the background task here
       String errorMessage = "Error: " + ex.getMessage();
@@ -138,7 +147,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
    * @throws IOException if there is an error writing to the CSV file.
   */
   public void writeToCsvFile() {
-    UserCsvManager userCsvManager = new UserCsvManager();
+    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocationString);
     List<String[]> userData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding

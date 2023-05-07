@@ -1,5 +1,6 @@
 package com.test.adminfunctions;
 
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorkerTesting;
 import org.testng.annotations.Test;
@@ -16,7 +17,8 @@ public class CreateUserTest {
     String gender = "male";
 
     AdminAddUserWorkerTesting adminAddUserWorkerTesting =
-        new AdminAddUserWorkerTesting(firstName, lastName, gender);
+        new AdminAddUserWorkerTesting(firstName, lastName, gender,
+            new FileLocations().getUserDbLocationTest());
 
     adminAddUserWorkerTesting.execute();
 

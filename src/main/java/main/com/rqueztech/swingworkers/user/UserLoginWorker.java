@@ -5,6 +5,8 @@ import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.ui.PanelCentral;
@@ -23,6 +25,8 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
   private final char[] userPassword;
   private boolean authenticated;
   private PanelCentral panelCentral;
+
+  private FileLocations fileLocations;
 
   /**
    * Create an instance of the user login worker class.
@@ -44,7 +48,8 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
     // Set authenticated variable accordingly
     // You can also update any progress or status here
     try {
-      UserCsvManager userCsvManager = new UserCsvManager();
+      this.fileLocations = new FileLocations(); 
+      UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations.getUserDbLocationMain());
       String[] accountNameData = userCsvManager.retrieveAccountData(this.userName);
 
       if (accountNameData == null) {
@@ -77,17 +82,17 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
       true, this indicates that the default password is detected.
       */ 
       boolean isDefaultPassword = this.userPassword.length < 8 && authenticated;
-  
+
       if (isDefaultPassword && authenticated) {
         UserCentralPanel userCentralPanel = (UserCentralPanel) this.panelCentral.getPanelsHashMap()
             .get(PanelCentralEnums.USERCENTRALPANEL);  
 
         userCentralPanel.getLoggedInUser().setLoggedInUser(userName.toCharArray());
-        
+
         System.out.println(
             userCentralPanel.getLoggedInUser().getCurrentLoggedInUser()
         );
-        
+
         this.panelCentral.getPanelsHashMap()
             .get(PanelCentralEnums.USERCHANGEDEFAULTPASSWORDPANEL)
               .setVisible(true);

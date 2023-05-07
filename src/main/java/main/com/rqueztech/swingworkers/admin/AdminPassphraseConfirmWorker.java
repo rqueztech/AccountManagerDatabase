@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.configuration.ConfigurationCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.configuration.ConfigurationModel;
@@ -16,22 +17,25 @@ public class AdminPassphraseConfirmWorker extends SwingWorker<ConfigurationModel
   private char[] adminPassphrase;
   private String adminConfigurationPassphrase;
   private String adminConfigurationSalt;
-  
+
   private ConfigurationCsvManager configurationCsvManager;
-  
+  private FileLocations fileLocations;
+
   public AdminPassphraseConfirmWorker(char[] adminPassphrase) {
     this.adminPassphrase = adminPassphrase;
   }
-  
+
   @Override
   protected ConfigurationModel doInBackground() throws Exception {
     // TODO Auto-generated method stub
-    this.configurationCsvManager = new ConfigurationCsvManager();
-    
+    this.fileLocations = new FileLocations();
+
+    this.configurationCsvManager = new ConfigurationCsvManager(this.fileLocations.getConfigLocationMain());
+
     System.out.println(
     configurationCsvManager.retrieveData()
     );  
-    
+
     return null;
   }
 

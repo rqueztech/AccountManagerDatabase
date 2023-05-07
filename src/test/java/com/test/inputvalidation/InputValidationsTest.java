@@ -65,7 +65,7 @@ public class InputValidationsTest {
     sb.append(legalCharacters.charAt(random.nextInt(legalCharacters.length())));
 
     System.out.println(sb.toString());
-    
+
     return sb.toString();
   }
 

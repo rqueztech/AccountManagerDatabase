@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.configuration.ConfigurationCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 
@@ -20,10 +22,13 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
 
   private byte[] encryptedAdminPassphrase;
   private byte[] newAdminPassphraseSalt;
+  private final String fileLocation;
 
   public SetupConfigurationWorker(
-      char[] newAdminPassphrase) {
+      char[] newAdminPassphrase,
+      final String fileLocation) {
 
+    this.fileLocation = fileLocation;
     this.newAdminPassphrase = newAdminPassphrase;
   }
 
@@ -47,7 +52,7 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
    * @throws IOException if there is an error writing to the CSV file.
   */
   public void writeToCsvFile() {
-    ConfigurationCsvManager configurationCsvManager = new ConfigurationCsvManager();
+    ConfigurationCsvManager configurationCsvManager = new ConfigurationCsvManager(this.fileLocation);
     List<String[]> configurationData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding

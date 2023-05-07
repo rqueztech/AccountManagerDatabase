@@ -8,6 +8,8 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.AdminCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.admin.AdminModel;
@@ -27,9 +29,9 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
 
   private char[] newAdminPassword;
   private byte[] encryptedAdminPassword;
-
   private byte[] newAdminPasswordSalt;
 
+  private String fileLocationString;
   private int adminNumber;
 
   /**
@@ -43,17 +45,20 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
   public AdminAddAdminWorker(
       String adminFirstName,
       String adminLastName,
-      char[] newAdminPassword) {
+      char[] newAdminPassword,
+      final String fileLocation) {
 
     this.adminFirstName = adminFirstName;
     this.adminLastName = adminLastName;
     this.newAdminPassword = newAdminPassword;
+    this.fileLocationString = fileLocation;
   }
 
   // --------------------------------------------------------------------------
   @Override
   protected AdminModel doInBackground() throws Exception {
     // TODO Auto-generated method stub
+
     this.adminAccountName = createAdminAccountName();
 
     // Create the salt that will be used for the admin password
@@ -111,7 +116,7 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
    * Writes data to the admin CSV manager file.
    */
   public void writeToCsvFile() {
-    AdminCsvManager adminCsvManager = new AdminCsvManager();
+    AdminCsvManager adminCsvManager = new AdminCsvManager(this.fileLocationString);
     List<String[]> adminData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding

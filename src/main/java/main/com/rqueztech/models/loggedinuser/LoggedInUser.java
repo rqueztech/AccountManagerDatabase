@@ -13,11 +13,11 @@ public class LoggedInUser {
   public char[] getCurrentLoggedInUser() {
     return this.currentUserLogged;
   }
-    
+
   public void setLoggedInUser(char[] currentUserLogged) {
     this.currentUserLogged = currentUserLogged;
   }
-  
+
   public void clearLoggedInUser() {
     Arrays.fill(this.currentUserLogged, '\0');
     this.currentUserLogged = new char[] {};

@@ -37,7 +37,7 @@ public class UserCentralPanel extends JPanel {
   private GridBagConstraints grid;
 
   public LoggedInUser loggedInUser;
-  
+
   private final int topInset = 0;
   private final int leftInset = 0;
   private final int bottomInset = 0;
@@ -55,7 +55,7 @@ public class UserCentralPanel extends JPanel {
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<UserCentralPanelEnums, JComponent> components;
   private PanelCentral panelCentral;
-  
+
   /**
    * Default constructor that takes parameters and initializes variables.
    *
@@ -66,7 +66,7 @@ public class UserCentralPanel extends JPanel {
   public UserCentralPanel(BaseFrame frame, GridBagLayout layout, PanelCentral panelCentral) {
     // Create an instance to the login user panel
     this.loggedInUser = new LoggedInUser();
-      
+
     // Function that will toggle visibility on and off in password
     // Field found in this class
     this.panelCentral = panelCentral;
@@ -159,7 +159,7 @@ public class UserCentralPanel extends JPanel {
 
     g.drawImage(this.image, 0, 0, getWidth(), getHeight(), null);
   }
-  
+
   //--------------------------------------------------------------------------
   public LoggedInUser getLoggedInUser() {
     return this.loggedInUser;

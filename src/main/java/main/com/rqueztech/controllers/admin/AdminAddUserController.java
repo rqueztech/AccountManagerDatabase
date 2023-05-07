@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorker;
 import main.com.rqueztech.ui.admin.AdminAddUserPanel;
 import main.com.rqueztech.ui.admin.enums.AdminAddUserEnums;
@@ -75,7 +77,7 @@ public class AdminAddUserController {
       // No User Password field Gets passed here.
 
       String gender = (String) this.gender.getSelectedItem();
-      
+
       String userFirstName = ((JTextField) this.components
           .get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY))
           .getText();
@@ -85,7 +87,8 @@ public class AdminAddUserController {
           .getText();
 
       AdminAddUserWorker adminAddUserWorker =
-          new AdminAddUserWorker(userFirstName, userLastName, gender);
+          new AdminAddUserWorker(userFirstName, userLastName, gender,
+              new FileLocations().getUserDbLocationMain());
 
       this.resetFields();
 

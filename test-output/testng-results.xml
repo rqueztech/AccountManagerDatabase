@@ -1,52 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="5" passed="4" failed="1" skipped="0">
+<testng-results ignored="0" total="1" passed="0" failed="0" skipped="1">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-05-06T15:37:23 JST" name="Default suite" finished-at="2023-05-06T15:37:24 JST" duration-ms="891">
+  <suite started-at="2023-05-07T19:16:53 JST" name="Default suite" finished-at="2023-05-07T19:16:53 JST" duration-ms="115">
     <groups>
     </groups>
-    <test started-at="2023-05-06T15:37:23 JST" name="Default test" finished-at="2023-05-06T15:37:24 JST" duration-ms="891">
-      <class name="com.test.adminfunctions.CreateAdminTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:23 JST" name="setUp" finished-at="2023-05-06T15:37:23 JST" duration-ms="255" status="PASS">
+    <test started-at="2023-05-07T19:16:53 JST" name="Default test" finished-at="2023-05-07T19:16:53 JST" duration-ms="115">
+      <class name="com.test.panels.admin.SetupConfigurationPanelTest">
+        <test-method is-config="true" signature="setUpOnce()[pri:0, instance:com.test.panels.admin.SetupConfigurationPanelTest@3a6bb9bf]" started-at="2023-05-07T19:16:53 JST" name="setUpOnce" finished-at="2023-05-07T19:16:53 JST" duration-ms="25" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="firstNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:23 JST" name="firstNameValid" finished-at="2023-05-06T15:37:23 JST" duration-ms="6" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- firstNameValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:23 JST" name="setUp" finished-at="2023-05-06T15:37:24 JST" duration-ms="127" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="lastNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="lastNameValid" finished-at="2023-05-06T15:37:24 JST" duration-ms="1" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- lastNameValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="setUp" finished-at="2023-05-06T15:37:24 JST" duration-ms="94" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="nullValueFoundTest()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="nullValueFoundTest" finished-at="2023-05-06T15:37:24 JST" duration-ms="0" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- nullValueFoundTest -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="setUp" finished-at="2023-05-06T15:37:24 JST" duration-ms="98" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method signature="passwordValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="passwordValid" finished-at="2023-05-06T15:37:24 JST" duration-ms="83" status="FAIL">
-          <exception class="java.lang.ArrayIndexOutOfBoundsException">
+        </test-method> <!-- setUpOnce -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.panels.admin.SetupConfigurationPanelTest@3a6bb9bf]" started-at="2023-05-07T19:16:53 JST" name="setUp" finished-at="2023-05-07T19:16:53 JST" duration-ms="10" status="FAIL">
+          <exception class="java.lang.NullPointerException">
             <message>
-              <![CDATA[Index 40 out of bounds for length 40]]>
+              <![CDATA[Cannot invoke "main.com.rqueztech.models.panels.PanelsHashMap.getPanelsHashMap()" because "this.panelsHashMap" is null]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.ArrayIndexOutOfBoundsException: Index 40 out of bounds for length 40
-at com.test.adminfunctions.CreateAdminTest.passwordValid(CreateAdminTest.java:175)
+              <![CDATA[java.lang.NullPointerException: Cannot invoke "main.com.rqueztech.models.panels.PanelsHashMap.getPanelsHashMap()" because "this.panelsHashMap" is null
+at com.test.panels.admin.SetupConfigurationPanelTest.setUp(SetupConfigurationPanelTest.java:36)
 at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 at java.base/java.lang.reflect.Method.invoke(Method.java:578)
 at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:677)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:69)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:361)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:296)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:823)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:590)
 at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:221)
 at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:50)
 at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:969)
@@ -71,19 +51,59 @@ at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.ArrayIndexOutOfBoundsException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- passwordValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="setUp" finished-at="2023-05-06T15:37:24 JST" duration-ms="104" status="PASS">
+          </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="saltValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@7334aada]" started-at="2023-05-06T15:37:24 JST" name="saltValid" finished-at="2023-05-06T15:37:24 JST" duration-ms="83" status="PASS">
+        <test-method signature="isValidEntry()[pri:0, instance:com.test.panels.admin.SetupConfigurationPanelTest@3a6bb9bf]" started-at="2023-05-07T19:16:53 JST" name="isValidEntry" finished-at="2023-05-07T19:16:53 JST" duration-ms="0" status="SKIP">
+          <exception class="java.lang.NullPointerException">
+            <message>
+              <![CDATA[Cannot invoke "main.com.rqueztech.models.panels.PanelsHashMap.getPanelsHashMap()" because "this.panelsHashMap" is null]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException: Cannot invoke "main.com.rqueztech.models.panels.PanelsHashMap.getPanelsHashMap()" because "this.panelsHashMap" is null
+at com.test.panels.admin.SetupConfigurationPanelTest.setUp(SetupConfigurationPanelTest.java:36)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:69)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:361)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:296)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:823)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:590)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:221)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:50)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:969)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:194)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+at org.testng.TestRunner.privateRun(TestRunner.java:829)
+at org.testng.TestRunner.run(TestRunner.java:602)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:437)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:431)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:391)
+at org.testng.SuiteRunner.run(SuiteRunner.java:330)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1256)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1176)
+at org.testng.TestNG.runSuites(TestNG.java:1099)
+at org.testng.TestNG.run(TestNG.java:1067)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- saltValid -->
-      </class> <!-- com.test.adminfunctions.CreateAdminTest -->
+        </test-method> <!-- isValidEntry -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.test.panels.admin.SetupConfigurationPanelTest@3a6bb9bf]" started-at="2023-05-07T19:16:53 JST" name="tearDown" finished-at="2023-05-07T19:16:53 JST" duration-ms="0" status="SKIP">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.test.panels.admin.SetupConfigurationPanelTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

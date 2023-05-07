@@ -22,7 +22,11 @@ public class AdminCsvManager {
   /**
    * Sets the default path for the admin database csv.
    */
-  private final String filePath = "src/main/resources/data/admindatabase.csv";
+  private final String filePath;
+
+  public AdminCsvManager(final String filePath) {
+    this.filePath = filePath;
+  }
 
   /**
    * Appends a string of arrays to add to the end of a csv file.
@@ -33,7 +37,7 @@ public class AdminCsvManager {
   public void addData(List<String[]> data) throws IOException {
     Path path = Paths.get(this.filePath);
     boolean fileExists = Files.exists(path);
-    
+
     if (!fileExists) {
       System.out.println("The file does not exist");
 

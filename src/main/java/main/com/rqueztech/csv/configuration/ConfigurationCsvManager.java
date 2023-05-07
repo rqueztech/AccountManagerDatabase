@@ -22,8 +22,11 @@ public class ConfigurationCsvManager {
   /**
    * Sets the default path for the configuration database csv.
    */
-  private final String filePath = "src/main/resources/data/configurationdatabase.csv";
-  
+  private final String filePath;
+
+  public ConfigurationCsvManager(final String filePath) {
+    this.filePath = filePath;
+  }
 
   /**
    * Appends a string of arrays to add to the end of a csv file.

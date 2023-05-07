@@ -79,16 +79,16 @@ public class UserChangeDefaultPasswordController {
         this.userChangeDefaultPasswordPanel.getComponentsMap()
         .get(UserChangeDefaultPasswordEnums
         .CONFIRMPASSWORDPASSWORDTEXTFIELDKEY);
-    
-    
-    
+
+
+
     submitButton.addActionListener(e -> {
 
       UserCentralPanel userCentralPanel =
           (UserCentralPanel) this.userChangeDefaultPasswordPanel
             .getPanelCentral().getPanelsHashMap()
             .get(PanelCentralEnums.USERCENTRALPANEL);
-      
+
       UserChangePasswordWorker userChangePasswordWorker =
           new UserChangePasswordWorker(
             userCentralPanel.getLoggedInUser().getCurrentLoggedInUser(),

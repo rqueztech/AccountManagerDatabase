@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;
 import main.com.rqueztech.swingworkers.configuration.SetupConfigurationWorker;
 import main.com.rqueztech.ui.configuration.SetupConfigurationPanel;
@@ -178,12 +180,12 @@ public class SetupConfigurationController {
 
       AdminAddAdminWorker adminAddAdminWorker =
           new AdminAddAdminWorker(adminFirstName, adminLastName,
-            adminPassword);
+            adminPassword, new FileLocations().getAdminDbLocationMain());
 
       adminAddAdminWorker.execute();
 
       SetupConfigurationWorker setupConfigurationWorker =
-          new SetupConfigurationWorker(adminPassphrase);
+          new SetupConfigurationWorker(adminPassphrase, new FileLocations().getConfigLocationMain());
 
       setupConfigurationWorker.execute();
 

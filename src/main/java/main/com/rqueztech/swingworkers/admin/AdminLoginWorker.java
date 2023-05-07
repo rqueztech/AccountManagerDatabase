@@ -5,6 +5,8 @@ import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.AdminCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.ui.PanelCentral;
@@ -22,6 +24,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
   private final char[] adminPassword;
   private boolean authenticated;
   private PanelCentral panelCentral;
+  private FileLocations fileLocations;
 
   /**
    * Create an instance of the admin login worker class.
@@ -35,6 +38,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
     this.adminPassword = adminPassword;
     this.authenticated = false;
     this.panelCentral = panelCentral;
+    this.fileLocations = new FileLocations();
   }
 
   @Override
@@ -43,7 +47,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
     // Set authenticated variable accordingly
     // You can also update any progress or status here
     try {
-      AdminCsvManager adminCsvManager = new AdminCsvManager();
+      AdminCsvManager adminCsvManager = new AdminCsvManager(this.fileLocations.getAdminDbLocationMain());
       String[] accountNameData = adminCsvManager.retrieveAccountData(this.adminName);
 
       if (accountNameData == null) {
@@ -79,7 +83,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
             .get(PanelCentralEnums.ADMINCENTRALPANEL);
 
         newPanel.getLoggedInAdmin().setLoggedInAdmin(adminName.toCharArray());
-        
+
         this.panelCentral.getPanelsHashMap()
           .get(PanelCentralEnums.ADMINCENTRALPANEL)
             .setVisible(true);

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.ui.user.UserCentralPanel;
@@ -32,6 +34,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
   private CSVReader csvReader;
   private CSVWriter csvWriter;
   private boolean isErrorWriting;
+  private FileLocations fileLocations;
 
   private final String userFileString = "src/main/resources/data/userdatabase.csv";
 
@@ -54,8 +57,9 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
 
   @Override
   protected Boolean doInBackground() throws Exception {
+this.fileLocations = new FileLocations();
 
-    UserCsvManager userCsvManager = new UserCsvManager();
+    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations.getUserDbLocationMain());
     /*
      * Initialize the file reader and return true/false value to indicate
      whether a file exists or not.

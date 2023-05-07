@@ -116,7 +116,7 @@ public class LoginFailPanel extends JPanel {
 
     this.components.put(labelKey, labelField);
   }  
-  
+
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.

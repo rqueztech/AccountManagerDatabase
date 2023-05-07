@@ -89,7 +89,7 @@ public class LogoutSuccessPanel extends JPanel {
       this.grid.gridy = 0;
       this.setLabelField(logoutSuccessLabelKey, "Logout Success");
       this.add(this.components.get(logoutSuccessLabelKey), grid);
-      
+
       this.grid.gridy = 1; // Buttons are not fixed, therefore coordinates are custom set
       this.setButton(logoutSuccessButtonKey, "Logout Successful");
       this.add(this.components.get(logoutSuccessButtonKey), grid);
@@ -129,7 +129,7 @@ public class LogoutSuccessPanel extends JPanel {
 
     this.components.put(labelKey, labelField);
   }
-  
+
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.

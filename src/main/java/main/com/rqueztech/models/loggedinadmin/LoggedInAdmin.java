@@ -13,11 +13,11 @@ public class LoggedInAdmin {
   public char[] getCurrentLoggedInAdmin() {
     return this.currentAdminLogged;
   }
-  
+
   public void setLoggedInAdmin(char[] currentAdminLogged) {
     this.currentAdminLogged = currentAdminLogged;
   }
-  
+
   public void clearLoggedInAdmin() {
     Arrays.fill(this.currentAdminLogged, '\0');
     this.currentAdminLogged = new char[] {};

@@ -21,6 +21,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\admin\ConfigurationHashMapController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\configuration\enums\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\csv\package-info.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\FileLocations.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\loggedinadmin\LoggedInAdmin.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\configuration\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\enums\package-info.java
@@ -72,6 +73,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\csv\configuration\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\user\UserChangeDefaultPasswordController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\interfaces\admin\AdminModelViewAddUserInterface.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\admin\AdminPassphraseConfirmWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\admin\AdminAddUserController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\configuration\SetupConfigurationWorker.java

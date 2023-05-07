@@ -22,8 +22,8 @@ public class UserCsvManager {
   /**
    * Sets the default path for the user database csv.
    */
-  public UserCsvManager() {
-    this.filePath = "src/main/resources/data/userdatabase.csv";
+  public UserCsvManager(final String filePath) {
+    this.filePath = filePath;
   }
 
   /**

@@ -20,8 +20,8 @@ public class AdminAddUserWorkerTesting
   private int adminNumber;
 
   public AdminAddUserWorkerTesting(String userFirstName, String userLastName,
-      String gender) {
-    super(userFirstName, userLastName, gender);
+      String gender, final String fileLocation) {
+    super(userFirstName, userLastName, gender, fileLocation);
     // TODO Auto-generated constructor stub
   }
 
