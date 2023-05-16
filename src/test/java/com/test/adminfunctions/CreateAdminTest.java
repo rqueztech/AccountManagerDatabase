@@ -31,7 +31,7 @@ public class CreateAdminTest {
 
   private final String fileLocation = new FileLocations().getAdminDbLocationTest();
 
-  private String[][] userData = {
+  private String[][] adminData = {
     {"Alina", "Walls", "Wj1*Cn5#"},
     {"Rufus", "Kennedy", "Ns5!Uw4&"},
     {"Rueben", "Lindsay", "Li6&Xx1&"},
@@ -80,12 +80,12 @@ public class CreateAdminTest {
   public void setUp() {
     this.currentAdmin = new ArrayList<AdminModel>();
     this.createFile = new File(fileLocation);
-    
-    if(this.createFile.exists()) {
+  
+    if (this.createFile.exists()) {
       this.createFile.delete();
     }
 
-    for (String[] arrayIterator : this.userData) {
+    for (String[] arrayIterator : this.adminData) {
       AdminAddAdminWorkerTesting adminAddAdminWorkerTesting =
           new AdminAddAdminWorkerTesting(
           arrayIterator[0],
@@ -132,7 +132,7 @@ public class CreateAdminTest {
       AdminModel currentAdmin = currentAdminIterator.next();
 
       Assert.assertEquals(currentAdmin.getAdminFirstName(),
-          this.userData[rowCurrent][firstNameColumn]);
+          this.adminData[rowCurrent][firstNameColumn]);
 
       rowCurrent++;
     }
@@ -147,7 +147,7 @@ public class CreateAdminTest {
       AdminModel currentAdmin = currentAdminIterator.next();
 
       Assert.assertEquals(currentAdmin.getAdminLastName(),
-          this.userData[rowCurrent][lastNameColumn]);
+          this.adminData[rowCurrent][lastNameColumn]);
 
       rowCurrent++;
     }
@@ -162,7 +162,7 @@ public class CreateAdminTest {
       AdminModel currentAdmin = currentAdminIterator.next();
 
       char[] currentPasswordAttempted = 
-        this.userData[rowCurrent][passwordColumn]
+        this.adminData[rowCurrent][passwordColumn]
         .toCharArray();
 
       Assert.assertNotNull(currentAdmin.getAdminSalt(), "Admin Salt Null");
@@ -188,7 +188,7 @@ public class CreateAdminTest {
       AdminModel currentAdmin = currentAdminIterator.next();
 
       char[] currentPasswordAttempted = 
-        this.userData[rowCurrent][passwordColumn].toCharArray();
+        this.adminData[rowCurrent][passwordColumn].toCharArray();
 
       assertTrue(PasswordEncryption.validateEnteredPassword(
           currentPasswordAttempted,

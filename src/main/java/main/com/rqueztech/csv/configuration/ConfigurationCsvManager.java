@@ -34,29 +34,47 @@ public class ConfigurationCsvManager {
    * @param data the list of string arrays to add as (a list of string arrays)
    * @throws IOException throws IOException if an I/O error occurs
    */
-  public void addData(List<String[]> data) throws IOException {
+  public void createConfigurationFile(List<String[]> data) throws IOException {
     Path path = Paths.get(this.filePath);
     boolean fileExists = Files.exists(path);
-    if (fileExists) {
-      System.out.println("The file exists");
-    } else {
-      System.out.println("The file does not exist");
 
-      // Create a new file with a header row
-      FileWriter writer = new FileWriter(filePath);
-      CSVWriter csvWriter = new CSVWriter(writer);
-      String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
-      csvWriter.writeNext(header);
-      csvWriter.close();
-      writer.close();
-    }
-
-    // Append data to the file
-    FileWriter writer = new FileWriter(filePath, true);
+    // Create a new file with a header row
+    FileWriter writer = new FileWriter(filePath);
     CSVWriter csvWriter = new CSVWriter(writer);
+    String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
+    csvWriter.writeNext(header);
     csvWriter.writeAll(data);
     csvWriter.close();
     writer.close();
+  }
+  
+  public void modifyConfigurationFile(char[] password, char[] salt)
+      throws IOException, CsvException {
+  
+    Path path = Paths.get(this.filePath);
+    boolean fileExists = Files.exists(path);
+
+    if (!fileExists) {
+      return;
+    }
+
+    try (CSVReader csvReader = new CSVReader(Files.newBufferedReader(path));
+         CSVWriter csvWriter = new CSVWriter(Files.newBufferedWriter(path))) {
+
+      List<String[]> rows = csvReader.readAll();
+  
+      // Locate the specific row for modification (index 1 as data starts from second row)
+      if (rows.size() > 1) {
+        String[] dataRow = rows.get(1);
+  
+        // Modify the third and fourth elements (index 2 and 3) with password and salt
+        dataRow[2] = new String(password);
+        dataRow[3] = new String(salt);
+      }
+
+      // Write the modified data back to the CSV file
+      csvWriter.writeAll(rows);
+    }
   }
 
   /**
@@ -114,6 +132,10 @@ public class ConfigurationCsvManager {
     // Create a CSVReader object using the FileReader object
     CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
+    if (!this.isFileExists()) {
+      return null;
+    }
+  
     List<String[]> rows = null;
     try {
       // Read all the rows from the CSV file and store them in a List
@@ -134,8 +156,6 @@ public class ConfigurationCsvManager {
     return rows;
   }
 
-
-
   private boolean isEqual(String[] arr1, String[] arr2) {
     if (arr1.length != arr2.length) {
       return false;
@@ -148,5 +168,10 @@ public class ConfigurationCsvManager {
     }
 
     return true;
+  }
+  
+  private boolean isFileExists() {
+    Path path = Paths.get(this.filePath);
+    return Files.exists(path);
   }
 }

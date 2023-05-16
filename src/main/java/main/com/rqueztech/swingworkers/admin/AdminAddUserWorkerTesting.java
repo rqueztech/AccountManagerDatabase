@@ -8,7 +8,7 @@ import main.com.rqueztech.models.user.UserModel;
  */
 public class AdminAddUserWorkerTesting
     extends AdminAddUserWorker {
-
+/*
   private String userAccountName;
   private String userFirstName;
   private String userLastName;
@@ -18,6 +18,7 @@ public class AdminAddUserWorkerTesting
 
   private String genderString;
   private int adminNumber;
+*/
 
   public AdminAddUserWorkerTesting(String userFirstName, String userLastName,
       String gender, final String fileLocation) {

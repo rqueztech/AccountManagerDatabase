@@ -37,6 +37,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\enums\MainLoginPanelEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\PasswordValidationDocumentListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\validation\InputValidations.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\admin\AdminValidPassphraseWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\passwordfields\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\admin\AdminUserViewController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\admin\ConfigurationHashMap.java

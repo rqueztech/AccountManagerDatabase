@@ -185,7 +185,8 @@ public class SetupConfigurationController {
       adminAddAdminWorker.execute();
 
       SetupConfigurationWorker setupConfigurationWorker =
-          new SetupConfigurationWorker(adminPassphrase, new FileLocations().getConfigLocationMain());
+          new SetupConfigurationWorker(adminPassphrase, new FileLocations()
+            .getConfigLocationMain());
 
       setupConfigurationWorker.execute();
 

@@ -40,7 +40,7 @@ public class UserCsvManager {
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
-      String[] header = {"acctName", "fName", "lName", "gender", "password", "salt", "admNo"};
+      String[] header = {"acctName", "fName", "lName", "gender", "encryptedPassword", "salt", "admNo"};
       csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();

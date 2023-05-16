@@ -57,7 +57,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
 
   @Override
   protected Boolean doInBackground() throws Exception {
-this.fileLocations = new FileLocations();
+    this.fileLocations = new FileLocations();
 
     UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations.getUserDbLocationMain());
     /*

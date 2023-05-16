@@ -1,2 +1,2 @@
-"acctName","fName","lName","password","salt","admNo"
-"RQuez","Ricardo","Quezada","aqd2tSsFmwF7oLxRpYT5WQ==","6kiTQ2gZdPTJZoQFMSFS9g==","0"
+"acctName","fName","lName","encryptedPassword","salt","admNo"
+"RQuez","Ricardo","Quezada","dHyJNPi8REVgHQ1bAOM1xw==","inxfY0ct/uSgPwXHhB8syg==","0"

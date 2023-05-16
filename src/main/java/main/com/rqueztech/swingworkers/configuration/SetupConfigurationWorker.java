@@ -24,8 +24,7 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
   private byte[] newAdminPassphraseSalt;
   private final String fileLocation;
 
-  public SetupConfigurationWorker(
-      char[] newAdminPassphrase,
+  public SetupConfigurationWorker(char[] newAdminPassphrase,
       final String fileLocation) {
 
     this.fileLocation = fileLocation;
@@ -52,7 +51,9 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
    * @throws IOException if there is an error writing to the CSV file.
   */
   public void writeToCsvFile() {
-    ConfigurationCsvManager configurationCsvManager = new ConfigurationCsvManager(this.fileLocation);
+    ConfigurationCsvManager configurationCsvManager = new
+        ConfigurationCsvManager(this.fileLocation);
+  
     List<String[]> configurationData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding
@@ -65,7 +66,7 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
     });
 
     try {
-      configurationCsvManager.addData(configurationData);
+      configurationCsvManager.createConfigurationFile(configurationData);
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

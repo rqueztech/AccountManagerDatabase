@@ -70,11 +70,6 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
   // --------------------------------------------------------------------------
   @Override
   protected UserModel doInBackground() throws Exception {
-    // TODO Auto-generated method stub
-    if (PasswordEncryption.validateEnteredPassword(adminPassphraseAttempt,
-        userNewHashedPassword, newUserSalt)) {
-      return null;
-    }
 
     this.createUserAccountName();
 
@@ -93,6 +88,12 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     // Password stored in the final model.
     this.userNewHashedPassword = this.hashUserPassword();                         
 
+    // TODO Auto-generated method stub
+    if (PasswordEncryption.validateEnteredPassword(adminPassphraseAttempt,
+        userNewHashedPassword, newUserSalt)) {
+      return null;
+    }
+  
     this.writeToCsvFile();
 
     // Note: Please change in the future
@@ -122,7 +123,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
             + result.getUserPassword() + "\n"
             + result.getUserSalt() + "\n"
             + result.getUserNumber();
-        JOptionPane.showMessageDialog(null, message);
+        //JOptionPane.showMessageDialog(null, message);
       } else {
         JOptionPane.showMessageDialog(null, "Password Incorrect");
       }

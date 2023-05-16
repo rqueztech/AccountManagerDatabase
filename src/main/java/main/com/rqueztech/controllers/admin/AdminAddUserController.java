@@ -10,14 +10,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import main.com.rqueztech.FileLocations;
+
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorker;
+import main.com.rqueztech.swingworkers.admin.AdminValidPassphraseWorker;
 import main.com.rqueztech.ui.admin.AdminAddUserPanel;
 import main.com.rqueztech.ui.admin.enums.AdminAddUserEnums;
+import main.com.rqueztech.ui.configuration.enums.SetupConfigurationPanelEnums;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
 import main.com.rqueztech.ui.events.AddUserDocumentListener;
 import main.com.rqueztech.ui.events.PasswordFieldListener;
 import main.com.rqueztech.ui.events.TextFieldListener;
 import main.com.rqueztech.ui.events.TogglePasswordVisibility;
+import main.com.rqueztech.ui.validation.InputValidations;
 
 /**
  * The AdminAddUserController is responsible for controlling the events and
@@ -29,7 +33,8 @@ public class AdminAddUserController {
   private AdminAddUserPanel adminAddUserPanel;
   private TogglePasswordVisibility togglePasswordVisibility;
   private ConcurrentHashMap<AdminAddUserEnums, JComponent> components;
-
+  private InputValidations inputValidations;
+  
   private JComboBox<String> gender;
 
   /**
@@ -44,6 +49,8 @@ public class AdminAddUserController {
       JComboBox<String> gender) {
     this.togglePasswordVisibility = new TogglePasswordVisibility();
 
+    this.inputValidations = new InputValidations();
+    
     this.adminAddUserPanel = adminAddUserPanel;
     this.components = adminAddUserPanel.getComponentsMap();
     this.gender = gender;
@@ -70,7 +77,7 @@ public class AdminAddUserController {
   // --------------------------------------------------------------------------
   private void userAddUserButtonListener() {
     JButton addUserButton = (JButton) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
+        .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
 
     addUserButton.addActionListener(e -> {
       // NOTE: Creation of the default user password is automatic.
@@ -86,6 +93,17 @@ public class AdminAddUserController {
           .get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY))
           .getText();
 
+      char[] adminPassphrase =  ((JPasswordField) this.components
+          .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY))
+          .getPassword();
+  
+      
+      AdminValidPassphraseWorker adminValidPassphraseWorker =
+          new AdminValidPassphraseWorker(adminPassphrase, new FileLocations()
+          .getConfigLocationMain());
+    
+      adminValidPassphraseWorker.execute();
+    
       AdminAddUserWorker adminAddUserWorker =
           new AdminAddUserWorker(userFirstName, userLastName, gender,
               new FileLocations().getUserDbLocationMain());
@@ -96,7 +114,8 @@ public class AdminAddUserController {
 
       this.adminAddUserPanel.setVisible(false);
       this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
-              .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
+            .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
+  
     });
   }
 
