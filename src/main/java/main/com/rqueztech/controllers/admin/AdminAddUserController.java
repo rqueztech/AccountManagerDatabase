@@ -3,9 +3,12 @@ package main.com.rqueztech.controllers.admin;
 import java.awt.Component;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -14,6 +17,7 @@ import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorker;
 import main.com.rqueztech.swingworkers.admin.AdminValidPassphraseWorker;
 import main.com.rqueztech.ui.admin.AdminAddUserPanel;
+import main.com.rqueztech.ui.admin.AdminUserViewPanel;
 import main.com.rqueztech.ui.admin.enums.AdminAddUserEnums;
 import main.com.rqueztech.ui.configuration.enums.SetupConfigurationPanelEnums;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
@@ -34,7 +38,7 @@ public class AdminAddUserController {
   private TogglePasswordVisibility togglePasswordVisibility;
   private ConcurrentHashMap<AdminAddUserEnums, JComponent> components;
   private InputValidations inputValidations;
-  
+
   private JComboBox<String> gender;
 
   /**
@@ -50,7 +54,7 @@ public class AdminAddUserController {
     this.togglePasswordVisibility = new TogglePasswordVisibility();
 
     this.inputValidations = new InputValidations();
-    
+
     this.adminAddUserPanel = adminAddUserPanel;
     this.components = adminAddUserPanel.getComponentsMap();
     this.gender = gender;
@@ -76,8 +80,8 @@ public class AdminAddUserController {
 
   // --------------------------------------------------------------------------
   private void userAddUserButtonListener() {
-    JButton addUserButton = (JButton) this.adminAddUserPanel
-        .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
+    JButton addUserButton = (JButton) this.adminAddUserPanel.getComponentsMap()
+        .get(AdminAddUserEnums.ADDUSERBUTTONKEY);
 
     addUserButton.addActionListener(e -> {
       // NOTE: Creation of the default user password is automatic.
@@ -94,35 +98,50 @@ public class AdminAddUserController {
           .getText();
 
       char[] adminPassphrase =  ((JPasswordField) this.components
-          .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY))
-          .getPassword();
-  
-      
+        .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY))
+        .getPassword();
+
+
       AdminValidPassphraseWorker adminValidPassphraseWorker =
           new AdminValidPassphraseWorker(adminPassphrase, new FileLocations()
           .getConfigLocationMain());
-    
+
       adminValidPassphraseWorker.execute();
+
+      try {
+        if (adminValidPassphraseWorker.get()) { 
+          AdminAddUserWorker adminAddUserWorker =
+              new AdminAddUserWorker(userFirstName, userLastName, gender,
+                  new FileLocations().getUserDbLocationMain());
     
-      AdminAddUserWorker adminAddUserWorker =
-          new AdminAddUserWorker(userFirstName, userLastName, gender,
-              new FileLocations().getUserDbLocationMain());
+          this.resetFields();
+    
+          adminAddUserWorker.execute();
+          
+          AdminUserViewPanel panel = (AdminUserViewPanel) this.adminAddUserPanel
+              .getPanelCentral().getPanelsHashMap().get(PanelCentralEnums
+              .ADMINUSERVIEWPANEL);
 
-      this.resetFields();
-
-      adminAddUserWorker.execute();
-
-      this.adminAddUserPanel.setVisible(false);
-      this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
-            .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
-  
+          panel.refreshTable();
+          
+          this.adminAddUserPanel.setVisible(false);
+          System.out.println("Poepwhgopeighwpoieghwepoigh");
+          this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
+              .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
+        } else {
+          JOptionPane.showMessageDialog(null, "NOT ADDED PROPERLY");
+        }
+      } catch (InterruptedException | ExecutionException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
   }
 
   // --------------------------------------------------------------------------
   private void resetFields() {
     for (Component component : this.adminAddUserPanel
-              .getComponentsMap().values()) {
+        .getComponentsMap().values()) {
       if (component instanceof JPasswordField) {
         ((JPasswordField) component).setText("");
         Arrays.fill(((JPasswordField) component).getPassword(), '\0');
@@ -137,7 +156,7 @@ public class AdminAddUserController {
   // --------------------------------------------------------------------------
   private void cancelButtonActionListener() {
     JButton adminLogin = (JButton) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.CANCELBUTTONKEY);
+        .getComponentsMap().get(AdminAddUserEnums.CANCELBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
       this.adminAddUserPanel.setVisible(false);
@@ -145,14 +164,14 @@ public class AdminAddUserController {
 
       // Take the user back to the Admin User View Panel
       this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
-              .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
+        .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
     });
   }
 
   // --------------------------------------------------------------------------
   private void lastNameListener() {
     JTextField userLastName = (JTextField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY);
 
     // Listener for the last name field
     TextFieldListener lastNameFieldListener =
@@ -164,17 +183,17 @@ public class AdminAddUserController {
   // --------------------------------------------------------------------------
   private void addUserButtonListener() {
     JTextField userFirstName = (JTextField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY);
 
     JTextField userLastName = (JTextField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums.LASTNAMETEXTFIELDKEY);
 
     JPasswordField passphrase = (JPasswordField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums
-              .PASSPHRASETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums
+        .PASSPHRASETEXTFIELDKEY);
 
     JButton addUserButton = (JButton) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
+        .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
 
     AddUserDocumentListener addUserDocumentListener =
           new AddUserDocumentListener(addUserButton, userFirstName,
@@ -182,19 +201,19 @@ public class AdminAddUserController {
           this.adminAddUserPanel.getGender());
 
     userFirstName.getDocument()
-              .addDocumentListener(addUserDocumentListener);
+        .addDocumentListener(addUserDocumentListener);
 
     userLastName.getDocument()
-              .addDocumentListener(addUserDocumentListener);
+        .addDocumentListener(addUserDocumentListener);
 
     passphrase.getDocument()
-              .addDocumentListener(addUserDocumentListener);
+        .addDocumentListener(addUserDocumentListener);
   }
 
   // --------------------------------------------------------------------------
   private void firstNameListener() {
     JTextField userFirstName = (JTextField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums.FIRSTNAMETEXTFIELDKEY);
 
     // Create a listener for the first name field
     TextFieldListener nameFieldListener =
@@ -206,8 +225,8 @@ public class AdminAddUserController {
   // --------------------------------------------------------------------------
   private void passphraseNameListener() {
     JPasswordField passphrase = (JPasswordField) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums
-              .PASSPHRASETEXTFIELDKEY);
+        .getComponentsMap().get(AdminAddUserEnums
+        .PASSPHRASETEXTFIELDKEY);
     // Listener for the last name field
     PasswordFieldListener passwordFieldListener =
           new PasswordFieldListener(passphrase);
@@ -223,16 +242,15 @@ public class AdminAddUserController {
   // --------------------------------------------------------------------------
   private void toggleEnterPasswordVisibility() {
     JButton toggleButton = (JButton) this.adminAddUserPanel
-              .getComponentsMap().get(AdminAddUserEnums
-              .PASSPHRASEVISIBILITYBUTTONKEY);
+        .getComponentsMap().get(AdminAddUserEnums
+        .PASSPHRASEVISIBILITYBUTTONKEY);
 
     toggleButton.addActionListener(e -> {
       JPasswordField enterPasswordTextField =
           (JPasswordField) this.adminAddUserPanel.getComponentsMap()
-              .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY);
+            .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY);
 
-      this.togglePasswordVisibility
-              .passwordToggler(enterPasswordTextField);
+      this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
 
     });
   }

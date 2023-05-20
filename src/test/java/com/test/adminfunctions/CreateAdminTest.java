@@ -80,7 +80,7 @@ public class CreateAdminTest {
   public void setUp() {
     this.currentAdmin = new ArrayList<AdminModel>();
     this.createFile = new File(fileLocation);
-  
+
     if (this.createFile.exists()) {
       this.createFile.delete();
     }

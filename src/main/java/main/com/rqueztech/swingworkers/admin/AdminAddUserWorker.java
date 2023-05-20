@@ -93,7 +93,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
         userNewHashedPassword, newUserSalt)) {
       return null;
     }
-  
+
     this.writeToCsvFile();
 
     // Note: Please change in the future
@@ -115,15 +115,8 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
 
       if (result != null) {
         // Handle the successful completion of the task here
-        String message = "User added successfully.\n"
-            + result.getUserName() + "\n"
-            + result.getUserFirstName() + "\n"
-            + result.getUserLastName() + "\n"
-            + result.getGender() + "\n"
-            + result.getUserPassword() + "\n"
-            + result.getUserSalt() + "\n"
-            + result.getUserNumber();
-        //JOptionPane.showMessageDialog(null, message);
+        String message = "User added successfully";
+        JOptionPane.showMessageDialog(null, message);
       } else {
         JOptionPane.showMessageDialog(null, "Password Incorrect");
       }

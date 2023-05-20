@@ -36,8 +36,6 @@ public class ConfigurationCsvManager {
     if (fileExists) {
       System.out.println("The file exists");
     } else {
-      System.out.println("The file does not exist");
-
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);

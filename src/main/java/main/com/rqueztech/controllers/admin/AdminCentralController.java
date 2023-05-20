@@ -1,6 +1,7 @@
 package main.com.rqueztech.controllers.admin;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import main.com.rqueztech.ui.admin.AdminCentralPanel;
 import main.com.rqueztech.ui.admin.enums.AdminCentralPanelEnums;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
@@ -44,6 +45,7 @@ public class AdminCentralController {
 
     adminLogin.addActionListener(e -> {
       this.adminCentralPanel.setVisible(false);
+
       this.adminCentralPanel.panelCentral.getPanelsHashMap()
           .get(PanelCentralEnums.ADMINADDUSERPANEL).setVisible(true);
     });
@@ -69,7 +71,7 @@ public class AdminCentralController {
               this.adminCentralPanel
               .getLoggedInAdmin()
               .getCurrentLoggedInAdmin()
-          );
+      );
 
       this.adminCentralPanel.setVisible(false);
       this.adminCentralPanel.panelCentral.getPanelsHashMap()

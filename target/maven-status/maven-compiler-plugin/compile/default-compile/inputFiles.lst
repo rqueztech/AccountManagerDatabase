@@ -13,6 +13,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\passwordfields\PasswordFieldTemplates.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\AdminCentralPanel.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\enums\AdminAddUserEnums.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\admin\AdminDeleteUserWorker.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\TextFieldListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\admin\AdminAddAdminWorker.java
@@ -50,6 +51,7 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\user\UserChangeDefaultPasswordPanel.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\AddUserDocumentListener.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\admin\AdminUserViewPanelController.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\user\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\SetupSubmitDocumentListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\loggedinadmin\package-info.java

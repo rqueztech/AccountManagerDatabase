@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 
 /**
  * The AdminCsvManager class handles read, write, create, and delete to csv.
@@ -39,7 +41,7 @@ public class AdminCsvManager {
     boolean fileExists = Files.exists(path);
 
     if (!fileExists) {
-      System.out.println("The file does not exist");
+      JOptionPane.showMessageDialog(null, "This file does not exist");
 
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
@@ -125,6 +127,10 @@ public class AdminCsvManager {
       e.printStackTrace();
     }
 
+    if (rows.get(0)[0].equals("acctName")) {
+      rows.remove(0);
+    }
+    
     // Close the CSVReader and FileReader objects
     csvReader.close();
     reader.close();

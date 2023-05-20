@@ -3,12 +3,8 @@ package main.com.rqueztech.controllers.admin;
 import java.awt.Component;
 import java.util.Arrays;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import main.com.rqueztech.FileLocations;
-import main.com.rqueztech.swingworkers.admin.AdminDeleteUserWorker;
 import main.com.rqueztech.ui.admin.AdminUserViewPanel;
 import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;
@@ -17,10 +13,10 @@ import main.com.rqueztech.ui.enums.PanelCentralEnums;
  * The class contains all of the action listeners and document listeners that
  control the components in the admin user view controller panel.
  */
-public class AdminUserViewController {
+public class AdminUserViewPanelController {
   private AdminUserViewPanel adminUserViewPanel;
 
-  public AdminUserViewController(AdminUserViewPanel adminUserViewPanel) {
+  public AdminUserViewPanelController(AdminUserViewPanel adminUserViewPanel) {
     this.adminUserViewPanel = adminUserViewPanel;
     this.invokeActionListeners();
   }
@@ -29,7 +25,6 @@ public class AdminUserViewController {
   private void invokeActionListeners() {
     this.userViewButtonListener();
     this.exitButtonActionListener();
-    this.deleteButtonActionListener();
     this.logoutButtonActionListener();
   }
 
@@ -44,36 +39,6 @@ public class AdminUserViewController {
       this.resetFields();
       this.adminUserViewPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
-    });
-  }
-  
-  //--------------------------------------------------------------------------
-  private void deleteButtonActionListener() {
-    JButton userDeleteButton = (JButton) this.adminUserViewPanel
-        .getComponentsMap()
-        .get(AdminUserViewEnums.DELETEUSERBUTTONKEY);
-
-    userDeleteButton.addActionListener(e -> {
-      System.out.println(this.adminUserViewPanel.getCurrentUser());
-        
-      if (this.adminUserViewPanel.getCurrentUser() != null) {
-        AdminDeleteUserWorker adminDeleteUserWorker =
-            new AdminDeleteUserWorker(this.adminUserViewPanel, this.adminUserViewPanel.getCurrentUser(),
-            FileLocations.getUserDbLocationMain());
-       
-        String message = String.format("Are you sure you would like to "
-            + "delete User: %s", this.adminUserViewPanel.getCurrentUser());
-        
-        if (JOptionPane.showConfirmDialog(null, message) == JOptionPane.OK_OPTION) {
-          adminDeleteUserWorker.execute();
-        } else {
-          JOptionPane.showMessageDialog(null, "No User Found");
-        }
-      } else {
-        JOptionPane.showMessageDialog(null, "Nothing Selected");
-      }
-      
-      this.resetFields();
     });
   }
 

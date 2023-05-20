@@ -41,16 +41,16 @@ public class ConfigurationCsvManager {
     // Create a new file with a header row
     FileWriter writer = new FileWriter(filePath);
     CSVWriter csvWriter = new CSVWriter(writer);
-    String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
-    csvWriter.writeNext(header);
+    //String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
+    //csvWriter.writeNext(header);
     csvWriter.writeAll(data);
     csvWriter.close();
     writer.close();
   }
-  
+
   public void modifyConfigurationFile(char[] password, char[] salt)
       throws IOException, CsvException {
-  
+
     Path path = Paths.get(this.filePath);
     boolean fileExists = Files.exists(path);
 
@@ -62,11 +62,11 @@ public class ConfigurationCsvManager {
          CSVWriter csvWriter = new CSVWriter(Files.newBufferedWriter(path))) {
 
       List<String[]> rows = csvReader.readAll();
-  
+
       // Locate the specific row for modification (index 1 as data starts from second row)
       if (rows.size() > 1) {
         String[] dataRow = rows.get(1);
-  
+
         // Modify the third and fourth elements (index 2 and 3) with password and salt
         dataRow[2] = new String(password);
         dataRow[3] = new String(salt);
@@ -135,7 +135,7 @@ public class ConfigurationCsvManager {
     if (!this.isFileExists()) {
       return null;
     }
-  
+
     List<String[]> rows = null;
     try {
       // Read all the rows from the CSV file and store them in a List
@@ -169,7 +169,7 @@ public class ConfigurationCsvManager {
 
     return true;
   }
-  
+
   private boolean isFileExists() {
     Path path = Paths.get(this.filePath);
     return Files.exists(path);

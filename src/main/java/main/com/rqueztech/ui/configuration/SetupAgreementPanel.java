@@ -86,9 +86,8 @@ public class SetupAgreementPanel extends JPanel {
       //--- Finish Constraints End ---
 
       this.setComponentMainPosition();
-      this.setTextPane(textPane,
-          "Welcome to the database. Click start configuration to"
-          + "begin the configuraiton.");
+      this.setTextPane(textPane, "Welcome to the database. Click start "
+          + "configuration to begin the configuraiton.");
 
       this.add(this.components.get(textPane));
 

@@ -3,12 +3,14 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.test.adminfunctions.ClassAdminPassphraseConfirmTest">
+      <class name="com.test.panels.admin.SetupConfigurationPanelTest">
         <methods>
+          <include name="setUpOnce"/>
+          <include name="isValidEntry"/>
           <include name="setUp"/>
-          <include name="validatePassword"/>
+          <include name="tearDown"/>
         </methods>
-      </class> <!-- com.test.adminfunctions.ClassAdminPassphraseConfirmTest -->
+      </class> <!-- com.test.panels.admin.SetupConfigurationPanelTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

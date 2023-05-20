@@ -11,6 +11,14 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,7 +38,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.controllers.admin.AdminUserViewController;
+import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.ui.BaseFrame;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
@@ -66,6 +77,16 @@ public class AdminUserViewPanel extends JPanel {
   private final int textfieldSize = 10;
 
   private PanelCentral panelCentral;
+  private JTable table;
+  
+  private String currentUser;
+  
+  //One dimensional array representing table columns
+  private String[] columns = {"User Name", "First Name", "Last Name", "Gender"};
+  private String[][] rows = {};
+
+  private File file;
+  private FileLocations fileLocations;
 
   // --- Group 2: Panel Map ---
   private ConcurrentHashMap<AdminUserViewEnums, JComponent> components;
@@ -84,11 +105,13 @@ public class AdminUserViewPanel extends JPanel {
 
     this.panelCentral = panelCentral;
 
+    this.fileLocations = new FileLocations();
+    this.file = new File(this.fileLocations.getUserDbLocationMain());
+
     this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
 
     // Dispatch responsibilities on EDT.
     SwingUtilities.invokeLater(() -> {
-
       this.setLayout(layout);
       this.setPreferredSize(new Dimension(frame.getHeight(), frame.getWidth()));
       this.image = new ImageIcon(getClass().getResource("/images/backgroundd.jpg")).getImage();
@@ -110,30 +133,39 @@ public class AdminUserViewPanel extends JPanel {
 
       this.grid.gridy += 1;
 
-      // One dimensional array representing table columns
-      String[] columns = {"UsrName", "FName", "LName, EmpNo, "};
+      UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations
+          .getUserDbLocationMain()); 
 
-      // Two dimensional array representing data inside of table (row format)
-      String[][] rows = {
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"},
-        {"rquez", "Ricardo", "Quezada"},
-        {"cmans", "Carl", "Mansfield"}
-      };
+      List<String[]> userData = new ArrayList<>();
+
+      try {
+        if (this.file.exists()) {
+          userData = userCsvManager.retrieveData();
+        }
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+
+      Iterator<String[]> iterator = userData.iterator();
+
+      while (iterator.hasNext()) {
+        String[] data = iterator.next();
+
+        String userName = data[0];
+        String firstName = data[1];
+        String lastName = data[2];
+        String empNo = data[3];
+
+        // Add the data to the rows array
+        String[] row = {userName, firstName, lastName, empNo};
+        
+        System.out.println(row);
+        
+        // Append the row to the rows array
+        this.rows = Arrays.copyOf(this.rows, this.rows.length + 1);
+        this.rows[this.rows.length - 1] = row;
+      }
 
       // Annonymous inner class implementing a table model
       DefaultTableModel model = new DefaultTableModel(rows, columns) {
@@ -149,8 +181,23 @@ public class AdminUserViewPanel extends JPanel {
       };
 
       // Anonymous innerclass defining the table for the program
-      JTable table = new JTable(model);
+      this.table = new JTable(model);
 
+      table.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+              int row = table.rowAtPoint(e.getPoint());
+              int column = 0;
+
+              AdminUserViewPanel.this.setRows(row, column);
+              String currentUser = AdminUserViewPanel.this.getRows()[row][column];
+              AdminUserViewPanel.this.setCurrentUser(currentUser);
+              
+              // Update the selection model
+              table.changeSelection(row, column, false, false);
+          }
+      });
+      
       TableRowSorter<TableModel> rowSorter =
           new TableRowSorter<>(table.getModel());
 
@@ -163,7 +210,7 @@ public class AdminUserViewPanel extends JPanel {
 
       JScrollPane scrollPane = new JScrollPane(table);
       scrollPane.setVerticalScrollBarPolicy(JScrollPane
-              .VERTICAL_SCROLLBAR_ALWAYS);
+          .VERTICAL_SCROLLBAR_ALWAYS);
 
       scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 
@@ -280,6 +327,8 @@ public class AdminUserViewPanel extends JPanel {
         }
       });
 
+      
+      
       this.grid.gridx += 1;
 
       this.setButton(AdminUserViewEnums
@@ -313,6 +362,49 @@ public class AdminUserViewPanel extends JPanel {
       this.adminUserViewController = new AdminUserViewController(this);
     });
 
+  }
+
+  public void setRows(int row, int column) {
+    this.currentUser = this.getRows()[row][column];
+  }
+  
+  public String[][] getRows() {
+    return this.rows;
+  }
+  
+  public void setCurrentUser(String currentUser) {
+    this.currentUser = currentUser;
+  }
+  
+  public String getCurrentUser() {
+    return this.currentUser;
+  }
+  
+  public void refreshTable() {
+    // Retrieve the updated data for the table
+    UserCsvManager userCsvManager = new UserCsvManager(fileLocations
+        .getUserDbLocationMain());
+    
+    List<String[]> userData = new ArrayList<>();
+    
+    try {
+      if (this.file.exists()) {
+        userData = userCsvManager.retrieveData();
+        System.out.println(userData);
+      } 
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // Clear the existing rows in the table model
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);
+
+    // Add the updated data to the table model
+    for (int i = 0; i < userData.size(); i++) {
+      String[] data = userData.get(i);
+      model.addRow(data);
+    }
   }
 
   // --------------------------------------------------------------------------

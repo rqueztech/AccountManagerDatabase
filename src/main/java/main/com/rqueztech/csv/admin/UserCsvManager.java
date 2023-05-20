@@ -36,11 +36,13 @@ public class UserCsvManager {
     if (this.isFileExists()) {
       System.out.println("The file exists");
     } else {
-      System.out.println("The file does not exist");
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
-      String[] header = {"acctName", "fName", "lName", "gender", "encryptedPassword", "salt", "admNo"};
+      
+      String[] header = {"acctName", "fName", "lName", "gender",
+        "encryptedPassword", "salt", "admNo"};
+      
       csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();
@@ -120,6 +122,10 @@ public class UserCsvManager {
       e.printStackTrace();
     }
 
+    if(rows.get(0)[0].equals("acctName")) {
+      rows.remove(0);
+    }
+    
     csvReader.close();
     reader.close();
 

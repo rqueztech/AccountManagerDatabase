@@ -27,8 +27,8 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
   public SetupConfigurationWorker(char[] newAdminPassphrase,
       final String fileLocation) {
 
-    this.fileLocation = fileLocation;
     this.newAdminPassphrase = newAdminPassphrase;
+    this.fileLocation = fileLocation;
   }
 
   // --------------------------------------------------------------------------
@@ -53,7 +53,7 @@ public class SetupConfigurationWorker extends SwingWorker<Boolean, Void> {
   public void writeToCsvFile() {
     ConfigurationCsvManager configurationCsvManager = new
         ConfigurationCsvManager(this.fileLocation);
-  
+
     List<String[]> configurationData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding

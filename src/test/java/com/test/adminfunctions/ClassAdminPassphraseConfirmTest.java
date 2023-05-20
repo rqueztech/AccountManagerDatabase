@@ -15,7 +15,7 @@ public class ClassAdminPassphraseConfirmTest {
   private FileLocations fileLocations;
   private String fileLocation;
   private File file;
-  
+
   private char[] characterPassword = "Charlie9@".toCharArray();
 
   @BeforeMethod
@@ -24,7 +24,7 @@ public class ClassAdminPassphraseConfirmTest {
     this.fileLocation = this.fileLocations.getConfigLocationTest();
     this.file = new File(this.fileLocation);
   }
-  
+
   @Test
   public void createConfigurationFile() {
     if (!this.file.exists()) {
@@ -32,11 +32,11 @@ public class ClassAdminPassphraseConfirmTest {
           new SetupConfigurationWorker(
           this.characterPassword,
           this.fileLocation);
-    
+
       setupConfigurationWorker.execute();
     }
   }
-  
+
   @Test
   public void validatePassword() {
     AdminValidPassphraseWorker adminValidPassphrase =

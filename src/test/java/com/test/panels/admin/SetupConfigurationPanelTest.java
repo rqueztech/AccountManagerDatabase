@@ -32,9 +32,12 @@ public class SetupConfigurationPanelTest {
   public void setUp() {
     SetupConfigurationPanel setupConfigurationPanel =
         GuiActionRunner.execute(() -> new SetupConfigurationPanel(
-          frame, new GridBagLayout(), panelCentral));
+          frame, new GridBagLayout(), this.panelCentral));
+
+    this.panelCentral.clearPanels();
 
     window = new FrameFixture(frame);
+
     window.show();
   }
 

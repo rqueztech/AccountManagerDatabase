@@ -80,7 +80,7 @@ public class CreateUserTest {
   public void setUp() {
     this.currentUser = new ArrayList<UserModel>();
     this.createFile = new File(fileLocation);
-  
+
     if (this.createFile.exists()) {
       this.createFile.delete();
     }
@@ -89,8 +89,8 @@ public class CreateUserTest {
       String firstName = arrayIterator[0];
       String lastName = arrayIterator[1];
       String gender = arrayIterator[2];
-  
-  
+
+
       AdminAddUserWorkerTesting adminAddUserWorkerTesting =
           new AdminAddUserWorkerTesting(
           firstName,
@@ -112,7 +112,7 @@ public class CreateUserTest {
         e.printStackTrace();
       }
     }
-  
+
     for (String[] item : userData) {
       System.out.println(item[0] + item[1] + item[2] + item[3]);
     }
