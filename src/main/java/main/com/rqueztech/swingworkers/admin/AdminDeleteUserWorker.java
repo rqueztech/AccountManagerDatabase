@@ -1,5 +1,6 @@
 package main.com.rqueztech.swingworkers.admin;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -32,10 +33,23 @@ public class AdminDeleteUserWorker extends SwingWorker<Void, Void> {
     // Example:
       
     this.userCsvManager = new UserCsvManager(this.currentFilePath);
+    
     List<String[]> currentData = this.userCsvManager.retrieveData();
     String[] accountToDelete = this.userCsvManager.retrieveAccountData(this.currentUser);
     
     this.userCsvManager.removeData(accountToDelete);
+    
+    currentData = this.userCsvManager.retrieveData();
+    
+    // Assuming currentData is a List<String[]> containing String arrays
+
+    for (String[] dataArray : currentData) {
+        for (String data : dataArray) {
+            // Perform actions with each data element
+            System.out.println(data);
+        }
+    }
+
     
     this.adminUserViewPanel.refreshTable();
     

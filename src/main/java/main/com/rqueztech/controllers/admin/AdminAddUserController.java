@@ -125,7 +125,6 @@ public class AdminAddUserController {
           panel.refreshTable();
           
           this.adminAddUserPanel.setVisible(false);
-          System.out.println("Poepwhgopeighwpoieghwepoigh");
           this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
         } else {

@@ -32,10 +32,6 @@ public class AdminPassphraseConfirmWorker extends SwingWorker<ConfigurationModel
 
     this.configurationCsvManager = new ConfigurationCsvManager(this.fileLocations.getConfigLocationMain());
 
-    System.out.println(
-    configurationCsvManager.retrieveData()
-    );  
-
     return null;
   }
 

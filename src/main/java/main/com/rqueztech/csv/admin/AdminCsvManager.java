@@ -46,7 +46,9 @@ public class AdminCsvManager {
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
+
       String[] header = {"acctName", "fName", "lName", "encryptedPassword", "salt", "admNo"};
+
       csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();
@@ -113,7 +115,7 @@ public class AdminCsvManager {
     FileReader reader = new FileReader(filePath);
 
     // Create a CSVReader object using the FileReader object
-    CSVReader csvReader = new CSVReaderBuilder(reader).build();
+    CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 
     List<String[]> rows = null;
     try {
@@ -125,10 +127,6 @@ public class AdminCsvManager {
     } catch (CsvException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
-    }
-
-    if (rows.get(0)[0].equals("acctName")) {
-      rows.remove(0);
     }
     
     // Close the CSVReader and FileReader objects

@@ -157,6 +157,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
 
     try {
       userCsvManager.addData(userData);
+      List<String[]> hereItIs = userCsvManager.retrieveData();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

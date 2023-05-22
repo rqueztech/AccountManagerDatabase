@@ -58,20 +58,8 @@ public class AdminCentralController {
         .ADMINLOGOUTBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
-      System.out.println(
-          this.adminCentralPanel
-          .getLoggedInAdmin()
-          .getCurrentLoggedInAdmin()
-      );
 
       this.adminCentralPanel.getLoggedInAdmin().clearLoggedInAdmin();
-      System.out.println("---------------------------");
-
-      System.out.println(
-              this.adminCentralPanel
-              .getLoggedInAdmin()
-              .getCurrentLoggedInAdmin()
-      );
 
       this.adminCentralPanel.setVisible(false);
       this.adminCentralPanel.panelCentral.getPanelsHashMap()

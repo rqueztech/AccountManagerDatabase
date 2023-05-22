@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -24,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -67,6 +70,8 @@ public class AdminUserViewPanel extends JPanel {
   private final int bottomInset = 0;
   private final int rightInset = 0;
 
+  private DefaultTableModel model;
+  
   // --- Section 4: Set Combo Box
   private final int gridxInitial = 0;
   private final int gridyInitial = 0;
@@ -106,7 +111,7 @@ public class AdminUserViewPanel extends JPanel {
     this.panelCentral = panelCentral;
 
     this.fileLocations = new FileLocations();
-    this.file = new File(this.fileLocations.getUserDbLocationMain());
+    this.file = new File(FileLocations.getUserDbLocationMain());
 
     this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
 
@@ -132,71 +137,12 @@ public class AdminUserViewPanel extends JPanel {
       this.add(this.components.get(AdminUserViewEnums.CONFIRMPASSWORDPASSWORDLABELKEY), grid);
 
       this.grid.gridy += 1;
-
-      UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations
-          .getUserDbLocationMain()); 
-
-      List<String[]> userData = new ArrayList<>();
-
-      try {
-        if (this.file.exists()) {
-          userData = userCsvManager.retrieveData();
-        }
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-
-      Iterator<String[]> iterator = userData.iterator();
-
-      while (iterator.hasNext()) {
-        String[] data = iterator.next();
-
-        String userName = data[0];
-        String firstName = data[1];
-        String lastName = data[2];
-        String empNo = data[3];
-
-        // Add the data to the rows array
-        String[] row = {userName, firstName, lastName, empNo};
-        
-        System.out.println(row);
-        
-        // Append the row to the rows array
-        this.rows = Arrays.copyOf(this.rows, this.rows.length + 1);
-        this.rows[this.rows.length - 1] = row;
-      }
-
-      // Annonymous inner class implementing a table model
-      DefaultTableModel model = new DefaultTableModel(rows, columns) {
-        /**
-         * Sets the UID for object serialization.
-         */
-        private static final long serialVersionUID = 8519481516680066111L;
-
-        @Override
-        public boolean isCellEditable(int row, int column) {
-          return false; // make all cells not editable
-        }
-      };
-
-      // Anonymous innerclass defining the table for the program
-      this.table = new JTable(model);
-
-      table.addMouseListener(new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-              int row = table.rowAtPoint(e.getPoint());
-              int column = 0;
-
-              AdminUserViewPanel.this.setRows(row, column);
-              String currentUser = AdminUserViewPanel.this.getRows()[row][column];
-              AdminUserViewPanel.this.setCurrentUser(currentUser);
-              
-              // Update the selection model
-              table.changeSelection(row, column, false, false);
-          }
-      });
+      
+      this.setModel();
+      this.createTable();
+      this.refreshTable();
+      this.setMouseListener();
+      this.setKeyListener();
       
       TableRowSorter<TableModel> rowSorter =
           new TableRowSorter<>(table.getModel());
@@ -339,6 +285,7 @@ public class AdminUserViewPanel extends JPanel {
 
       this.grid.gridx = 0;
       this.grid.gridy += 1;
+      
       this.setButton(AdminUserViewEnums
            .RETURNCENTRALBUTTONKEY, "Go Back");
 
@@ -347,11 +294,13 @@ public class AdminUserViewPanel extends JPanel {
 
       this.grid.gridx += 1;
       this.setButton(AdminUserViewEnums.ADDUSERBUTTONKEY, "Add User");
-      this.add(this.components.get(AdminUserViewEnums.ADDUSERBUTTONKEY), this.grid);
+      this.add(this.components.get(AdminUserViewEnums
+          .ADDUSERBUTTONKEY), this.grid);
 
       this.grid.gridx += 1;
       this.setButton(AdminUserViewEnums.DELETEUSERBUTTONKEY, "Delete User");
-      this.add(this.components.get(AdminUserViewEnums.DELETEUSERBUTTONKEY), this.grid);
+      this.add(this.components.get(AdminUserViewEnums
+          .DELETEUSERBUTTONKEY), this.grid);
 
       this.grid.gridy += 1;
       this.grid.gridx = 0;
@@ -363,7 +312,93 @@ public class AdminUserViewPanel extends JPanel {
     });
 
   }
+  
+  public void setMouseListener() {
+    this.table.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        int selectedRow = table.getSelectedRow();
+        int column = 0;
 
+        if (selectedRow >= 0) {
+            String selectedUser = (String) table.getValueAt(selectedRow, column);
+            AdminUserViewPanel.this.setCurrentUser(selectedUser);
+              table.changeSelection(selectedRow, column, false, false);
+            }
+          }
+      });
+  }
+  
+  public void setKeyListener() {
+    this.table.addKeyListener(new KeyAdapter() {
+        public void keyPressed(KeyEvent e) {
+            int selectedRow = table.getSelectedRow();
+            int column = 0;
+
+            if (selectedRow >= 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
+                String selectedUser = (String) table.getValueAt(selectedRow, column);
+                AdminUserViewPanel.this.setCurrentUser(selectedUser);
+                table.changeSelection(selectedRow, column, false, false);
+
+                // Trigger the event for delete action
+                // Call the appropriate method or perform the desired action
+                JOptionPane.showMessageDialog(null, "Entered Delete");
+                System.out.println(selectedRow);
+            }
+        }
+    });
+}
+
+  
+  public void setModel() {
+    // Annonymous inner class implementing a table model
+    this.model = new DefaultTableModel(this.rows, this.columns) {
+        /**
+         * Sets the UID for object serialization.
+         */
+        private static final long serialVersionUID = 8519481516680066111L;
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+          return false; // make all cells not editable
+        }
+      };
+  }
+  
+  public void createTable() {
+    // Anonymous innerclass defining the table for the program
+    this.table = new JTable(model);
+  }
+  
+  public void refreshTable() {
+    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations
+          .getUserDbLocationMain()); 
+
+    List<String[]> userData = new ArrayList<>();
+
+    try {
+      if (this.file.exists()) {
+        userData = userCsvManager.retrieveData();
+      }
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    // Clear the existing rows in the table model
+    this.model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);
+    
+    for (String[] row : userData) {
+      if (!row[0].equals("acctName")) {
+        model.addRow((Object[]) row);
+      }
+    }
+    
+    model.fireTableDataChanged();
+  }
+
+  /*
   public void setRows(int row, int column) {
     this.currentUser = this.getRows()[row][column];
   }
@@ -371,6 +406,7 @@ public class AdminUserViewPanel extends JPanel {
   public String[][] getRows() {
     return this.rows;
   }
+  */
   
   public void setCurrentUser(String currentUser) {
     this.currentUser = currentUser;
@@ -380,33 +416,6 @@ public class AdminUserViewPanel extends JPanel {
     return this.currentUser;
   }
   
-  public void refreshTable() {
-    // Retrieve the updated data for the table
-    UserCsvManager userCsvManager = new UserCsvManager(fileLocations
-        .getUserDbLocationMain());
-    
-    List<String[]> userData = new ArrayList<>();
-    
-    try {
-      if (this.file.exists()) {
-        userData = userCsvManager.retrieveData();
-        System.out.println(userData);
-      } 
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    // Clear the existing rows in the table model
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.setRowCount(0);
-
-    // Add the updated data to the table model
-    for (int i = 0; i < userData.size(); i++) {
-      String[] data = userData.get(i);
-      model.addRow(data);
-    }
-  }
-
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.

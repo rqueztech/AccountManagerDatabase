@@ -41,8 +41,8 @@ public class ConfigurationCsvManager {
     // Create a new file with a header row
     FileWriter writer = new FileWriter(filePath);
     CSVWriter csvWriter = new CSVWriter(writer);
-    //String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
-    //csvWriter.writeNext(header);
+    String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
+    csvWriter.writeNext(header);
     csvWriter.writeAll(data);
     csvWriter.close();
     writer.close();
