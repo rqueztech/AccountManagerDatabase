@@ -26,9 +26,9 @@ public class UserCsvManagerTest {
 
   final String[] header = {"acctName", "fName", "lName", "gender",
       "encryptedPassword", "salt", "admNo"};
-  
+
   private File existFile;
-  
+
   @BeforeMethod
   public void setUp() {
   // Delete the test file after each test
@@ -37,7 +37,7 @@ public class UserCsvManagerTest {
       } catch (IOException e) {
         e.printStackTrace();
       }
-    
+
     // Create a new UserCsvManager instance with the test file path\
     this.existFile = new File(TEST_FILE_PATH);
     this.userCsvManager = new UserCsvManager(TEST_FILE_PATH);
@@ -59,37 +59,37 @@ public class UserCsvManagerTest {
   // Manually after passing it through the csv add data function
   // To avoid duplicates
     List<String[]> testData = new ArrayList<>();
-    
+
     // This list will be the list retreived from the csv file.
     List<String[]> retreivedDataList = new ArrayList<>();
-    
+
     List<String[]> newAddition = new ArrayList<>();
-    
+
     String[] entryStrings = new String[] {"JohnDoe", "John", "Doe", "Male",
       "password", "salt", "123"};
-    
+
     testData.add(entryStrings);
-    
+
     // Add the data to the usv file
     try {
       userCsvManager.addData(testData);
       // Add the header for the local copy.
       testData.add(0, this.header);
       retreivedDataList = userCsvManager.retrieveData();
-      
+
       for (int i = 0; i < testData.size(); i++) {
         assertTrue(Arrays.equals(testData.get(i), retreivedDataList.get(i)));
       }
-      
+
       entryStrings = new String[] {"ParlsKunior", "John", "Doe", "Male",
             "password", "salt", "123"};
-          
+
       testData.add(entryStrings);
-      
+
       newAddition.add(entryStrings);
-      
+
       userCsvManager.addData(newAddition);
-          
+
           retreivedDataList = new ArrayList<>();
           retreivedDataList = userCsvManager.retrieveData();
     } catch (IOException e) {
@@ -97,7 +97,7 @@ public class UserCsvManagerTest {
       e.printStackTrace();
     }
   }
-  
+
   @Test
   public void addData() throws IOException {
     // Create some test data
@@ -110,14 +110,14 @@ public class UserCsvManagerTest {
 
     // Add the header in the first element
     testData.add(0, header);
-    
+
     //System.out.println("1 " + Arrays.deepToString(testData.toArray()));
-    
+
     // Retrieve the data from the CSV file
     List<String[]> retrievedData = userCsvManager.retrieveData();
 
     int testDataSize = testData.size();
-      
+
     // This will subtract one element, the element is the header that is retreived
     // From the csv file.
     int retreivedSize = retrievedData.size();
@@ -140,7 +140,7 @@ public class UserCsvManagerTest {
     userCsvManager.addData(testData);
 
     testData.add(this.header);
-    
+
     // Remove one row of data
     String[] dataToRemove = testData.get(0);
     userCsvManager.removeData(dataToRemove);
@@ -159,7 +159,7 @@ public class UserCsvManagerTest {
   public void retrieveData() throws IOException {
     // Create some test data
     List<String[]> testData = new ArrayList<>();
-    
+
     testData.add(new String[]{"JohnDoe", "John", "Doe", "Male", "password", "salt", "123"});
     testData.add(new String[]{"JaneSmith", "Jane", "Smith", "Female", "password", "salt", "456"});
 

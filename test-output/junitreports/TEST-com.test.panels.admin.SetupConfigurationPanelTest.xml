@@ -6,10 +6,10 @@
   </testcase> <!-- isValidEntry -->
   <system-out/>
   <testcase classname="com.test.panels.admin.SetupConfigurationPanelTest" name="setUp" time="0.003">
-    <error message="Unresolved compilation problem: 
+    <error message="Unresolved compilation problem:
   The method clearPanels() is undefined for the type PanelCentral
 " type="java.lang.Error">
-      <![CDATA[java.lang.Error: Unresolved compilation problem: 
+      <![CDATA[java.lang.Error: Unresolved compilation problem:
 The method clearPanels() is undefined for the type PanelCentral
 
 at com.test.panels.admin.SetupConfigurationPanelTest.setUp(SetupConfigurationPanelTest.java:37)

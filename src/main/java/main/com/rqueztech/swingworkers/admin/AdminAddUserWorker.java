@@ -1,5 +1,6 @@
 package main.com.rqueztech.swingworkers.admin;
 
+import java.awt.Panel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +8,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+
+import javax.print.event.PrintJobAttributeEvent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -48,6 +51,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
   private byte[] userNewHashedPassword;
   private final String fileLocationString;
 
+
   /**
    * Constructs a new AdminAddUserWorker with the specified user information.
    *
@@ -82,17 +86,20 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     this.setUserDefaultPassword(defaultUserPasswordAppend);
 
     // Generate the salt that will be used in hashing the user's password
-    this.newUserSalt = this.generateUserSalt(); 
+    this.newUserSalt = this.generateUserSalt();
 
     // hash the user's password. This will be the
     // Password stored in the final model.
-    this.userNewHashedPassword = this.hashUserPassword();                         
+    this.userNewHashedPassword = this.hashUserPassword();               
 
     // TODO Auto-generated method stub
     if (PasswordEncryption.validateEnteredPassword(adminPassphraseAttempt,
         userNewHashedPassword, newUserSalt)) {
       return null;
     }
+
+    this.userFirstName = this.cleanStrings(this.userFirstName);
+    this.userLastName = this.cleanStrings(this.userLastName);
 
     this.writeToCsvFile();
 
@@ -106,6 +113,15 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     );
   }
 
+  public String cleanStrings(String name) {
+    StringBuilder sb = new StringBuilder();
+  
+    sb.append(name.substring(0, 1).toUpperCase());
+    sb.append(name.substring(1).toLowerCase());
+  
+    return sb.toString();
+  }
+
   // --------------------------------------------------------------------------
   @Override
   protected void done() {
@@ -117,6 +133,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
         // Handle the successful completion of the task here
         String message = "User added successfully";
         JOptionPane.showMessageDialog(null, message);
+
       } else {
         JOptionPane.showMessageDialog(null, "Password Incorrect");
       }
@@ -188,7 +205,8 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
       secondAccountNameString = this.userLastName.substring(0, 4);
     }
 
-    this.userAccountName = String.format("%s%s", firstAccountNameString, secondAccountNameString);
+    this.userAccountName = String.format("%s%s", firstAccountNameString,
+      secondAccountNameString).toLowerCase();
   }
 
   // --------------------------------------------------------------------------

@@ -68,6 +68,9 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
               .hashPassword(this.newAdminPassword,
           this.newAdminPasswordSalt);
 
+    this.adminFirstName = this.cleanStrings(this.adminFirstName);
+    this.adminLastName = this.cleanStrings(this.adminLastName);
+
     this.writeToCsvFile();
 
     return new AdminModel(
@@ -152,6 +155,16 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
     }
 
     return String.format("%s%s", firstAccountNameString, secondAccountNameString);
+  }
+
+  //--------------------------------------------------------------------------
+  public String cleanStrings(String name) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(name.substring(0, 1).toUpperCase());
+    sb.append(name.substring(1).toLowerCase());
+
+    return sb.toString();
   }
 
   // --------------------------------------------------------------------------

@@ -30,7 +30,7 @@ public class AdminPassphraseConfirmWorker extends SwingWorker<ConfigurationModel
     // TODO Auto-generated method stub
     this.fileLocations = new FileLocations();
 
-    this.configurationCsvManager = new ConfigurationCsvManager(this.fileLocations.getConfigLocationMain());
+    this.configurationCsvManager = new ConfigurationCsvManager(FileLocations.getConfigLocationMain());
 
     return null;
   }

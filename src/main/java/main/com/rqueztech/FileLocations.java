@@ -13,10 +13,10 @@ public class FileLocations {
 
   private static final String configLocationTest = "src/test/resources/data/configurationdatabase.csv";
   private static final String adminDbLocationTest = "src/test/resources/data/admindatabase.csv";
-  private static final String userDbLocationTest = "src/test/resources/data/userdatabase.csv";  
+  private static final String userDbLocationTest = "src/test/resources/data/userdatabase.csv";
 
   private static final String userCsvLocationTest = "src/test/resources/csvdata/userdatabase.csv";
-  
+
   public static String getConfigLocationMain() {
     return configLocationMain;
   }
@@ -40,7 +40,7 @@ public class FileLocations {
   public static String getUserDbLocationTest() {
     return userDbLocationTest;
   }
-  
+
   public static String getUserCsvLocationTest() {
     return userCsvLocationTest;
   }

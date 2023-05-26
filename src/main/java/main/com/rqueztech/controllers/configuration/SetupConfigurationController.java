@@ -57,14 +57,14 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void exitActionListener() {
     JButton adminLogin = (JButton) this.components
-              .get(SetupConfigurationPanelEnums.EXITBUTTONKEY);
+        .get(SetupConfigurationPanelEnums.EXITBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
       this.setupConfigurationPanel.setVisible(false);
       this.resetFields();
       this.setupConfigurationPanel.getPanelCentral()
-              .getPanelsHashMap().get(PanelCentralEnums.SETUPAGREEMENTPANEL)
-              .setVisible(true);
+        .getPanelsHashMap().get(PanelCentralEnums.SETUPAGREEMENTPANEL)
+            .setVisible(true);
     });
   }
 
@@ -92,13 +92,13 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void toggleConfirmPassphraseVisibility() {
     JButton toggleButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSPHRASEVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSPHRASEVISIBILITYBUTTONKEY);
 
     toggleButton.addActionListener(e -> {
       JPasswordField confirmPassphraseTextField = (JPasswordField)
-           this.components.get(SetupConfigurationPanelEnums
-                  .CONFIRMPASSPHRASETEXTFIELDKEY);
+          this.components.get(SetupConfigurationPanelEnums
+          .CONFIRMPASSPHRASETEXTFIELDKEY);
 
       this.togglePasswordVisibility.passwordToggler(confirmPassphraseTextField);
     });
@@ -107,13 +107,13 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void togglePasswordVisibility() {
     JButton toggleButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .PASSWORDVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .PASSWORDVISIBILITYBUTTONKEY);
 
     toggleButton.addActionListener(e -> {
       JPasswordField passphraseTextField = (JPasswordField)
           this.components.get(SetupConfigurationPanelEnums
-                  .PASSWORDTEXTFIELDKEY);
+          .PASSWORDTEXTFIELDKEY);
       this.togglePasswordVisibility.passwordToggler(passphraseTextField);
     });
   }
@@ -121,13 +121,13 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void toggleConfirmPasswordVisibility() {
     JButton toggleButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSWORDVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSWORDVISIBILITYBUTTONKEY);
 
     toggleButton.addActionListener(e -> {
       JPasswordField passphraseTextField = (JPasswordField)
-           this.components.get(SetupConfigurationPanelEnums
-                  .CONFIRMPASSWORDTEXTFIELDKEY);
+          this.components.get(SetupConfigurationPanelEnums
+          .CONFIRMPASSWORDTEXTFIELDKEY);
 
       this.togglePasswordVisibility.passwordToggler(passphraseTextField);
     });
@@ -136,13 +136,13 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void togglePassphraseVisibility() {
     JButton toggleButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .PASSPHRASEVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .PASSPHRASEVISIBILITYBUTTONKEY);
 
     toggleButton.addActionListener(e -> {
       JPasswordField passphraseTextField = (JPasswordField)
           this.components.get(SetupConfigurationPanelEnums
-                  .PASSPHRASETEXTFIELDKEY);
+          .PASSPHRASETEXTFIELDKEY);
 
       this.togglePasswordVisibility.passwordToggler(passphraseTextField);
     });
@@ -160,86 +160,86 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void submitActionListener() {
     JButton adminLogin = (JButton) this.components
-              .get(SetupConfigurationPanelEnums.SUBMITBUTTONKEY);
+        .get(SetupConfigurationPanelEnums.SUBMITBUTTONKEY);
 
     adminLogin.addActionListener(e -> {
       // Set the first and last name, admin passphrase, and password
       String adminFirstName = ((JTextField) this.components
-              .get(SetupConfigurationPanelEnums.FIRSTNAMETEXTFIELDKEY))
-              .getText();
+          .get(SetupConfigurationPanelEnums.FIRSTNAMETEXTFIELDKEY))
+          .getText();
 
       String adminLastName = ((JTextField) this.components
-              .get(SetupConfigurationPanelEnums.LASTNAMETEXTFIELDKEY))
-              .getText();
+          .get(SetupConfigurationPanelEnums.LASTNAMETEXTFIELDKEY))
+          .getText();
 
       char[] adminPassword = ((JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY))
-              .getPassword();
+        .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY))
+        .getPassword();
 
       char[] adminPassphrase = ((JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY)
-          ).getPassword();
+        .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY))
+        .getPassword();
 
       AdminAddAdminWorker adminAddAdminWorker =
           new AdminAddAdminWorker(adminFirstName, adminLastName,
-            adminPassword, new FileLocations().getAdminDbLocationMain());
+          adminPassword, FileLocations.getAdminDbLocationMain());
 
       adminAddAdminWorker.execute();
 
       SetupConfigurationWorker setupConfigurationWorker =
-          new SetupConfigurationWorker(adminPassphrase, new FileLocations()
-            .getConfigLocationMain());
+          new SetupConfigurationWorker(adminPassphrase, FileLocations
+          .getConfigLocationMain());
 
       setupConfigurationWorker.execute();
 
       this.setupConfigurationPanel.setVisible(false);
       this.resetFields();
       this.setupConfigurationPanel.getPanelCentral().getPanelsHashMap()
-              .get(PanelCentralEnums.MAINLOGINPANEL).setVisible(true);
+        .get(PanelCentralEnums.MAINLOGINPANEL).setVisible(true);
     });
   }
 
   // --------------------------------------------------------------------------
   private void setSubmitButtonFeedback() {
     JButton adminSubmitButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums.SUBMITBUTTONKEY);
+        .get(SetupConfigurationPanelEnums.SUBMITBUTTONKEY);
 
     JTextField firstName = (JTextField) this.components
-              .get(SetupConfigurationPanelEnums.FIRSTNAMETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.FIRSTNAMETEXTFIELDKEY);
 
     JTextField lastName = (JTextField) this.components
-              .get(SetupConfigurationPanelEnums.LASTNAMETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.LASTNAMETEXTFIELDKEY);
 
     JPasswordField passphraseField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY);
 
     JPasswordField confirmPassphraseField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSPHRASETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSPHRASETEXTFIELDKEY);
 
     JPasswordField passwordField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY);
 
     JPasswordField confirmPasswordField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSWORDTEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSWORDTEXTFIELDKEY);
 
     // Create a listener for the first name field
     TextFieldListener nameFieldListener =
-          new TextFieldListener(firstName);
+        new TextFieldListener(firstName);
 
     // Listener for the last name field
     TextFieldListener lastNameFieldListener =
-          new TextFieldListener(lastName);
+        new TextFieldListener(lastName);
 
     firstName.getDocument().addDocumentListener(nameFieldListener);
 
     lastName.getDocument().addDocumentListener(lastNameFieldListener);
 
     SetupSubmitDocumentListener submitDocumentListener =
-          new SetupSubmitDocumentListener(adminSubmitButton, firstName,
-          lastName, passphraseField, confirmPassphraseField,
-          passwordField, confirmPasswordField);
+        new SetupSubmitDocumentListener(adminSubmitButton, firstName,
+        lastName, passphraseField, confirmPassphraseField,
+        passwordField, confirmPasswordField);
 
     // Listen to the input of the first and last name in real time
     firstName.getDocument().addDocumentListener(submitDocumentListener);
@@ -248,26 +248,26 @@ public class SetupConfigurationController {
     passphraseField.getDocument().addDocumentListener(submitDocumentListener);
 
     confirmPassphraseField.getDocument()
-          .addDocumentListener(submitDocumentListener);
+        .addDocumentListener(submitDocumentListener);
 
     passwordField.getDocument().addDocumentListener(submitDocumentListener);
 
     confirmPasswordField.getDocument()
-          .addDocumentListener(submitDocumentListener);
+        .addDocumentListener(submitDocumentListener);
   }
 
   // --------------------------------------------------------------------------
   private void setValidPassphraseFeedback() {
     JButton passphraseButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .PASSPHRASEVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .PASSPHRASEVISIBILITYBUTTONKEY);
 
     JPasswordField passphraseField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.PASSPHRASETEXTFIELDKEY);
 
     PasswordValidationDocumentListener passphraseDocumentListener =
-          new PasswordValidationDocumentListener(passphraseField,
-          passphraseButton);
+        new PasswordValidationDocumentListener(passphraseField,
+        passphraseButton);
 
     passphraseField.getDocument().addDocumentListener(passphraseDocumentListener);
   }
@@ -275,33 +275,33 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void setValidConfirmPassphraseFeedback() {
     JButton confirmPassphraseButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSPHRASEVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSPHRASEVISIBILITYBUTTONKEY);
 
     JPasswordField confirmPassphraseField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSPHRASETEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSPHRASETEXTFIELDKEY);
 
     PasswordValidationDocumentListener confirmPassphraseDocumentListener =
-          new PasswordValidationDocumentListener(confirmPassphraseField,
-          confirmPassphraseButton);
+        new PasswordValidationDocumentListener(confirmPassphraseField,
+        confirmPassphraseButton);
 
     confirmPassphraseField.getDocument()
-          .addDocumentListener(confirmPassphraseDocumentListener);
+        .addDocumentListener(confirmPassphraseDocumentListener);
   }
 
   // --------------------------------------------------------------------------
   private void setValidPasswordFeedback() {
     JButton passwordButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .PASSWORDVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .PASSWORDVISIBILITYBUTTONKEY);
 
     JPasswordField passwordField = (JPasswordField) this.components
-              .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY);
+        .get(SetupConfigurationPanelEnums.PASSWORDTEXTFIELDKEY);
 
     PasswordValidationDocumentListener passwordDocumentListener =
-          new PasswordValidationDocumentListener(passwordField,
-          passwordButton);
+        new PasswordValidationDocumentListener(passwordField,
+        passwordButton);
     passwordField.getDocument().addDocumentListener(passwordDocumentListener);
 
   }
@@ -309,18 +309,18 @@ public class SetupConfigurationController {
   // --------------------------------------------------------------------------
   private void setValidConfirmPasswordFeedback() {
     JButton confirmPasswordButton = (JButton) this.components
-              .get(SetupConfigurationPanelEnums
-                .CONFIRMPASSWORDVISIBILITYBUTTONKEY);
+        .get(SetupConfigurationPanelEnums
+        .CONFIRMPASSWORDVISIBILITYBUTTONKEY);
 
     JPasswordField confirmPasswordField = (JPasswordField)
         this.components.get(SetupConfigurationPanelEnums
-                .CONFIRMPASSWORDTEXTFIELDKEY);
+        .CONFIRMPASSWORDTEXTFIELDKEY);
 
     PasswordValidationDocumentListener confirmPasswordDocumentListener =
-          new PasswordValidationDocumentListener(confirmPasswordField,
-          confirmPasswordButton);
+        new PasswordValidationDocumentListener(confirmPasswordField,
+        confirmPasswordButton);
 
     confirmPasswordField.getDocument()
-          .addDocumentListener(confirmPasswordDocumentListener);
+        .addDocumentListener(confirmPasswordDocumentListener);
   }
 }

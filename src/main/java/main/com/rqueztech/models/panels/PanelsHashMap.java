@@ -28,14 +28,14 @@ public class PanelsHashMap {
       ConcurrentHashMap<PanelCentralEnums, JPanel> panelsHashMap) {
     lock.lock();
     try {
-      this.panelsHashMap = panelsHashMap;  
+      this.panelsHashMap = panelsHashMap;
     } finally {
       lock.unlock();
     }
   }
 
   /**
-   * The class is responsible for returning the panel HashMap. 
+   * The class is responsible for returning the panel HashMap.
    *
    * @return getPanelsHashMap as (a ConcurrentHashMap).
    */

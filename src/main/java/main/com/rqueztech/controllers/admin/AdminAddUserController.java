@@ -103,27 +103,29 @@ public class AdminAddUserController {
 
 
       AdminValidPassphraseWorker adminValidPassphraseWorker =
-          new AdminValidPassphraseWorker(adminPassphrase, new FileLocations()
+          new AdminValidPassphraseWorker(adminPassphrase, FileLocations
           .getConfigLocationMain());
 
       adminValidPassphraseWorker.execute();
 
       try {
-        if (adminValidPassphraseWorker.get()) { 
+        if (adminValidPassphraseWorker.get()) {
           AdminAddUserWorker adminAddUserWorker =
               new AdminAddUserWorker(userFirstName, userLastName, gender,
-                  new FileLocations().getUserDbLocationMain());
-    
+                FileLocations.getUserDbLocationMain());
+
           this.resetFields();
-    
+
           adminAddUserWorker.execute();
-          
+
           AdminUserViewPanel panel = (AdminUserViewPanel) this.adminAddUserPanel
               .getPanelCentral().getPanelsHashMap().get(PanelCentralEnums
               .ADMINUSERVIEWPANEL);
 
+          // Create a sleeper function to give enough time for the update to take effect
+          Thread.sleep(200);
           panel.refreshTable();
-          
+
           this.adminAddUserPanel.setVisible(false);
           this.adminAddUserPanel.getPanelCentral().getPanelsHashMap()
               .get(PanelCentralEnums.ADMINUSERVIEWPANEL).setVisible(true);
@@ -195,9 +197,9 @@ public class AdminAddUserController {
         .getComponentsMap().get(AdminAddUserEnums.ADDUSERBUTTONKEY);
 
     AddUserDocumentListener addUserDocumentListener =
-          new AddUserDocumentListener(addUserButton, userFirstName,
-          userLastName, passphrase,
-          this.adminAddUserPanel.getGender());
+        new AddUserDocumentListener(addUserButton, userFirstName,
+        userLastName, passphrase,
+        this.adminAddUserPanel.getGender());
 
     userFirstName.getDocument()
         .addDocumentListener(addUserDocumentListener);
@@ -216,7 +218,7 @@ public class AdminAddUserController {
 
     // Create a listener for the first name field
     TextFieldListener nameFieldListener =
-          new TextFieldListener(userFirstName);
+        new TextFieldListener(userFirstName);
 
     userFirstName.getDocument().addDocumentListener(nameFieldListener);
   }
@@ -228,7 +230,7 @@ public class AdminAddUserController {
         .PASSPHRASETEXTFIELDKEY);
     // Listener for the last name field
     PasswordFieldListener passwordFieldListener =
-          new PasswordFieldListener(passphrase);
+        new PasswordFieldListener(passphrase);
 
     passphrase.getDocument().addDocumentListener(passwordFieldListener);
   }
@@ -247,7 +249,7 @@ public class AdminAddUserController {
     toggleButton.addActionListener(e -> {
       JPasswordField enterPasswordTextField =
           (JPasswordField) this.adminAddUserPanel.getComponentsMap()
-            .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY);
+          .get(AdminAddUserEnums.PASSPHRASETEXTFIELDKEY);
 
       this.togglePasswordVisibility.passwordToggler(enterPasswordTextField);
 

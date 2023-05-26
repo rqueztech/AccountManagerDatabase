@@ -42,7 +42,7 @@ public class UserModel {
     this.setUserFirstName(userFirstName);
     this.setUserLastName(userLastName);
     this.setGender(gender);
-    this.setUserPassword(userHashedPassword); 
+    this.setUserPassword(userHashedPassword);
     this.setUserSalt(userSalt);
     this.setUserNumber(userNumber);
   }

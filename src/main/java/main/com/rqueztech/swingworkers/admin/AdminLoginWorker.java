@@ -24,7 +24,6 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
   private final char[] adminPassword;
   private boolean authenticated;
   private PanelCentral panelCentral;
-  private FileLocations fileLocations;
 
   /**
    * Create an instance of the admin login worker class.
@@ -38,7 +37,6 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
     this.adminPassword = adminPassword;
     this.authenticated = false;
     this.panelCentral = panelCentral;
-    this.fileLocations = new FileLocations();
   }
 
   @Override
@@ -47,7 +45,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
     // Set authenticated variable accordingly
     // You can also update any progress or status here
     try {
-      AdminCsvManager adminCsvManager = new AdminCsvManager(this.fileLocations.getAdminDbLocationMain());
+      AdminCsvManager adminCsvManager = new AdminCsvManager(FileLocations.getAdminDbLocationMain());
       String[] accountNameData = adminCsvManager.retrieveAccountData(this.adminName);
 
       if (accountNameData == null) {
@@ -78,7 +76,7 @@ public class AdminLoginWorker extends SwingWorker<Boolean, Void> {
 
       if (authenticated) {
         // Authentication was successful, update UI accordingly
-        AdminCentralPanel newPanel = (AdminCentralPanel) 
+        AdminCentralPanel newPanel = (AdminCentralPanel)
             this.panelCentral.getPanelsHashMap()
             .get(PanelCentralEnums.ADMINCENTRALPANEL);
 

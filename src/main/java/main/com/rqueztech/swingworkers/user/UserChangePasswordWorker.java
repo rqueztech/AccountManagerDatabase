@@ -21,7 +21,7 @@ import main.com.rqueztech.ui.user.UserCentralPanel;
 /**
  * Responsible for authenticating the user login. The class takes the user name
  and password, searches the csv file to see if the password exists, and checks
- if the password entered for the user is valid or not. 
+ if the password entered for the user is valid or not.
  *
  * @extends SwingWorker SwingWorker extends the swing worker to execute
  processes on the swing worker and prevent locking up the EDT
@@ -59,7 +59,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
   protected Boolean doInBackground() throws Exception {
     this.fileLocations = new FileLocations();
 
-    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations.getUserDbLocationMain());
+    UserCsvManager userCsvManager = new UserCsvManager(FileLocations.getUserDbLocationMain());
     /*
      * Initialize the file reader and return true/false value to indicate
      whether a file exists or not.
@@ -104,7 +104,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
       } else if (!result && this.isErrorWriting) {
         JOptionPane.showMessageDialog(null, "Error Writing");
       } else {
-        JOptionPane.showMessageDialog(null, "No File Found");
+        System.out.println(JOptionPane.showMessageDialog(null, );
       }
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
@@ -126,7 +126,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
       // TODO Auto-generated catch block
       e.printStackTrace();
       return false;
-    }  
+    }
   }
 
   /**

@@ -46,7 +46,7 @@ public class AdminUserViewController {
               .get(PanelCentralEnums.LOGOUTSUCCESSPANEL).setVisible(true);
     });
   }
-  
+
   //--------------------------------------------------------------------------
   private void deleteButtonActionListener() {
     JButton userDeleteButton = (JButton) this.adminUserViewPanel
@@ -55,15 +55,15 @@ public class AdminUserViewController {
 
     userDeleteButton.addActionListener(e -> {
       System.out.println(this.adminUserViewPanel.getCurrentUser());
-        
+
       if (this.adminUserViewPanel.getCurrentUser() != null) {
         AdminDeleteUserWorker adminDeleteUserWorker =
             new AdminDeleteUserWorker(this.adminUserViewPanel, this.adminUserViewPanel.getCurrentUser(),
             FileLocations.getUserDbLocationMain());
-       
+
         String message = String.format("Are you sure you would like to "
             + "delete User: %s", this.adminUserViewPanel.getCurrentUser());
-        
+
         if (JOptionPane.showConfirmDialog(null, message) == JOptionPane.OK_OPTION) {
           adminDeleteUserWorker.execute();
         } else {
@@ -72,7 +72,7 @@ public class AdminUserViewController {
       } else {
         JOptionPane.showMessageDialog(null, "Nothing Selected");
       }
-      
+
       this.resetFields();
     });
   }

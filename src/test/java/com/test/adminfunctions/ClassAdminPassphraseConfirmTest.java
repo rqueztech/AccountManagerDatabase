@@ -20,8 +20,8 @@ public class ClassAdminPassphraseConfirmTest {
 
   @BeforeMethod
   public void setUp() {
-    this.fileLocations = new FileLocations();
-    this.fileLocation = this.fileLocations.getConfigLocationTest();
+    FileLocations = new FileLocations();
+    this.fileLocation = FileLocations.getConfigLocationTest();
     this.file = new File(this.fileLocation);
   }
 

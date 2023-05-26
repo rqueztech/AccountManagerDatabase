@@ -5,7 +5,6 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +23,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class UserCsvManager {
   private final String filePath;
   private final Lock lock = new ReentrantLock();
-  
+
   /**
    * Sets the default path for the user database csv.
    */
@@ -44,14 +43,14 @@ public class UserCsvManager {
       if (this.isFileExists()) {
         System.out.println("The file exists");
       } else {
-        
+
         // Create a new file with a header row
         FileWriter writer = new FileWriter(filePath);
         CSVWriter csvWriter = new CSVWriter(writer);
 
         String[] header = {"acctName", "fName", "lName", "gender",
           "encryptedPassword", "salt", "admNo"};
-      
+
         csvWriter.writeNext(header);
         csvWriter.close();
         writer.close();
@@ -74,7 +73,7 @@ public class UserCsvManager {
    * @param dataToRemove contains the information of what to remove as (a String array)
    */
   public void removeData(String[] dataToRemove) throws IOException {
-    
+
     lock.lock();
     try {
       FileReader reader = new FileReader(filePath);
@@ -126,44 +125,32 @@ public class UserCsvManager {
 
     lock.lock();
     try {
-        FileReader reader = new FileReader(filePath);
-        CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+      FileReader reader = new FileReader(filePath);
+      CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 
-        // If the file does not exist, return null. No action
-        // will be performed.
-        if (!this.isFileExists()) {
-            return null;
-        }
+      // If the file does not exist, return null. No action
+      // will be performed.
+      if (!this.isFileExists()) {
+        return null;
+      }
 
-        String[] line;
-        while ((line = csvReader.readNext()) != null) {
-            rows.add(line);
-            try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
+      String[] line;
+      while ((line = csvReader.readNext()) != null) {
+        rows.add(line);
+      }
 
-        int size = rows.size();
-        System.out.println("Number of rows: " + size);
+      int size = rows.size();
+      System.out.println("Number of rows: " + size);
 
-        // Access the last row if the list is not empty
-        if (!rows.isEmpty()) {
-            String[] lastRow = rows.get(size - 1);
-            System.out.println("Last row: " + Arrays.toString(lastRow));
-        }
-
-        return rows;
+      return rows;
     } catch (CsvValidationException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     } finally {
-        lock.unlock();
+      lock.unlock();
     }
 
     return null;
-}
+  }
 
 
   /**
@@ -177,13 +164,13 @@ public class UserCsvManager {
    */
   public String[] retrieveAccountData(String acctName) throws IOException {
     List<String[]> rows = null;
-    
+
     lock.lock();
     try {
       if (!this.isFileExists()) {
         return null;
       }
-      
+
       // Create a FileReader object to read the CSV file
       FileReader reader = new FileReader(filePath);
 
@@ -214,10 +201,10 @@ public class UserCsvManager {
     } finally {
       lock.unlock();
     }
-      
+
     // If no matching row is found, return null
     return null;
-  }  
+  }
 
   private boolean isEqual(String[] arr1, String[] arr2) {
     if (arr1.length != arr2.length) {

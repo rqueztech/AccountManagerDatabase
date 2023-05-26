@@ -3,13 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="csvtests.UserCsvManagerTest">
+      <class name="com.test.adminfunctions.CreateAdminTest">
         <methods>
-          <include name="addDataAlternating"/>
-          <include name="tearDown"/>
           <include name="setUp"/>
+          <include name="nameCleanerWorks"/>
         </methods>
-      </class> <!-- csvtests.UserCsvManagerTest -->
+      </class> <!-- com.test.adminfunctions.CreateAdminTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

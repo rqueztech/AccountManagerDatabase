@@ -1,6 +1,7 @@
 package com.test.adminfunctions;
 
 import static org.testng.Assert.assertEquals;
+
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
@@ -11,7 +12,10 @@ import java.util.concurrent.ExecutionException;
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.admin.AdminModel;
+import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorkerTesting;
+import main.com.rqueztech.ui.validation.InputValidations;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -23,12 +27,15 @@ import org.testng.annotations.Test;
 public class CreateAdminTest {
   private List<AdminModel> currentAdmin;
   private File createFile;
+  private InputValidations inputValidations;
 
   // Create variables that will avoid magic numbers
   private final int firstNameColumn = 0;
   private final int lastNameColumn = 1;
   private final int passwordColumn = 2;
 
+  private AdminAddAdminWorkerTesting adminAddAdminWorkerTesting;
+  
   private final String fileLocation = new FileLocations().getAdminDbLocationTest();
 
   private String[][] adminData = {
@@ -74,24 +81,23 @@ public class CreateAdminTest {
     {"Austin", "Castillo", "Os5*Ep6?"}
   };
 
-
-
   @BeforeMethod
   public void setUp() {
     this.currentAdmin = new ArrayList<AdminModel>();
     this.createFile = new File(fileLocation);
-
+    this.inputValidations = new InputValidations();
+    
     if (this.createFile.exists()) {
       this.createFile.delete();
     }
 
     for (String[] arrayIterator : this.adminData) {
-      AdminAddAdminWorkerTesting adminAddAdminWorkerTesting =
+      this.adminAddAdminWorkerTesting =
           new AdminAddAdminWorkerTesting(
           arrayIterator[0],
           arrayIterator[1],
           arrayIterator[2].toCharArray(),
-              new FileLocations().getAdminDbLocationTest() 
+              new FileLocations().getAdminDbLocationTest()
         );
 
       adminAddAdminWorkerTesting.execute();
@@ -110,7 +116,7 @@ public class CreateAdminTest {
   }
 
   @Test
-  public void nullValueFoundTest() throws Exception {  
+  public void nullValueFoundTest() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
@@ -124,7 +130,7 @@ public class CreateAdminTest {
   }
 
   @Test
-  public void firstNameValid() throws Exception {  
+  public void firstNameValid() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
 
@@ -139,7 +145,7 @@ public class CreateAdminTest {
   }
 
   @Test
-  public void lastNameValid() throws Exception {  
+  public void lastNameValid() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
 
@@ -154,14 +160,14 @@ public class CreateAdminTest {
   }
 
   @Test
-  public void saltValid() throws Exception {  
+  public void saltValid() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
 
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
 
-      char[] currentPasswordAttempted = 
+      char[] currentPasswordAttempted =
         this.adminData[rowCurrent][passwordColumn]
         .toCharArray();
 
@@ -180,16 +186,19 @@ public class CreateAdminTest {
   }
 
   @Test
-  public void passwordValid() throws Exception {  
+  public void passwordValid() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
     int rowCurrent = 0;
 
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
 
-      char[] currentPasswordAttempted = 
+      char[] currentPasswordAttempted =
         this.adminData[rowCurrent][passwordColumn].toCharArray();
-
+      
+      assertTrue(this.inputValidations.validatePassword(
+          currentPasswordAttempted));
+      
       assertTrue(PasswordEncryption.validateEnteredPassword(
           currentPasswordAttempted,
           currentAdmin.getAdminSalt(),
@@ -199,5 +208,22 @@ public class CreateAdminTest {
       rowCurrent++;
     }
   }
+  
+  @Test
+  public void nameCleanerWorks() throws Exception {
+    Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
 
+    while (currentAdminIterator.hasNext()) {
+      AdminModel currentAdmin = currentAdminIterator.next();
+      
+      String firstNameString = currentAdmin.getAdminFirstName().toUpperCase();
+      String lastNameString = currentAdmin.getAdminLastName().toUpperCase();
+      
+      firstNameString = adminAddAdminWorkerTesting.cleanStrings(firstNameString);
+      lastNameString = adminAddAdminWorkerTesting.cleanStrings(lastNameString);
+      
+      assertTrue(firstNameString.matches("[A-Z][a-z]+"));
+      assertTrue(lastNameString.matches("[A-Z][a-z]+"));
+    }
+  }
 }

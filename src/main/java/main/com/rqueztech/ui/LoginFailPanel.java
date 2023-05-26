@@ -38,7 +38,7 @@ public class LoginFailPanel extends JPanel {
 
   // --- Section 3: Login Button Component Keys
   private final String loginFailLabelKey = "LoginFail";
-  private final String loginFailureButtonKey = "LoginFailureButtonKey"; 
+  private final String loginFailureButtonKey = "LoginFailureButtonKey";
   private PanelCentral panelCentral;
   private LoginFailController loginIncorrectErrorController;
 
@@ -115,7 +115,7 @@ public class LoginFailPanel extends JPanel {
     this.grid.weighty = 0.0;
 
     this.components.put(labelKey, labelField);
-  }  
+  }
 
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {

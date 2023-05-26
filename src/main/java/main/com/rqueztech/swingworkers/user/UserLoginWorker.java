@@ -48,8 +48,8 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
     // Set authenticated variable accordingly
     // You can also update any progress or status here
     try {
-      this.fileLocations = new FileLocations(); 
-      UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations.getUserDbLocationMain());
+      this.fileLocations = new FileLocations();
+      UserCsvManager userCsvManager = new UserCsvManager(FileLocations.getUserDbLocationMain());
       String[] accountNameData = userCsvManager.retrieveAccountData(this.userName);
 
       if (accountNameData == null) {
@@ -80,12 +80,12 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
 
       /* If the password entered is less than 8 characters and the result is
       true, this indicates that the default password is detected.
-      */ 
+      */
       boolean isDefaultPassword = this.userPassword.length < 8 && authenticated;
 
       if (isDefaultPassword && authenticated) {
         UserCentralPanel userCentralPanel = (UserCentralPanel) this.panelCentral.getPanelsHashMap()
-            .get(PanelCentralEnums.USERCENTRALPANEL);  
+            .get(PanelCentralEnums.USERCENTRALPANEL);
 
         userCentralPanel.getLoggedInUser().setLoggedInUser(userName.toCharArray());
 

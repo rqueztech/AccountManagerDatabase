@@ -18,12 +18,12 @@ public class AdminAddAdminWorkerTesting extends AdminAddAdminWorker {
 
   private static final Supplier<AdminAddAdminWorkerTesting> INSTANCE =
       () -> new AdminAddAdminWorkerTesting("adminFirstName",
-          "adminLastName", new char[0], new FileLocations()
-          .getAdminDbLocationTest());
+      "adminLastName", new char[0], FileLocations
+      .getAdminDbLocationTest());
 
   public AdminAddAdminWorkerTesting(String adminFirstName, String adminLastName,
         char[] newAdminpassword, final String fileLocation) {
-    super(adminFirstName, adminLastName, newAdminpassword, new FileLocations()
+    super(adminFirstName, adminLastName, newAdminpassword, FileLocations
         .getAdminDbLocationTest());
   }
 

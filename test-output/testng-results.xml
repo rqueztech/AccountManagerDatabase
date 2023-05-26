@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+<testng-results ignored="0" total="6" passed="6" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-05-22T18:06:38 JST" name="Default suite" finished-at="2023-05-22T18:06:38 JST" duration-ms="63">
+  <suite started-at="2023-05-25T16:06:14 JST" name="Default suite" finished-at="2023-05-25T16:06:16 JST" duration-ms="2359">
     <groups>
     </groups>
-    <test started-at="2023-05-22T18:06:38 JST" name="Default test" finished-at="2023-05-22T18:06:38 JST" duration-ms="63">
-      <class name="csvtests.UserCsvManagerTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="setUp" finished-at="2023-05-22T18:06:38 JST" duration-ms="6" status="PASS">
+    <test started-at="2023-05-25T16:06:14 JST" name="Default test" finished-at="2023-05-25T16:06:16 JST" duration-ms="2359">
+      <class name="com.test.adminfunctions.CreateAdminTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:14 JST" name="setUp" finished-at="2023-05-25T16:06:15 JST" duration-ms="555" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="addData()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="addData" finished-at="2023-05-22T18:06:38 JST" duration-ms="14" status="PASS">
+        <test-method signature="firstNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="firstNameValid" finished-at="2023-05-25T16:06:15 JST" duration-ms="14" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- addData -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="tearDown" finished-at="2023-05-22T18:06:38 JST" duration-ms="1" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method signature="addDataAlternating()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="addDataAlternating" finished-at="2023-05-22T18:06:38 JST" duration-ms="3" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- addDataAlternating -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="setUp" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
+        </test-method> <!-- firstNameValid -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="setUp" finished-at="2023-05-25T16:06:15 JST" duration-ms="265" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="tearDown" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
+        <test-method signature="lastNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="lastNameValid" finished-at="2023-05-25T16:06:15 JST" duration-ms="3" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method signature="removeData()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="removeData" finished-at="2023-05-22T18:06:38 JST" duration-ms="5" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- removeData -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="setUp" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
+        </test-method> <!-- lastNameValid -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="setUp" finished-at="2023-05-25T16:06:15 JST" duration-ms="250" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="retrieveData()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="retrieveData" finished-at="2023-05-22T18:06:38 JST" duration-ms="2" status="PASS">
+        <test-method signature="nameCleanerWorks()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="nameCleanerWorks" finished-at="2023-05-25T16:06:15 JST" duration-ms="7" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- retrieveData -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="tearDown" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="setUp" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
+        </test-method> <!-- nameCleanerWorks -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="setUp" finished-at="2023-05-25T16:06:15 JST" duration-ms="260" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:csvtests.UserCsvManagerTest@42e99e4a]" started-at="2023-05-22T18:06:38 JST" name="tearDown" finished-at="2023-05-22T18:06:38 JST" duration-ms="0" status="PASS">
+        <test-method signature="nullValueFoundTest()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="nullValueFoundTest" finished-at="2023-05-25T16:06:15 JST" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- csvtests.UserCsvManagerTest -->
+        </test-method> <!-- nullValueFoundTest -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:15 JST" name="setUp" finished-at="2023-05-25T16:06:16 JST" duration-ms="261" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="passwordValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:16 JST" name="passwordValid" finished-at="2023-05-25T16:06:16 JST" duration-ms="206" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- passwordValid -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:16 JST" name="setUp" finished-at="2023-05-25T16:06:16 JST" duration-ms="255" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="saltValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-05-25T16:06:16 JST" name="saltValid" finished-at="2023-05-25T16:06:16 JST" duration-ms="202" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- saltValid -->
+      </class> <!-- com.test.adminfunctions.CreateAdminTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

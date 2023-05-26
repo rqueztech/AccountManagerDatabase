@@ -96,7 +96,7 @@ public class CreateUserTest {
           firstName,
           lastName,
           gender,
-              new FileLocations().getUserDbLocationTest() 
+              new FileLocations().getUserDbLocationTest()
         );
 
       adminAddUserWorkerTesting.execute();
@@ -119,7 +119,7 @@ public class CreateUserTest {
   }
 
   @Test
-  public void nullValueFoundTest() throws Exception {  
+  public void nullValueFoundTest() throws Exception {
     Iterator<UserModel> currentUserIterator = currentUser.iterator();
     while (currentUserIterator.hasNext()) {
       UserModel currentUser = currentUserIterator.next();
@@ -133,7 +133,7 @@ public class CreateUserTest {
   }
 
   @Test
-  public void firstNameValid() throws Exception {  
+  public void firstNameValid() throws Exception {
     Iterator<UserModel> currentUserIterator = currentUser.iterator();
     int rowCurrent = 0;
 
@@ -148,7 +148,7 @@ public class CreateUserTest {
   }
 
   @Test
-  public void lastNameValid() throws Exception {  
+  public void lastNameValid() throws Exception {
     Iterator<UserModel> currentUserIterator = currentUser.iterator();
     int rowCurrent = 0;
 
@@ -163,14 +163,14 @@ public class CreateUserTest {
   }
 
   @Test
-  public void saltValid() throws Exception {  
+  public void saltValid() throws Exception {
     Iterator<UserModel> currentUserIterator = currentUser.iterator();
     int rowCurrent = 0;
 
     while (currentUserIterator.hasNext()) {
       UserModel currentUser = currentUserIterator.next();
 
-      char[] currentPasswordAttempted = 
+      char[] currentPasswordAttempted =
         this.userData[rowCurrent][passwordColumn]
         .toCharArray();
 
@@ -189,14 +189,14 @@ public class CreateUserTest {
   }
 
   @Test
-  public void passwordValid() throws Exception {  
+  public void passwordValid() throws Exception {
     Iterator<UserModel> currentUserIterator = currentUser.iterator();
     int rowCurrent = 0;
 
     while (currentUserIterator.hasNext()) {
       UserModel currentUser = currentUserIterator.next();
 
-      char[] currentPasswordAttempted = 
+      char[] currentPasswordAttempted =
         this.userData[rowCurrent][passwordColumn].toCharArray();
 
       assertTrue(PasswordEncryption.validateEnteredPassword(

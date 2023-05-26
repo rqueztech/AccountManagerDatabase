@@ -9,7 +9,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-  </properties> 
+  </properties>
 
   <build>
   <plugins>
@@ -28,7 +28,7 @@
 
     <configuration>
       <!-- Executes the main class in the project -->
-      <mainClass>main.com.rqueztech.Main</mainClass> 
+      <mainClass>main.com.rqueztech.Main</mainClass>
     </configuration>
     </plugin>
 

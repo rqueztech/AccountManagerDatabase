@@ -41,7 +41,7 @@ public class LogoutSuccessPanel extends JPanel {
 
   // --- Section 3: Login Button Component Keys
   private final String logoutSuccessLabelKey = "LogoutSuccess";
-  private final String logoutSuccessButtonKey = "LogoutSuccessButtonKey"; 
+  private final String logoutSuccessButtonKey = "LogoutSuccessButtonKey";
   private PanelCentral panelCentral;
 
   private final int gridxInitial = 0;

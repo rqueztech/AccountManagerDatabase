@@ -86,7 +86,7 @@ public class SetupSubmitDocumentListener implements DocumentListener {
   */
   public boolean isPasswordsMatch() {
     // If the password fields match, return true. Passwords do match
-    if (Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {   
+    if (Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {
       return true;
     }
 
@@ -129,7 +129,7 @@ public class SetupSubmitDocumentListener implements DocumentListener {
   }
 
   public boolean isValidLastName() {
-    return this.inputValidations.isOnlyLetterCharacters(this.lastNameTextField.getText()); 
+    return this.inputValidations.isOnlyLetterCharacters(this.lastNameTextField.getText());
   }
 
   /**

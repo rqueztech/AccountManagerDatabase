@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  * The class ensures that all input validation functions are doing the proper
  input validations and working as they should.
  */
-public class InputValidationsTest { 
+public class InputValidationsTest {
   @Test
   public void testNoEntryFoundWithString() {
     InputValidations inputValidations = new InputValidations();
@@ -22,7 +22,7 @@ public class InputValidationsTest {
   public void testValidatePasswordWithCharArray() {
     InputValidations inputValidations = new InputValidations();
 
-    for (int counter = 0; counter < 40; counter++) {     
+    for (int counter = 0; counter < 40; counter++) {
       String input = this.generatePassword();
       boolean result = inputValidations.validatePassword(input);
       Assert.assertTrue(result);
@@ -50,7 +50,7 @@ public class InputValidationsTest {
     String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     String lowerCase = "abcdefghijklmnopqrstuvwxyz";
     String number = "0123456789";
-    String legalCharacters = "@$!%*#?&"; 
+    String legalCharacters = "@$!%*#?&";
 
     StringBuilder sb = new StringBuilder();
     Random random = new Random();

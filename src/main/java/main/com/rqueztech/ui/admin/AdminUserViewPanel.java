@@ -45,6 +45,7 @@ import javax.swing.table.TableRowSorter;
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.controllers.admin.AdminUserViewController;
 import main.com.rqueztech.csv.admin.UserCsvManager;
+import main.com.rqueztech.swingworkers.admin.AdminDeleteUserWorker;
 import main.com.rqueztech.ui.BaseFrame;
 import main.com.rqueztech.ui.PanelCentral;
 import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
@@ -71,7 +72,7 @@ public class AdminUserViewPanel extends JPanel {
   private final int rightInset = 0;
 
   private DefaultTableModel model;
-  
+
   // --- Section 4: Set Combo Box
   private final int gridxInitial = 0;
   private final int gridyInitial = 0;
@@ -83,9 +84,9 @@ public class AdminUserViewPanel extends JPanel {
 
   private PanelCentral panelCentral;
   private JTable table;
-  
+
   private String currentUser;
-  
+
   //One dimensional array representing table columns
   private String[] columns = {"User Name", "First Name", "Last Name", "Gender"};
   private String[][] rows = {};
@@ -110,7 +111,6 @@ public class AdminUserViewPanel extends JPanel {
 
     this.panelCentral = panelCentral;
 
-    this.fileLocations = new FileLocations();
     this.file = new File(FileLocations.getUserDbLocationMain());
 
     this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
@@ -137,13 +137,13 @@ public class AdminUserViewPanel extends JPanel {
       this.add(this.components.get(AdminUserViewEnums.CONFIRMPASSWORDPASSWORDLABELKEY), grid);
 
       this.grid.gridy += 1;
-      
+
       this.setModel();
       this.createTable();
       this.refreshTable();
       this.setMouseListener();
       this.setKeyListener();
-      
+
       TableRowSorter<TableModel> rowSorter =
           new TableRowSorter<>(table.getModel());
 
@@ -273,8 +273,8 @@ public class AdminUserViewPanel extends JPanel {
         }
       });
 
-      
-      
+
+
       this.grid.gridx += 1;
 
       this.setButton(AdminUserViewEnums
@@ -285,7 +285,7 @@ public class AdminUserViewPanel extends JPanel {
 
       this.grid.gridx = 0;
       this.grid.gridy += 1;
-      
+
       this.setButton(AdminUserViewEnums
            .RETURNCENTRALBUTTONKEY, "Go Back");
 
@@ -312,7 +312,7 @@ public class AdminUserViewPanel extends JPanel {
     });
 
   }
-  
+
   public void setMouseListener() {
     this.table.addMouseListener(new MouseAdapter() {
       @Override
@@ -328,28 +328,28 @@ public class AdminUserViewPanel extends JPanel {
           }
       });
   }
-  
+
   public void setKeyListener() {
     this.table.addKeyListener(new KeyAdapter() {
         public void keyPressed(KeyEvent e) {
-            int selectedRow = table.getSelectedRow();
-            int column = 0;
+          int selectedRow = table.getSelectedRow();
+          int column = 0;
 
-            if (selectedRow >= 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
-                String selectedUser = (String) table.getValueAt(selectedRow, column);
-                AdminUserViewPanel.this.setCurrentUser(selectedUser);
-                table.changeSelection(selectedRow, column, false, false);
+          if (selectedRow >= 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
+            String selectedUser = (String) table.getValueAt(selectedRow, column);
+            
+            AdminUserViewPanel.this.setCurrentUser(selectedUser);
+            table.changeSelection(selectedRow, column, false, false);
 
-                // Trigger the event for delete action
-                // Call the appropriate method or perform the desired action
-                JOptionPane.showMessageDialog(null, "Entered Delete");
-                System.out.println(selectedRow);
-            }
+            // Trigger the event for delete action
+            // Call the appropriate method or perform the desired action
+            AdminUserViewPanel.this.;
         }
+      }
     });
-}
+  }
 
-  
+
   public void setModel() {
     // Annonymous inner class implementing a table model
     this.model = new DefaultTableModel(this.rows, this.columns) {
@@ -364,15 +364,15 @@ public class AdminUserViewPanel extends JPanel {
         }
       };
   }
-  
+
   public void createTable() {
     // Anonymous innerclass defining the table for the program
     this.table = new JTable(model);
   }
-  
+
   public void refreshTable() {
-    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocations
-          .getUserDbLocationMain()); 
+    UserCsvManager userCsvManager = new UserCsvManager(FileLocations
+          .getUserDbLocationMain());
 
     List<String[]> userData = new ArrayList<>();
 
@@ -384,17 +384,17 @@ public class AdminUserViewPanel extends JPanel {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
     // Clear the existing rows in the table model
     this.model = (DefaultTableModel) table.getModel();
     model.setRowCount(0);
-    
+
     for (String[] row : userData) {
       if (!row[0].equals("acctName")) {
         model.addRow((Object[]) row);
       }
     }
-    
+
     model.fireTableDataChanged();
   }
 
@@ -402,20 +402,20 @@ public class AdminUserViewPanel extends JPanel {
   public void setRows(int row, int column) {
     this.currentUser = this.getRows()[row][column];
   }
-  
+
   public String[][] getRows() {
     return this.rows;
   }
   */
-  
+
   public void setCurrentUser(String currentUser) {
     this.currentUser = currentUser;
   }
-  
+
   public String getCurrentUser() {
     return this.currentUser;
   }
-  
+
   // --------------------------------------------------------------------------
   private void setBackgroundImageConstraints() {
     // Set everything to initial status.

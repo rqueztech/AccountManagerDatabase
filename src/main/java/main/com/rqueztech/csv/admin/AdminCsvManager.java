@@ -41,7 +41,7 @@ public class AdminCsvManager {
     boolean fileExists = Files.exists(path);
 
     if (!fileExists) {
-      JOptionPane.showMessageDialog(null, "This file does not exist");
+      System.out.println("File does not exist, created.");
 
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
@@ -128,7 +128,7 @@ public class AdminCsvManager {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    
+
     // Close the CSVReader and FileReader objects
     csvReader.close();
     reader.close();

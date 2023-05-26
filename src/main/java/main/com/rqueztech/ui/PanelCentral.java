@@ -42,7 +42,7 @@ public class PanelCentral extends JPanel {
 
   /**
    * Creates a new instance of the PanelCentral passing the BaseFrame class as
-   an argument. 
+   an argument.
    *
    * @param frame contains the main frame for the program as (BaseFrame object)
    */

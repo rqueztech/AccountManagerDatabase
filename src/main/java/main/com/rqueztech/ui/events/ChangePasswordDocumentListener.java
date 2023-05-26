@@ -66,7 +66,7 @@ public class ChangePasswordDocumentListener implements DocumentListener {
   public boolean isPasswordsMatch() {
     // If the password fields match, return true. Passwords do match
     if (Arrays.equals(passwordField.getPassword(),
-        confirmPasswordField.getPassword())) {   
+        confirmPasswordField.getPassword())) {
       return true;
     }
 
