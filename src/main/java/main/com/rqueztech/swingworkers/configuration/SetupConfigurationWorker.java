@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import javax.swing.SwingWorker;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.configuration.ConfigurationCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;

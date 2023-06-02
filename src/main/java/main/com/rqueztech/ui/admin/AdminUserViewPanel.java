@@ -36,12 +36,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.controllers.admin.AdminUserViewController;
 import main.com.rqueztech.csv.admin.UserCsvManager;
@@ -88,7 +88,7 @@ public class AdminUserViewPanel extends JPanel {
   private String currentUser;
 
   //One dimensional array representing table columns
-  private String[] columns = {"User Name", "First Name", "Last Name", "Gender"};
+  private String[] columns = {"User Name", "First Name", "Last Name", "Gender", "Emp No"};
   private String[][] rows = {};
 
   private File file;
@@ -112,7 +112,6 @@ public class AdminUserViewPanel extends JPanel {
     this.panelCentral = panelCentral;
 
     this.file = new File(FileLocations.getUserDbLocationMain());
-
     this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
 
     // Dispatch responsibilities on EDT.
@@ -122,8 +121,10 @@ public class AdminUserViewPanel extends JPanel {
       this.image = new ImageIcon(getClass().getResource("/images/backgroundd.jpg")).getImage();
       this.components = new ConcurrentHashMap<AdminUserViewEnums, JComponent>();
 
+      /*
       this.setBackgroundImageConstraints();
       frame.add(this, this.grid);
+      */
 
       // --- Start Constraints ---
       // Set all of the constraints for the background image
@@ -331,19 +332,16 @@ public class AdminUserViewPanel extends JPanel {
 
   public void setKeyListener() {
     this.table.addKeyListener(new KeyAdapter() {
-        public void keyPressed(KeyEvent e) {
-          int selectedRow = table.getSelectedRow();
-          int column = 0;
+      public void keyPressed(KeyEvent e) {
+        int selectedRow = table.getSelectedRow();
+        int column = 0;
 
-          if (selectedRow >= 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
-            String selectedUser = (String) table.getValueAt(selectedRow, column);
-            
-            AdminUserViewPanel.this.setCurrentUser(selectedUser);
-            table.changeSelection(selectedRow, column, false, false);
+        if (selectedRow >= 0 && e.getKeyCode() == KeyEvent.VK_DELETE) {
+          String selectedUser = (String) table.getValueAt(selectedRow, column);
 
-            // Trigger the event for delete action
-            // Call the appropriate method or perform the desired action
-            AdminUserViewPanel.this.;
+          AdminUserViewPanel.this.setCurrentUser(selectedUser);
+          table.changeSelection(selectedRow, column, false, false);
+
         }
       }
     });
@@ -363,6 +361,7 @@ public class AdminUserViewPanel extends JPanel {
           return false; // make all cells not editable
         }
       };
+      
   }
 
   public void createTable() {
@@ -391,22 +390,21 @@ public class AdminUserViewPanel extends JPanel {
 
     for (String[] row : userData) {
       if (!row[0].equals("acctName")) {
-        model.addRow((Object[]) row);
+        Object[] rowData = new Object[5]; // Number of desired elements to add
+        
+        rowData[0] = row[0]; // Add element from column 0
+        rowData[1] = row[1]; // Add element from column 1
+        rowData[2] = row[2]; // Add element from column 2
+        rowData[3] = row[3]; // Add element from column 3
+        rowData[4] = row[6]; // Add element from column 6
+
+        model.addRow(rowData);
       }
     }
 
+
     model.fireTableDataChanged();
   }
-
-  /*
-  public void setRows(int row, int column) {
-    this.currentUser = this.getRows()[row][column];
-  }
-
-  public String[][] getRows() {
-    return this.rows;
-  }
-  */
 
   public void setCurrentUser(String currentUser) {
     this.currentUser = currentUser;

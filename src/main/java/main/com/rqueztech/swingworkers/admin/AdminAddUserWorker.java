@@ -8,16 +8,16 @@ import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-
 import javax.print.event.PrintJobAttributeEvent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
+import main.com.rqueztech.csv.configuration.ConfigurationCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.interfaces.admin.AdminModelViewAddUserInterface;
 import main.com.rqueztech.models.user.UserModel;
+import main.com.rqueztech.ui.admin.usernamecreation.CreateUserName;
 
 /**
  * The AdminAddUserWorker class is a SwingWorker that creates a new user model
@@ -49,8 +49,12 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
 
   // hash the password from all of these parameters
   private byte[] userNewHashedPassword;
-  private final String fileLocationString;
+  private final String userDatabaseFileLocationString;
+  private UserCsvManager userCsvManager;
+  private ConfigurationCsvManager configurationCsvManager;
+  private String configurationFileLocation;
 
+  private CreateUserName createUserName;
 
   /**
    * Constructs a new AdminAddUserWorker with the specified user information.
@@ -63,27 +67,32 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
       String userFirstName,
       String userLastName,
       String gender,
-      final String fileLocation) {
+      final String userDatabaseFileLocation,
+      final String configurationFileLocation) {
 
     this.userFirstName = userFirstName;
     this.userLastName = userLastName;
     this.gender = gender;
-    this.fileLocationString = fileLocation;
+    this.userDatabaseFileLocationString = userDatabaseFileLocation;
+    this.configurationFileLocation = configurationFileLocation;
   }
 
   // --------------------------------------------------------------------------
   @Override
   protected UserModel doInBackground() throws Exception {
+    this.userCsvManager = new UserCsvManager(this.userDatabaseFileLocationString);
+    this.createUserName = new CreateUserName(FileLocations
+      .getUserDbLocationMain());
 
-    this.createUserAccountName();
+    this.configurationCsvManager = new ConfigurationCsvManager(this
+      .configurationFileLocation);
 
-    // Key to append: This character will append to the end of
-    // The default password. This can be changed later. Later iterations
-    // Of the program will set randomized default passwords for users.
-    char defaultUserPasswordAppend = this.userFirstName.toUpperCase().charAt(0);
+    this.userAccountName = this.createUserName
+      .createUserAccountName(this.userFirstName, this.userLastName);
 
     // Call the function to set the default user password
-    this.setUserDefaultPassword(defaultUserPasswordAppend);
+    this.defaultUserPassword = this.createUserName
+        .setUserDefaultPassword(this.userLastName);
 
     // Generate the salt that will be used in hashing the user's password
     this.newUserSalt = this.generateUserSalt();
@@ -93,33 +102,33 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
     this.userNewHashedPassword = this.hashUserPassword();               
 
     // TODO Auto-generated method stub
-    if (PasswordEncryption.validateEnteredPassword(adminPassphraseAttempt,
-        userNewHashedPassword, newUserSalt)) {
+    if (PasswordEncryption.validateEnteredPassword(this.adminPassphraseAttempt,
+        this.userNewHashedPassword, this.newUserSalt)) {
       return null;
     }
 
-    this.userFirstName = this.cleanStrings(this.userFirstName);
-    this.userLastName = this.cleanStrings(this.userLastName);
-
-    this.writeToCsvFile();
+    this.userFirstName = this.createUserName.cleanStrings(this.userFirstName);
+    this.userLastName = this.createUserName.cleanStrings(this.userLastName);
 
     // Note: Please change in the future
-    this.userNumber = 0;  // Current number is 0. Placeholder.
+    List<String[]> configurationFile = this.configurationCsvManager
+        .retrieveData();  // Current number is 0. Placeholder.
+    
+    this.userNumber = Integer.parseInt(configurationFile.get(1)[1]);
+    this.increaseEmployeeNumber();
+    configurationFile.get(1)[1] = Integer.toString(this.userNumber);
+    
+    this.configurationCsvManager.createConfigurationFile(configurationFile);
+
+    this.writeToCsvFile();
+    
+    this.clearUserPassword();
 
     // Finally: Create the new user model with all of the appropriate information
     return new UserModel(this.userAccountName, this.userFirstName,
       this.userLastName, this.gender, this.userNewHashedPassword,
       this.newUserSalt, this.userNumber
     );
-  }
-
-  public String cleanStrings(String name) {
-    StringBuilder sb = new StringBuilder();
-  
-    sb.append(name.substring(0, 1).toUpperCase());
-    sb.append(name.substring(1).toLowerCase());
-  
-    return sb.toString();
   }
 
   // --------------------------------------------------------------------------
@@ -158,7 +167,7 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
    * @throws IOException if there is an error writing to the CSV file.
   */
   public void writeToCsvFile() {
-    UserCsvManager userCsvManager = new UserCsvManager(this.fileLocationString);
+    UserCsvManager userCsvManager = new UserCsvManager(this.userDatabaseFileLocationString);
     List<String[]> userData = new ArrayList<String[]>();
 
     // Convert the password to base 64 encoding
@@ -179,34 +188,6 @@ public class AdminAddUserWorker extends SwingWorker<UserModel, Void>
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-  }
-
-  // --------------------------------------------------------------------------
-  // NOTE: This should not be default. It is best to make a randomized password.
-  // For the sake of simplicity, we will make it default to a simple default. Please
-  // Change in the future.
-  private void setUserDefaultPassword(char userFirstNameLetter) {
-    // Initial base for the default password goes here
-    char[] defaultUserPassword = {'a', 'b', 'c', userFirstNameLetter};
-    this.defaultUserPassword = defaultUserPassword;
-  }
-
-  // --------------------------------------------------------------------------
-  private void createUserAccountName() {
-    // Get the first string of the account name.
-    String firstAccountNameString = this.userFirstName.substring(0, 1);
-    String secondAccountNameString = "";
-
-    int lastNameLength = this.userLastName.length();
-
-    if (lastNameLength >= 2 && lastNameLength < 4) {
-      secondAccountNameString = this.userLastName.substring(0, lastNameLength);
-    } else {
-      secondAccountNameString = this.userLastName.substring(0, 4);
-    }
-
-    this.userAccountName = String.format("%s%s", firstAccountNameString,
-      secondAccountNameString).toLowerCase();
   }
 
   // --------------------------------------------------------------------------

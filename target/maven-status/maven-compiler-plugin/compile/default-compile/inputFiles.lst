@@ -62,8 +62,10 @@ C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\mai
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\user\enums\UserChangeDefaultPasswordEnums.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\BaseFrame.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\usernamecreation\CreateUserName.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\events\PasswordFieldListener.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\loggedinuser\package-info.java
+C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\ui\admin\usernamecreation\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\models\loggedinuser\LoggedInUser.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\swingworkers\admin\package-info.java
 C:\Users\quest\eclipse-workspace\GitHub\AccountManagerDatabase\src\main\java\main\com\rqueztech\controllers\LoginFailController.java

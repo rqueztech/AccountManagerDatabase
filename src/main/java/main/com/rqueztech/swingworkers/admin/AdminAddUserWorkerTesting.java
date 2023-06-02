@@ -6,8 +6,7 @@ import main.com.rqueztech.models.user.UserModel;
  * The class creates an instance of the AdminAddUserWorker for testing to
  access the protected doInBackground() class.
  */
-public class AdminAddUserWorkerTesting
-    extends AdminAddUserWorker {
+public class AdminAddUserWorkerTesting extends AdminAddUserWorker {
 /*
   private String userAccountName;
   private String userFirstName;
@@ -21,8 +20,8 @@ public class AdminAddUserWorkerTesting
 */
 
   public AdminAddUserWorkerTesting(String userFirstName, String userLastName,
-      String gender, final String fileLocation) {
-    super(userFirstName, userLastName, gender, fileLocation);
+      String gender, final String fileLocation, final String configLocation) {
+    super(userFirstName, userLastName, gender, fileLocation, configLocation);
     // TODO Auto-generated constructor stub
   }
 

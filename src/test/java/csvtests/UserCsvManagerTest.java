@@ -3,17 +3,14 @@ package csvtests;
 import static org.testng.AssertJUnit.assertTrue;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.AssertJUnit.assertEquals;
-
 import java.io.File;
-import java.io.IOException;import java.nio.channels.AcceptPendingException;
+import java.io.IOException;
+import java.nio.channels.AcceptPendingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.sql.RowSet;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import org.testng.annotations.AfterMethod;
@@ -31,12 +28,12 @@ public class UserCsvManagerTest {
 
   @BeforeMethod
   public void setUp() {
-  // Delete the test file after each test
-      try {
-        Files.deleteIfExists(Paths.get(TEST_FILE_PATH));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+    // Delete the test file after each test
+    try {
+      Files.deleteIfExists(Paths.get(TEST_FILE_PATH));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     // Create a new UserCsvManager instance with the test file path\
     this.existFile = new File(TEST_FILE_PATH);

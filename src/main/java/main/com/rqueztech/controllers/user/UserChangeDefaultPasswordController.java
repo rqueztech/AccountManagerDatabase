@@ -109,8 +109,6 @@ public class UserChangeDefaultPasswordController {
         e1.printStackTrace();
       }
 
-      System.out.println(successfulChange);
-
       if (successfulChange) {
         this.userChangeDefaultPasswordPanel.setVisible(false);
         this.resetFields();

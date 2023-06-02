@@ -23,7 +23,8 @@ public class ConfigurationCsvManager {
    * Sets the default path for the configuration database csv.
    */
   private final String filePath;
-
+  private final String[] header = { "numAdmins", "numUsers", "admPassphrase", "admSalt" };
+  
   public ConfigurationCsvManager(final String filePath) {
     this.filePath = filePath;
   }
@@ -41,8 +42,11 @@ public class ConfigurationCsvManager {
     // Create a new file with a header row
     FileWriter writer = new FileWriter(filePath);
     CSVWriter csvWriter = new CSVWriter(writer);
-    String[] header = {"numAdmins", "numUsers", "admPassphrase", "admSalt"};
-    csvWriter.writeNext(header);
+
+    if (!fileExists) {
+      csvWriter.writeNext(header);
+    }
+    
     csvWriter.writeAll(data);
     csvWriter.close();
     writer.close();
@@ -61,8 +65,10 @@ public class ConfigurationCsvManager {
     try (CSVReader csvReader = new CSVReader(Files.newBufferedReader(path));
          CSVWriter csvWriter = new CSVWriter(Files.newBufferedWriter(path))) {
 
+      csvReader.readNext();
+    	
       List<String[]> rows = csvReader.readAll();
-
+      
       // Locate the specific row for modification (index 1 as data starts from second row)
       if (rows.size() > 1) {
         String[] dataRow = rows.get(1);

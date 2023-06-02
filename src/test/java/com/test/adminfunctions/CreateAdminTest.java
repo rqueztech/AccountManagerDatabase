@@ -1,7 +1,6 @@
 package com.test.adminfunctions;
 
 import static org.testng.Assert.assertEquals;
-
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
@@ -15,7 +14,6 @@ import main.com.rqueztech.models.admin.AdminModel;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorkerTesting;
 import main.com.rqueztech.ui.validation.InputValidations;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -35,7 +33,7 @@ public class CreateAdminTest {
   private final int passwordColumn = 2;
 
   private AdminAddAdminWorkerTesting adminAddAdminWorkerTesting;
-  
+
   private final String fileLocation = new FileLocations().getAdminDbLocationTest();
 
   private String[][] adminData = {
@@ -86,7 +84,7 @@ public class CreateAdminTest {
     this.currentAdmin = new ArrayList<AdminModel>();
     this.createFile = new File(fileLocation);
     this.inputValidations = new InputValidations();
-    
+
     if (this.createFile.exists()) {
       this.createFile.delete();
     }
@@ -97,7 +95,7 @@ public class CreateAdminTest {
           arrayIterator[0],
           arrayIterator[1],
           arrayIterator[2].toCharArray(),
-              new FileLocations().getAdminDbLocationTest()
+              FileLocations.getAdminDbLocationTest()
         );
 
       adminAddAdminWorkerTesting.execute();
@@ -195,10 +193,10 @@ public class CreateAdminTest {
 
       char[] currentPasswordAttempted =
         this.adminData[rowCurrent][passwordColumn].toCharArray();
-      
+
       assertTrue(this.inputValidations.validatePassword(
           currentPasswordAttempted));
-      
+
       assertTrue(PasswordEncryption.validateEnteredPassword(
           currentPasswordAttempted,
           currentAdmin.getAdminSalt(),
@@ -208,20 +206,20 @@ public class CreateAdminTest {
       rowCurrent++;
     }
   }
-  
+
   @Test
   public void nameCleanerWorks() throws Exception {
     Iterator<AdminModel> currentAdminIterator = currentAdmin.iterator();
 
     while (currentAdminIterator.hasNext()) {
       AdminModel currentAdmin = currentAdminIterator.next();
-      
+
       String firstNameString = currentAdmin.getAdminFirstName().toUpperCase();
       String lastNameString = currentAdmin.getAdminLastName().toUpperCase();
-      
+
       firstNameString = adminAddAdminWorkerTesting.cleanStrings(firstNameString);
       lastNameString = adminAddAdminWorkerTesting.cleanStrings(lastNameString);
-      
+
       assertTrue(firstNameString.matches("[A-Z][a-z]+"));
       assertTrue(lastNameString.matches("[A-Z][a-z]+"));
     }

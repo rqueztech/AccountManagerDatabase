@@ -11,7 +11,6 @@ import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.models.panels.PanelsHashMap;
 import main.com.rqueztech.ui.admin.AdminAddUserPanel;
@@ -34,7 +33,7 @@ public class PanelCentral extends JPanel {
 
   private static final long serialVersionUID = -652692111395861275L;
 
-  private final String fileLocation = new FileLocations().getAdminDbLocationMain();
+  private final String fileLocation = FileLocations.getAdminDbLocationMain();
   private File file = new File(fileLocation);
 
   // Reference to the BaseFrame objects

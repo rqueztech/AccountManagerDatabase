@@ -4,16 +4,13 @@ import java.awt.Component;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import main.com.rqueztech.FileLocations;
-
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorker;
 import main.com.rqueztech.swingworkers.admin.AdminValidPassphraseWorker;
 import main.com.rqueztech.ui.admin.AdminAddUserPanel;
@@ -112,7 +109,8 @@ public class AdminAddUserController {
         if (adminValidPassphraseWorker.get()) {
           AdminAddUserWorker adminAddUserWorker =
               new AdminAddUserWorker(userFirstName, userLastName, gender,
-                FileLocations.getUserDbLocationMain());
+                FileLocations.getUserDbLocationMain(),
+                FileLocations.getConfigLocationMain());
 
           this.resetFields();
 

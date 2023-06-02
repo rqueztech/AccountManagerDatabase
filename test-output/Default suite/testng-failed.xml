@@ -3,12 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.test.adminfunctions.CreateAdminTest">
+      <class name="com.test.adminfunctions.CreateUserTest">
         <methods>
+          <include name="firstNameValid"/>
+          <include name="passwordValid"/>
           <include name="setUp"/>
-          <include name="nameCleanerWorks"/>
+          <include name="saltValid"/>
+          <include name="lastNameValid"/>
+          <include name="nullValueFoundTest"/>
         </methods>
-      </class> <!-- com.test.adminfunctions.CreateAdminTest -->
+      </class> <!-- com.test.adminfunctions.CreateUserTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

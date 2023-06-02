@@ -2,7 +2,6 @@ package com.test.adminfunctions;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,7 +12,6 @@ import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.admin.AdminModel;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -90,14 +88,14 @@ public class CreateConfigurationTest {
   };
 
   private ConcurrentHashMap<String, AdminModel> adminAccounts = 
-		  
-  
+      
+
   private AdminAddAdminWorker adminAddAdminWorker;
-  
+
   @BeforeMethod
   public void setUp() {
-	  
-	  
+    
+    
     for (int counter = 0; counter < fakeData.length; counter++) {  
       this.adminAddAdminWorker =
            new AdminAddAdminWorker(
@@ -114,7 +112,7 @@ public class CreateConfigurationTest {
 
   @Test
   public void adminInformationValid() throws Exception {
-    
+
   }
 
 }

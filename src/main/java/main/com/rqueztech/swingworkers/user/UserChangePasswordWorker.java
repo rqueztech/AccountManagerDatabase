@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
@@ -34,7 +33,6 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
   private CSVReader csvReader;
   private CSVWriter csvWriter;
   private boolean isErrorWriting;
-  private FileLocations fileLocations;
 
   private final String userFileString = "src/main/resources/data/userdatabase.csv";
 
@@ -57,7 +55,6 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
 
   @Override
   protected Boolean doInBackground() throws Exception {
-    this.fileLocations = new FileLocations();
 
     UserCsvManager userCsvManager = new UserCsvManager(FileLocations.getUserDbLocationMain());
     /*
@@ -104,7 +101,7 @@ public class UserChangePasswordWorker extends SwingWorker<Boolean, Void> {
       } else if (!result && this.isErrorWriting) {
         JOptionPane.showMessageDialog(null, "Error Writing");
       } else {
-        System.out.println(JOptionPane.showMessageDialog(null, );
+        System.out.println("Not Updated");
       }
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();

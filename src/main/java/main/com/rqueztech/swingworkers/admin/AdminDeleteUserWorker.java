@@ -2,7 +2,6 @@ package main.com.rqueztech.swingworkers.admin;
 
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.SwingWorker;
 import main.com.rqueztech.ui.admin.AdminUserViewPanel;
 import main.com.rqueztech.FileLocations;

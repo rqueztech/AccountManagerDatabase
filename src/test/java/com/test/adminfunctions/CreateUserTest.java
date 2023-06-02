@@ -2,16 +2,25 @@ package com.test.adminfunctions;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import main.com.rqueztech.FileLocations;
+import main.com.rqueztech.csv.admin.UserCsvManager;
+import main.com.rqueztech.csv.configuration.ConfigurationCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.models.user.UserModel;
+import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;
+import main.com.rqueztech.swingworkers.admin.AdminAddUserWorker;
 import main.com.rqueztech.swingworkers.admin.AdminAddUserWorkerTesting;
+import main.com.rqueztech.swingworkers.configuration.SetupConfigurationWorker;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,15 +31,14 @@ import org.testng.annotations.Test;
  */
 public class CreateUserTest {
   private List<UserModel> currentUser;
-  private File createFile;
-
+  private AdminAddUserWorkerTesting adminAddUserWorkerTesting;
+  private SetupConfigurationWorker setupConfigurationWorker;
+  
   // Create variables that will avoid magic numbers
   private final int firstNameColumn = 0;
   private final int lastNameColumn = 1;
   private final int passwordColumn = 2;
-
-  private final String fileLocation = new FileLocations().getUserDbLocationTest();
-
+  
   private String[][] userData = {
     {"Alina", "Walls", "Male"},
     {"Rufus", "Kennedy", "Male"},
@@ -74,15 +82,16 @@ public class CreateUserTest {
     {"Austin", "Castillo", "Male"}
   };
 
-
-
   @BeforeMethod
   public void setUp() {
     this.currentUser = new ArrayList<UserModel>();
-    this.createFile = new File(fileLocation);
-
-    if (this.createFile.exists()) {
-      this.createFile.delete();
+    
+    boolean configCsvExists = this.isFileExists(FileLocations
+        .getConfigLocationTest());
+    
+    if (!configCsvExists) {
+      this.setupConfigurationWorker = new SetupConfigurationWorker("1qaz#EDC"
+        .toCharArray(), FileLocations.getConfigLocationTest());
     }
 
     for (String[] arrayIterator : this.userData) {
@@ -91,13 +100,14 @@ public class CreateUserTest {
       String gender = arrayIterator[2];
 
 
-      AdminAddUserWorkerTesting adminAddUserWorkerTesting =
+      this.adminAddUserWorkerTesting =
           new AdminAddUserWorkerTesting(
-          firstName,
-          lastName,
-          gender,
-              new FileLocations().getUserDbLocationTest()
-        );
+        firstName,
+        lastName,
+        gender,
+        FileLocations.getUserDbLocationTest(),
+        FileLocations.getConfigLocationTest()
+      );
 
       adminAddUserWorkerTesting.execute();
 
@@ -111,10 +121,6 @@ public class CreateUserTest {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-    }
-
-    for (String[] item : userData) {
-      System.out.println(item[0] + item[1] + item[2] + item[3]);
     }
   }
 
@@ -208,5 +214,9 @@ public class CreateUserTest {
       rowCurrent++;
     }
   }
-
+  
+  private boolean isFileExists(final String pathToCheck) {
+    Path path = Paths.get(pathToCheck);
+    return Files.exists(path);
+  }
 }

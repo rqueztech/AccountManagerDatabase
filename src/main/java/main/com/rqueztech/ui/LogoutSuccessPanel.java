@@ -16,7 +16,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
 import main.com.rqueztech.ui.buttons.ButtonTemplates;
 import main.com.rqueztech.ui.enums.PanelCentralEnums;

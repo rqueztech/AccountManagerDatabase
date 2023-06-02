@@ -41,14 +41,12 @@ public class AdminCsvManager {
     boolean fileExists = Files.exists(path);
 
     if (!fileExists) {
-      System.out.println("File does not exist, created.");
+      JOptionPane.showMessageDialog(null, "This file does not exist");
 
       // Create a new file with a header row
       FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
-
       String[] header = {"acctName", "fName", "lName", "encryptedPassword", "salt", "admNo"};
-
       csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();
@@ -115,7 +113,7 @@ public class AdminCsvManager {
     FileReader reader = new FileReader(filePath);
 
     // Create a CSVReader object using the FileReader object
-    CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+    CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
     List<String[]> rows = null;
     try {
@@ -129,6 +127,10 @@ public class AdminCsvManager {
       e.printStackTrace();
     }
 
+    if (rows.get(0)[0].equals("acctName")) {
+      rows.remove(0);
+    }
+    
     // Close the CSVReader and FileReader objects
     csvReader.close();
     reader.close();

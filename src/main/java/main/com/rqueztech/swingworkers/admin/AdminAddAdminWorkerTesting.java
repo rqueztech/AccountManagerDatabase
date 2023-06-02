@@ -1,7 +1,6 @@
 package main.com.rqueztech.swingworkers.admin;
 
 import java.util.function.Supplier;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.models.admin.AdminModel;
 
@@ -22,7 +21,7 @@ public class AdminAddAdminWorkerTesting extends AdminAddAdminWorker {
       .getAdminDbLocationTest());
 
   public AdminAddAdminWorkerTesting(String adminFirstName, String adminLastName,
-        char[] newAdminpassword, final String fileLocation) {
+      char[] newAdminpassword, final String fileLocation) {
     super(adminFirstName, adminLastName, newAdminpassword, FileLocations
         .getAdminDbLocationTest());
   }

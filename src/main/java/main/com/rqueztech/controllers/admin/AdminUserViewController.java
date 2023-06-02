@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.swingworkers.admin.AdminDeleteUserWorker;
 import main.com.rqueztech.ui.admin.AdminUserViewPanel;

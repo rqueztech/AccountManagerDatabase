@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.interfaces.admin.AdminAddUserModelControlInterface;
 import main.com.rqueztech.swingworkers.admin.AdminAddAdminWorker;

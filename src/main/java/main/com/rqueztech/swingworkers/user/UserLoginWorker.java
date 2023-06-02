@@ -5,7 +5,6 @@ import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.UserCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
@@ -25,8 +24,6 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
   private final char[] userPassword;
   private boolean authenticated;
   private PanelCentral panelCentral;
-
-  private FileLocations fileLocations;
 
   /**
    * Create an instance of the user login worker class.
@@ -48,7 +45,6 @@ public class UserLoginWorker extends SwingWorker<Boolean, Void> {
     // Set authenticated variable accordingly
     // You can also update any progress or status here
     try {
-      this.fileLocations = new FileLocations();
       UserCsvManager userCsvManager = new UserCsvManager(FileLocations.getUserDbLocationMain());
       String[] accountNameData = userCsvManager.retrieveAccountData(this.userName);
 

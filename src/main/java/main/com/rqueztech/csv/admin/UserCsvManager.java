@@ -4,7 +4,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,17 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The UserCsvManager class handles read, write, create, and delete to csv.
  */
 public class UserCsvManager {
   private final String filePath;
-  private final Lock lock = new ReentrantLock();
 
   /**
    * Sets the default path for the user database csv.
@@ -38,33 +33,27 @@ public class UserCsvManager {
    * @throws IOException throws IOException if an I/O error occurs
    */
   public void addData(List<String[]> data) throws IOException {
-    lock.lock();
-    try {
-      if (this.isFileExists()) {
-        System.out.println("The file exists");
-      } else {
-
-        // Create a new file with a header row
-        FileWriter writer = new FileWriter(filePath);
-        CSVWriter csvWriter = new CSVWriter(writer);
-
-        String[] header = {"acctName", "fName", "lName", "gender",
-          "encryptedPassword", "salt", "admNo"};
-
-        csvWriter.writeNext(header);
-        csvWriter.close();
-        writer.close();
-      }
-
-      // Append data to the file
-      FileWriter writer = new FileWriter(filePath, true);
+    if (this.isFileExists()) {
+      System.out.println("The file exists");
+    } else {
+      // Create a new file with a header row
+      FileWriter writer = new FileWriter(filePath);
       CSVWriter csvWriter = new CSVWriter(writer);
-      csvWriter.writeAll(data);
+      
+      String[] header = {"acctName", "fName", "lName", "gender",
+        "encryptedPassword", "salt", "admNo"};
+      
+      csvWriter.writeNext(header);
       csvWriter.close();
       writer.close();
-    } finally {
-      lock.unlock();
     }
+
+    // Append data to the file
+    FileWriter writer = new FileWriter(filePath, true);
+    CSVWriter csvWriter = new CSVWriter(writer);
+    csvWriter.writeAll(data);
+    csvWriter.close();
+    writer.close();
   }
 
   /**
@@ -73,45 +62,39 @@ public class UserCsvManager {
    * @param dataToRemove contains the information of what to remove as (a String array)
    */
   public void removeData(String[] dataToRemove) throws IOException {
+    FileReader reader = new FileReader(filePath);
+    CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
-    lock.lock();
+    List<String[]> rows = null;
+
     try {
-      FileReader reader = new FileReader(filePath);
-      CSVReader csvReader = new CSVReaderBuilder(reader).build();
-
-      List<String[]> rows = null;
-
-      try {
-        rows = csvReader.readAll();
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (CsvException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-
-      List<String[]> updatedRows = new ArrayList<>();
-
-      for (String[] row : rows) {
-        if (!isEqual(row, dataToRemove)) {
-          updatedRows.add(row);
-        }
-      }
-
-      csvReader.close();
-      reader.close();
-
-      FileWriter writer = new FileWriter(filePath);
-      CSVWriter csvWriter = new CSVWriter(writer);
-
-      csvWriter.writeAll(updatedRows);
-
-      csvWriter.close();
-      writer.close();
-    } finally {
-      lock.unlock();
+      rows = csvReader.readAll();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CsvException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
+
+    List<String[]> updatedRows = new ArrayList<>();
+
+    for (String[] row : rows) {
+      if (!isEqual(row, dataToRemove)) {
+        updatedRows.add(row);
+      }
+    }
+
+    csvReader.close();
+    reader.close();
+
+    FileWriter writer = new FileWriter(filePath);
+    CSVWriter csvWriter = new CSVWriter(writer);
+
+    csvWriter.writeAll(updatedRows);
+
+    csvWriter.close();
+    writer.close();
   }
 
   /**
@@ -121,37 +104,33 @@ public class UserCsvManager {
    * @throws IOException if an I/O error occurs while reading the CSV file.
    */
   public List<String[]> retrieveData() throws IOException {
-    List<String[]> rows = new ArrayList<>();
+    FileReader reader = new FileReader(filePath);
+    CSVReader csvReader = new CSVReaderBuilder(reader).build();
 
-    lock.lock();
-    try {
-      FileReader reader = new FileReader(filePath);
-      CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
-
-      // If the file does not exist, return null. No action
-      // will be performed.
-      if (!this.isFileExists()) {
-        return null;
-      }
-
-      String[] line;
-      while ((line = csvReader.readNext()) != null) {
-        rows.add(line);
-      }
-
-      int size = rows.size();
-      System.out.println("Number of rows: " + size);
-
-      return rows;
-    } catch (CsvValidationException e) {
-      e.printStackTrace();
-    } finally {
-      lock.unlock();
+    if (!this.isFileExists()) {
+      return null;
     }
 
-    return null;
-  }
+    List<String[]> rows = null;
+    try {
+      rows = csvReader.readAll();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CsvException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
+    if(rows.get(0)[0].equals("acctName")) {
+      rows.remove(0);
+    }
+    
+    csvReader.close();
+    reader.close();
+
+    return rows;
+  }
 
   /**
    * Retrieves the row from a CSV file located at the given file path where the value of the
@@ -163,48 +142,42 @@ public class UserCsvManager {
    * @throws IOException if an I/O error occurs while reading the CSV file.
    */
   public String[] retrieveAccountData(String acctName) throws IOException {
+    if (!this.isFileExists()) {
+      return null;
+    }
+
+    // Create a FileReader object to read the CSV file
+    FileReader reader = new FileReader(filePath);
+
+    // Create a CSVReader object using the FileReader object
+    CSVReader csvReader = new CSVReaderBuilder(reader).build();
+
     List<String[]> rows = null;
-
-    lock.lock();
     try {
-      if (!this.isFileExists()) {
-        return null;
+      // Read all the rows from the CSV file and store them in a List
+      rows = csvReader.readAll();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (CsvException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    // Close the CSVReader and FileReader objects
+    csvReader.close();
+    reader.close();
+
+    // Search for the first row where the value of the first column matches the given `acctName`
+    for (String[] row : rows) {
+      if (row[0].equals(acctName)) {
+        return row;
       }
-
-      // Create a FileReader object to read the CSV file
-      FileReader reader = new FileReader(filePath);
-
-      // Create a CSVReader object using the FileReader object
-      CSVReader csvReader = new CSVReaderBuilder(reader).build();
-
-      try {
-        // Read all the rows from the CSV file and store them in a List
-        rows = csvReader.readAll();
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (CsvException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-
-      // Close the CSVReader and FileReader objects
-      csvReader.close();
-      reader.close();
-
-      // Search for the first row where the value of the first column matches the given `acctName`
-      for (String[] row : rows) {
-        if (row[0].equals(acctName)) {
-          return row;
-        }
-      }
-    } finally {
-      lock.unlock();
     }
 
     // If no matching row is found, return null
     return null;
-  }
+  }  
 
   private boolean isEqual(String[] arr1, String[] arr2) {
     if (arr1.length != arr2.length) {

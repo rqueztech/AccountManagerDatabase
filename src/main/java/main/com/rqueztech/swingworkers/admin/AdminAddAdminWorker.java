@@ -8,7 +8,6 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.csv.admin.AdminCsvManager;
 import main.com.rqueztech.encryption.PasswordEncryption;
@@ -33,6 +32,7 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
 
   private String fileLocationString;
   private int adminNumber;
+
 
   /**
    * The specific constructor for AdminAddWorker that takes the parameters
@@ -143,15 +143,15 @@ public class AdminAddAdminWorker extends SwingWorker<AdminModel, Void> {
   // --------------------------------------------------------------------------
   private String createAdminAccountName() {
     // Get the first string of the account name.
-    String firstAccountNameString = this.adminFirstName.substring(0, 1);
+    String firstAccountNameString = this.adminFirstName.substring(0, 1).toLowerCase();
     String secondAccountNameString = "";
 
     int lastNameLength = this.adminLastName.length();
 
     if (lastNameLength < 4) {
-      secondAccountNameString = this.adminLastName;
+      secondAccountNameString = this.adminLastName.toLowerCase();
     } else {
-      secondAccountNameString = this.adminLastName.substring(0, 4);
+      secondAccountNameString = this.adminLastName.substring(0, 4).toLowerCase();
     }
 
     return String.format("%s%s", firstAccountNameString, secondAccountNameString);
