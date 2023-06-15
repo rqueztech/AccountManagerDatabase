@@ -42,6 +42,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableStringConverter;
 import main.com.rqueztech.FileLocations;
 import main.com.rqueztech.controllers.admin.AdminUserViewController;
 import main.com.rqueztech.csv.admin.UserCsvManager;

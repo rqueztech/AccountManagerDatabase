@@ -1,53 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="5" passed="5" failed="0" skipped="0">
+<testng-results ignored="0" total="6" passed="6" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-05-30T17:55:51 JST" name="Default suite" finished-at="2023-05-30T17:55:54 JST" duration-ms="3095">
+  <suite started-at="2023-06-12T22:40:39 JST" name="Default suite" finished-at="2023-06-12T22:40:47 JST" duration-ms="7853">
     <groups>
     </groups>
-    <test started-at="2023-05-30T17:55:51 JST" name="Default test" finished-at="2023-05-30T17:55:54 JST" duration-ms="3095">
-      <class name="com.test.adminfunctions.CreateUserTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:51 JST" name="setUp" finished-at="2023-05-30T17:55:52 JST" duration-ms="905" status="PASS">
+    <test started-at="2023-06-12T22:40:39 JST" name="Default test" finished-at="2023-06-12T22:40:47 JST" duration-ms="7853">
+      <class name="com.test.adminfunctions.CreateAdminTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:39 JST" name="setUp" finished-at="2023-06-12T22:40:42 JST" duration-ms="2508" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="firstNameValid()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:52 JST" name="firstNameValid" finished-at="2023-05-30T17:55:52 JST" duration-ms="12" status="PASS">
+        <test-method signature="firstNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:42 JST" name="firstNameValid" finished-at="2023-06-12T22:40:42 JST" duration-ms="15" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- firstNameValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:52 JST" name="setUp" finished-at="2023-05-30T17:55:53 JST" duration-ms="543" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:42 JST" name="setUp" finished-at="2023-06-12T22:40:43 JST" duration-ms="1210" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="lastNameValid()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:53 JST" name="lastNameValid" finished-at="2023-05-30T17:55:53 JST" duration-ms="2" status="PASS">
+        <test-method signature="lastNameValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:43 JST" name="lastNameValid" finished-at="2023-06-12T22:40:43 JST" duration-ms="3" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- lastNameValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:53 JST" name="setUp" finished-at="2023-05-30T17:55:53 JST" duration-ms="538" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:43 JST" name="setUp" finished-at="2023-06-12T22:40:44 JST" duration-ms="761" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="nullValueFoundTest()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:53 JST" name="nullValueFoundTest" finished-at="2023-05-30T17:55:53 JST" duration-ms="2" status="PASS">
+        <test-method signature="nameCleanerWorks()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:44 JST" name="nameCleanerWorks" finished-at="2023-06-12T22:40:44 JST" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- nameCleanerWorks -->
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:44 JST" name="setUp" finished-at="2023-06-12T22:40:45 JST" duration-ms="730" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="nullValueFoundTest()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:45 JST" name="nullValueFoundTest" finished-at="2023-06-12T22:40:45 JST" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- nullValueFoundTest -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:53 JST" name="setUp" finished-at="2023-05-30T17:55:54 JST" duration-ms="515" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:45 JST" name="setUp" finished-at="2023-06-12T22:40:45 JST" duration-ms="726" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="passwordValid()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:54 JST" name="passwordValid" finished-at="2023-05-30T17:55:54 JST" duration-ms="2" status="PASS">
+        <test-method signature="passwordValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:45 JST" name="passwordValid" finished-at="2023-06-12T22:40:46 JST" duration-ms="210" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- passwordValid -->
-        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:54 JST" name="setUp" finished-at="2023-05-30T17:55:54 JST" duration-ms="483" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:46 JST" name="setUp" finished-at="2023-06-12T22:40:47 JST" duration-ms="1347" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="saltValid()[pri:0, instance:com.test.adminfunctions.CreateUserTest@7334aada]" started-at="2023-05-30T17:55:54 JST" name="saltValid" finished-at="2023-05-30T17:55:54 JST" duration-ms="3" status="PASS">
+        <test-method signature="saltValid()[pri:0, instance:com.test.adminfunctions.CreateAdminTest@4d9e68d0]" started-at="2023-06-12T22:40:47 JST" name="saltValid" finished-at="2023-06-12T22:40:47 JST" duration-ms="240" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- saltValid -->
-      </class> <!-- com.test.adminfunctions.CreateUserTest -->
+      </class> <!-- com.test.adminfunctions.CreateAdminTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

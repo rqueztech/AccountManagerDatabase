@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import main.com.rqueztech.FileLocations;
+import main.com.rqueztech.encryption.PasswordEncryption;
 import main.com.rqueztech.swingworkers.admin.AdminDeleteUserWorker;
 import main.com.rqueztech.ui.admin.AdminUserViewPanel;
 import main.com.rqueztech.ui.admin.enums.AdminUserViewEnums;
@@ -18,7 +19,8 @@ import main.com.rqueztech.ui.enums.PanelCentralEnums;
  */
 public class AdminUserViewController {
   private AdminUserViewPanel adminUserViewPanel;
-
+  private boolean optionSelected = false;
+  
   public AdminUserViewController(AdminUserViewPanel adminUserViewPanel) {
     this.adminUserViewPanel = adminUserViewPanel;
     this.invokeActionListeners();
@@ -55,23 +57,38 @@ public class AdminUserViewController {
     userDeleteButton.addActionListener(e -> {
       System.out.println(this.adminUserViewPanel.getCurrentUser());
 
-      if (this.adminUserViewPanel.getCurrentUser() != null) {
-        AdminDeleteUserWorker adminDeleteUserWorker =
-            new AdminDeleteUserWorker(this.adminUserViewPanel, this.adminUserViewPanel.getCurrentUser(),
-            FileLocations.getUserDbLocationMain());
-
-        String message = String.format("Are you sure you would like to "
-            + "delete User: %s", this.adminUserViewPanel.getCurrentUser());
-
-        if (JOptionPane.showConfirmDialog(null, message) == JOptionPane.OK_OPTION) {
-          adminDeleteUserWorker.execute();
-        } else {
-          JOptionPane.showMessageDialog(null, "No User Found");
-        }
-      } else {
-        JOptionPane.showMessageDialog(null, "Nothing Selected");
+      // If no user is selected, break out and print message
+      if (this.adminUserViewPanel.getCurrentUser() == null) {
+        JOptionPane.showMessageDialog(null, "No User Selected");
+        return;
       }
+      
+      // If user is selected, ask if they want to proceed with deletion
+      if (JOptionPane.showConfirmDialog(null,
+          "Proceed with deletion of user? ")
+          != JOptionPane.OK_OPTION) {
+        return;
+      }
+      
+      // Prompt the user to enter the password
+      JPasswordField passwordField = new JPasswordField();
+      int option = JOptionPane.showConfirmDialog(null, passwordField,
+          "Enter your password:", JOptionPane.OK_CANCEL_OPTION,
+           JOptionPane.PLAIN_MESSAGE);
 
+      if (option == JOptionPane.OK_OPTION) {
+    	  
+        char[] passwordChars = passwordField.getPassword();
+        // Handle the password as needed
+          
+        AdminDeleteUserWorker adminDeleteUserWorker =
+            new AdminDeleteUserWorker(this.adminUserViewPanel,
+              this.adminUserViewPanel.getCurrentUser(),
+            FileLocations.getUserDbLocationMain());
+        
+        adminDeleteUserWorker.execute();
+      }
+      
       this.resetFields();
     });
   }
